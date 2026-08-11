@@ -51,7 +51,7 @@ The backend is **market-agnostic**. Switching or adding data providers is a sing
 
 ```bash
 # 1. Clone
-git clone https://github.com/yourname/financebtw.git
+git clone https://github.com/Manav-Arora4/financebtw.git
 cd financebtw
 
 # 2. Configure

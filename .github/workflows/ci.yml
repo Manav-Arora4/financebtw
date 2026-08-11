@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  # ─── Backend Lint ────────────────────────────────────────────────────────────
+  backend-lint:
+    name: Backend Lint (black + ruff + mypy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dev dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Black format check
+        run: black --check backend/ tests/
+
+      - name: Ruff lint
+        run: ruff check backend/ tests/
+
+      - name: MyPy type check
+        run: mypy backend/
+
+  # ─── Backend Tests ───────────────────────────────────────────────────────────
+  backend-test:
+    name: Backend Tests (pytest)
+    runs-on: ubuntu-latest
+    needs: backend-lint
+    env:
+      DATABASE_URL: postgresql+asyncpg://financebtw:test@localhost:5432/financebtw_test
+      JWT_SECRET_KEY: test_secret_key_for_ci_pipeline_only_32_chars
+      APP_ENV: development
+      THE_NEWS_API_KEY: ""
+      GROQ_API_KEY: ""
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: financebtw
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: financebtw_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Run tests
+        run: pytest tests/ -v --asyncio-mode=auto --cov=backend --cov-report=xml --cov-fail-under=70
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+        if: always()
+
+  # ─── Docker Build Smoke Test ─────────────────────────────────────────────────
+  docker-build:
+    name: Docker Build (smoke test)
+    runs-on: ubuntu-latest
+    needs: backend-test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build backend image
+        run: docker build -f docker/backend/Dockerfile -t financebtw-backend:ci .

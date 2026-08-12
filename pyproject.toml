@@ -42,10 +42,25 @@ dependencies = [
     # Logging
     "structlog>=24.4.0",
 
-    # Market data — Phase 11 (stubs registered now)
+    # Market data providers
     "yfinance>=0.2.48",
     "nsepython>=2.0",
     "bsedata>=0.5.1",
+
+    # AI Agent Orchestration (LangGraph)
+    "langgraph>=0.2.0",
+    "langchain-core>=0.3.0",
+
+    # Universal LLM Gateway (LiteLLM)
+    "litellm>=1.50.0",
+
+    # RAG Framework (LlamaIndex)
+    "llama-index>=0.11.0",
+    "llama-index-vector-stores-qdrant>=0.2.0",
+    "llama-index-embeddings-huggingface>=0.2.0",
+
+    # Local Embeddings & Reranker (BGE-M3, BGE-Reranker-Large)
+    "sentence-transformers>=3.0.0",
 ]
 
 [project.optional-dependencies]

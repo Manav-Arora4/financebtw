@@ -72,8 +72,17 @@ class Settings(BaseSettings):
         """Return CORS origins as a list, split from the comma-separated env string."""
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
-    # ── LLM Providers ────────────────────────────────────────────────────────
-    llm_provider: Literal["groq", "gemini", "openai", "anthropic", "deepseek", "ollama"] = "groq"
+    # ── Universal LLM Gateway (LiteLLM) ──────────────────────────────────────
+    llm_provider: Literal[
+        "groq",
+        "openai",
+        "anthropic",
+        "gemini",
+        "openrouter",
+        "ollama",
+        "together",
+        "deepseek",
+    ] = "groq"
     llm_model: str = "llama-3.3-70b-versatile"
 
     groq_api_key: str = ""
@@ -81,8 +90,14 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
     anthropic_api_key: str = ""
     deepseek_api_key: str = ""
+    openrouter_api_key: str = ""
+    together_api_key: str = ""
     ollama_base_url: str = "http://localhost:11434"
     ollama_default_model: str = "llama3.3"
+
+    # ── Local Embeddings & Reranker ──────────────────────────────────────────
+    embedding_model: str = "BAAI/bge-m3"
+    reranker_model: str = "BAAI/bge-reranker-large"
 
     # ── Market Data Providers ────────────────────────────────────────────────
     # Yahoo Finance

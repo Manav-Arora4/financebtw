@@ -11,7 +11,7 @@ export const AppLayout: React.FC = () => {
 
   return (
     <div className={`terminal-app-root ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-      {/* 1. Unified Bloomberg Command Header */}
+      {/* 1. Unified Terminal Command Header */}
       <Header />
 
       {/* 2. Real-time Continuous Market Ticker Marquee */}

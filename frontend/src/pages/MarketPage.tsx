@@ -313,12 +313,12 @@ export const MarketPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Quadrant 4: Bloomberg Institutional News Wire */}
+        {/* Quadrant 4: Institutional News Wire */}
         <div className="terminal-panel wire-quadrant">
           <div className="panel-header">
             <div className="panel-title-group">
               <span className="panel-code">&lt;NEWS&gt;</span>
-              <span className="panel-title">BLOOMBERG NEWS WIRE STREAM</span>
+              <span className="panel-title">INSTITUTIONAL NEWS WIRE STREAM</span>
             </div>
             <span className="wire-live-tag">[WIRE ACTIVE]</span>
           </div>

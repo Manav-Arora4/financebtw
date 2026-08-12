@@ -41,7 +41,7 @@ export const OverviewPage: React.FC = () => {
   const phases = [
     { num: '01', name: 'Repository Foundation & Provider Abstraction', branch: 'feature/project-setup', status: 'DONE' },
     { num: '02', name: 'Supabase Authentication & JWT Verifier', branch: 'feature/authentication', status: 'DONE' },
-    { num: '03', name: 'Bloomberg Terminal UI & Navigation Layout', branch: 'feature/frontend-layout', status: 'DONE' },
+    { num: '03', name: 'Professional Terminal UI & Navigation Layout', branch: 'feature/frontend-layout', status: 'DONE' },
     { num: '04', name: 'Document Ingestion Pipeline (LlamaIndex)', branch: 'feature/document-ingestion', status: 'NEXT' },
     { num: '05', name: 'Semantic Chunking & Tabular Structure Parser', branch: 'feature/chunking', status: 'PLAN' },
     { num: '06', name: 'BGE-M3 Dense+Sparse Vectors & Qdrant Storage', branch: 'feature/embeddings', status: 'PLAN' },

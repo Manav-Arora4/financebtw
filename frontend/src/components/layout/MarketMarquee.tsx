@@ -10,7 +10,7 @@ export const MarketMarquee: React.FC = () => {
     <div className="terminal-marquee-strip">
       <div className="marquee-prefix-label">
         <span className="live-pulse"></span>
-        <span className="prefix-txt">BLOOMBERG WIRE // REALTIME FEEDS:</span>
+        <span className="prefix-txt">LIVE WIRE // REALTIME FEEDS:</span>
       </div>
       <div className="terminal-marquee-track">
         {marqueeItems.map((item, idx) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const AnalystRatingsCard: React.FC = () => {
-  // Radius = 38, strokeWidth = 6. Inner clear radius = 35 (diameter 70).
+  // Radius = 38, strokeWidth = 7. Inner clear radius = 34.5 (diameter 69).
   // Circumference = 2 * PI * 38 = 238.76
   const circ = 238.76;
   const buyLen = (78 / 100) * circ;
@@ -15,17 +15,17 @@ export const AnalystRatingsCard: React.FC = () => {
       </div>
 
       <div className="analyst-gauge-and-breakdown">
-        {/* SVG Multi-colored Circular Ring Gauge with Vector-Rendered Center Text */}
+        {/* Large Prominent Multi-colored Circular Donut Gauge */}
         <div className="analyst-circle-gauge-wrapper">
           <svg viewBox="0 0 100 100" className="gauge-svg">
-            {/* Background track */}
+            {/* Background Track */}
             <circle
               cx="50"
               cy="50"
               r="38"
               fill="none"
               stroke="#131c2c"
-              strokeWidth="6"
+              strokeWidth="7"
             />
             {/* 1. Green Buy Arc (78%) */}
             <circle
@@ -34,61 +34,60 @@ export const AnalystRatingsCard: React.FC = () => {
               r="38"
               fill="none"
               stroke="#22c55e"
-              strokeWidth="6"
+              strokeWidth="7"
               strokeDasharray={`${buyLen} ${circ - buyLen}`}
               strokeDashoffset="0"
               transform="rotate(-90 50 50)"
             />
-            {/* 2. Amber Hold Arc (19%) */}
-            <circle
-              cx="50"
-              cy="50"
-              r="38"
-              fill="none"
-              stroke="#f59e0b"
-              strokeWidth="6"
-              strokeDasharray={`${holdLen} ${circ - holdLen}`}
-              strokeDashoffset={`-${buyLen}`}
-              transform="rotate(-90 50 50)"
-            />
-            {/* 3. Red Sell Arc (3%) */}
+            {/* 2. Red Sell Arc (3%) */}
             <circle
               cx="50"
               cy="50"
               r="38"
               fill="none"
               stroke="#ef4444"
-              strokeWidth="6"
+              strokeWidth="7"
               strokeDasharray={`${sellLen} ${circ - sellLen}`}
-              strokeDashoffset={`-${buyLen + holdLen}`}
+              strokeDashoffset={`-${buyLen}`}
+              transform="rotate(-90 50 50)"
+            />
+            {/* 3. Slate Grey Hold Arc (19%) */}
+            <circle
+              cx="50"
+              cy="50"
+              r="38"
+              fill="none"
+              stroke="#64748b"
+              strokeWidth="7"
+              strokeDasharray={`${holdLen} ${circ - holdLen}`}
+              strokeDashoffset={`-${buyLen + sellLen}`}
               transform="rotate(-90 50 50)"
             />
 
-            {/* In-SVG Perfectly Proportioned Centered Score & Label */}
+            {/* Centered Score & Clean Title-Case Label */}
             <text
               x="50"
-              y="46"
+              y="45"
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#ffffff"
-              fontSize="20"
-              fontWeight="900"
+              fontSize="21"
+              fontWeight="800"
               fontFamily="Inter, sans-serif"
             >
               4.3
             </text>
             <text
               x="50"
-              y="61"
+              y="60"
               textAnchor="middle"
               dominantBaseline="middle"
-              fill="#22c55e"
-              fontSize="6.5"
-              fontWeight="800"
+              fill="#94a3b8"
+              fontSize="8"
+              fontWeight="500"
               fontFamily="Inter, sans-serif"
-              letterSpacing="0.4"
             >
-              OUTPERFORM
+              Outperform
             </text>
           </svg>
         </div>
@@ -100,15 +99,15 @@ export const AnalystRatingsCard: React.FC = () => {
               <span className="dot-indicator green"></span>
               <span>Buy</span>
             </div>
-            <span className="rating-row-count">28 (78%)</span>
+            <span className="rating-row-count">25 (78%)</span>
           </div>
 
           <div className="rating-row">
             <div className="rating-row-label">
-              <span className="dot-indicator amber"></span>
+              <span className="dot-indicator grey"></span>
               <span>Hold</span>
             </div>
-            <span className="rating-row-count">7 (19%)</span>
+            <span className="rating-row-count">6 (19%)</span>
           </div>
 
           <div className="rating-row">

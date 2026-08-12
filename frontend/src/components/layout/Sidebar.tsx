@@ -2,78 +2,96 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppStore } from '../../store/useAppStore';
 
-interface NavItem {
-  path: string;
-  label: string;
-  code: string;
-  badge?: string;
-}
-
 export const Sidebar: React.FC = () => {
-  const { sidebarCollapsed, toggleSidebar, selectedSymbol } = useAppStore();
+  const { sidebarCollapsed, toggleSidebar } = useAppStore();
 
-  const navItems: NavItem[] = [
-    { path: '/market', label: 'Market Overview', code: 'MKT', badge: 'LIVE' },
-    { path: '/chat', label: 'Financial AI Chat', code: 'AI' },
-    { path: '/documents', label: 'Filings & Reports', code: 'DOC' },
-    { path: '/portfolio', label: 'Portfolio & Risk', code: 'PTF' },
-    { path: '/settings', label: 'Settings & Feeds', code: 'SET' },
+  const navGroups = [
+    {
+      title: 'MARKETS',
+      items: [
+        { path: '/market', label: 'Markets', tag: '[M]' },
+        { path: '/market', label: 'Watchlist', tag: '[W]' },
+        { path: '/market', label: 'Heatmap', tag: '[H]' },
+        { path: '/market', label: 'Screener', tag: '[S]' },
+        { path: '/market', label: 'Alerts', tag: '[A]' },
+      ],
+    },
+    {
+      title: 'PORTFOLIO',
+      items: [
+        { path: '/portfolio', label: 'Portfolio', tag: '[P]' },
+        { path: '/portfolio', label: 'Holdings', tag: '[H]' },
+        { path: '/portfolio', label: 'Performance', tag: '[R]' },
+        { path: '/portfolio', label: 'Transactions', tag: '[T]' },
+      ],
+    },
+    {
+      title: 'RESEARCH & AI',
+      items: [
+        { path: '/chat', label: 'AI Assistant', tag: '[AI]', isSparkle: true },
+        { path: '/chat', label: 'Research', tag: '[RS]' },
+        { path: '/documents', label: 'News', tag: '[NW]' },
+        { path: '/documents', label: 'Filings', tag: '[FL]' },
+        { path: '/documents', label: 'Transcripts', tag: '[TR]' },
+        { path: '/documents', label: 'Documents', tag: '[DC]' },
+      ],
+    },
+    {
+      title: 'TOOLS',
+      items: [
+        { path: '/market', label: 'Compare', tag: '[CP]' },
+        { path: '/market', label: 'Options Chain', tag: '[OC]' },
+        { path: '/market', label: 'Backtest', tag: '[BT]' },
+        { path: '/settings', label: 'DCF Calculator', tag: '[DCF]' },
+      ],
+    },
   ];
 
   return (
-    <aside className={`terminal-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
-      {/* Sidebar Header */}
-      <div className="sidebar-top-row">
-        {!sidebarCollapsed && <span className="sidebar-title">NAVIGATION</span>}
-        <button
-          className="btn-sidebar-toggle"
-          onClick={toggleSidebar}
-          title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+    <aside className={`finsight-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
+      {/* Top Main Dashboard Pill */}
+      <div className="sidebar-top-section">
+        <NavLink
+          to="/market"
+          className={({ isActive }) => `dashboard-main-btn ${isActive ? 'active' : ''}`}
         >
-          {sidebarCollapsed ? '[>]' : '[<]'}
-        </button>
+          <span className="btn-dash-icon">[::]</span>
+          {!sidebarCollapsed && <span className="btn-dash-label">Dashboard</span>}
+        </NavLink>
       </div>
 
-      {/* Active Security Target */}
-      {!sidebarCollapsed && (
-        <div className="sidebar-active-target">
-          <span className="target-lbl">ACTIVE SECURITY:</span>
-          <span className="target-code">{selectedSymbol}</span>
-        </div>
-      )}
-
-      {/* Nav List */}
-      <nav className="sidebar-nav-list">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
-            title={sidebarCollapsed ? `${item.code}: ${item.label}` : undefined}
-          >
-            <span className="nav-code">&lt;{item.code}&gt;</span>
-            {!sidebarCollapsed && (
-              <>
-                <span className="nav-label">{item.label}</span>
-                {item.badge && <span className="nav-pill">[{item.badge}]</span>}
-              </>
-            )}
-          </NavLink>
+      {/* Nav Groups */}
+      <nav className="sidebar-scrollable-nav">
+        {navGroups.map((grp) => (
+          <div key={grp.title} className="sidebar-nav-group">
+            {!sidebarCollapsed && <div className="group-heading-text">{grp.title}</div>}
+            <div className="group-nav-links">
+              {grp.items.map((item, idx) => (
+                <NavLink
+                  key={`${item.label}-${idx}`}
+                  to={item.path}
+                  className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
+                  title={sidebarCollapsed ? item.label : undefined}
+                >
+                  <span className="item-ascii-icon">{item.tag}</span>
+                  {!sidebarCollapsed && <span className="item-label-text">{item.label}</span>}
+                </NavLink>
+              ))}
+            </div>
+          </div>
         ))}
       </nav>
 
-      {/* Sidebar Footer */}
-      <div className="sidebar-bottom-status">
-        {!sidebarCollapsed ? (
-          <div className="status-container">
-            <div className="status-live-line">
-              <span className="pulse-green"></span>
-              <span className="status-txt">FEED: 100% ONLINE</span>
-            </div>
-            <div className="market-session-txt">SESSION: REGULAR TRADING</div>
-          </div>
-        ) : (
-          <div className="pulse-green" title="Feeds Online"></div>
+      {/* Bottom Footer Actions */}
+      <div className="sidebar-bottom-actions">
+        <button className="btn-collapse-sidebar" onClick={toggleSidebar}>
+          <span className="collapse-icon">{sidebarCollapsed ? '[>]' : '[<]'}</span>
+          {!sidebarCollapsed && <span>Collapse</span>}
+        </button>
+        {!sidebarCollapsed && (
+          <button className="btn-theme-toggle" title="Dark Theme Active">
+            <span>[D]</span>
+          </button>
         )}
       </div>
     </aside>

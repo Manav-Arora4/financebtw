@@ -1,152 +1,71 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useAppStore } from '../../store/useAppStore';
 
 export const Header: React.FC = () => {
   const { user, signOut } = useAuth();
-  const { selectedMarket, setSelectedMarket, selectedSymbol, setSelectedSymbol, openAuthModal } = useAppStore();
-  const [commandInput, setCommandInput] = useState('');
-  const [timeIst, setTimeIst] = useState('');
-  const [timeEst, setTimeEst] = useState('');
-  const [timeGmt, setTimeGmt] = useState('');
-  const navigate = useNavigate();
+  const { setSelectedSymbol, openAuthModal } = useAppStore();
+  const [searchInput, setSearchInput] = useState('');
 
-  useEffect(() => {
-    const updateClocks = () => {
-      const now = new Date();
-      setTimeIst(
-        now.toLocaleTimeString('en-US', {
-          timeZone: 'Asia/Kolkata',
-          hour12: false,
-          hour: '2-digit',
-          minute: '2-digit',
-        }) + ' IST'
-      );
-      setTimeEst(
-        now.toLocaleTimeString('en-US', {
-          timeZone: 'America/New_York',
-          hour12: false,
-          hour: '2-digit',
-          minute: '2-digit',
-        }) + ' EST'
-      );
-      setTimeGmt(
-        now.toLocaleTimeString('en-US', {
-          timeZone: 'Europe/London',
-          hour12: false,
-          hour: '2-digit',
-          minute: '2-digit',
-        }) + ' LON'
-      );
-    };
-
-    updateClocks();
-    const interval = setInterval(updateClocks, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleCommandSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const cmd = commandInput.trim().toUpperCase();
-    if (!cmd) return;
+    const query = searchInput.trim().toUpperCase();
+    if (!query) return;
 
-    if (cmd === 'MKT' || cmd === 'MARKET' || cmd === 'QUOTE') {
-      navigate('/market');
-    } else if (cmd === 'AI' || cmd === 'CHAT' || cmd === 'ASK') {
-      navigate('/chat');
-    } else if (cmd === 'DOCS' || cmd === 'FILINGS' || cmd === 'RAG') {
-      navigate('/documents');
-    } else if (cmd === 'PORT' || cmd === 'PORTFOLIO' || cmd === 'RISK') {
-      navigate('/portfolio');
-    } else if (cmd === 'CFG' || cmd === 'SETTINGS') {
-      navigate('/settings');
-    } else {
-      const ticker = cmd.includes('.') ? cmd : `${cmd}.NS`;
-      setSelectedSymbol(ticker);
-      navigate('/market');
-    }
-    setCommandInput('');
+    const ticker = query.includes('.') ? query : `${query}`;
+    setSelectedSymbol(ticker);
+    setSearchInput('');
   };
 
   const username =
     (user?.user_metadata?.full_name as string) ||
     (user?.user_metadata?.username as string) ||
-    (user?.email ? user.email.split('@')[0] : 'Guest');
+    (user?.email ? user.email.split('@')[0] : 'Manav Arora');
 
   return (
-    <header className="terminal-header-main">
-      {/* Brand & Market Status */}
-      <div className="header-brand-group">
-        <div className="header-logo" onClick={() => navigate('/market')}>
-          <span className="logo-tag">[FB]</span>
-          <span className="logo-title">FinanceBtw</span>
+    <header className="finsight-header">
+      {/* Brand Logo */}
+      <div className="header-brand">
+        <div className="brand-logo-icon">
+          <span className="logo-symbol">[FB]</span>
         </div>
-        <div className="active-ticker-tag">
-          <span className="dot-live"></span>
-          <span className="ticker-code">{selectedSymbol}</span>
-        </div>
+        <span className="brand-title-text">FinanceBtw <span className="brand-ai-text">AI</span></span>
       </div>
 
-      {/* Command Search Bar */}
-      <form className="header-command-form" onSubmit={handleCommandSubmit}>
-        <span className="cmd-prompt">FB&gt;</span>
+      {/* Global Search Bar */}
+      <form className="header-search-bar" onSubmit={handleSearchSubmit}>
+        <span className="search-icon-symbol">[?]</span>
         <input
           type="text"
-          className="cmd-input"
-          placeholder="Enter stock ticker (e.g. RELIANCE, TCS, INFY) or function (AI, PORT, DOCS) <GO>"
-          value={commandInput}
-          onChange={(e) => setCommandInput(e.target.value)}
+          className="search-input-field"
+          placeholder="Search for stocks, ETFs, companies, news, filings, metrics..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
         />
-        <button type="submit" className="btn-cmd-go">
-          &lt;GO&gt;
-        </button>
+        <span className="search-kbd-shortcut">Ctrl+K</span>
       </form>
 
-      {/* Market Switcher */}
-      <div className="header-market-pills">
-        <button
-          className={`market-pill ${selectedMarket === 'india' ? 'active' : ''}`}
-          onClick={() => setSelectedMarket('india')}
-          title="Indian Markets (NSE / BSE)"
-        >
-          [INDIA / NSE]
-        </button>
-        <button
-          className={`market-pill ${selectedMarket === 'usa' ? 'active' : ''}`}
-          onClick={() => setSelectedMarket('usa')}
-          title="US Markets (NYSE / NASDAQ)"
-        >
-          [USA / SEC]
-        </button>
-        <button
-          className={`market-pill ${selectedMarket === 'crypto' ? 'active' : ''}`}
-          onClick={() => setSelectedMarket('crypto')}
-          title="Crypto Universe"
-        >
-          [CRYPTO]
-        </button>
-      </div>
+      {/* Header Right Actions */}
+      <div className="header-right-actions">
+        {/* Notification Bell */}
+        <div className="notification-bell-btn" title="12 New Market Alerts">
+          <span className="bell-icon">[!]</span>
+          <span className="notif-badge-count">12</span>
+        </div>
 
-      {/* Global Clocks */}
-      <div className="header-clocks">
-        <span className="clock-val highlight">{timeIst}</span>
-        <span className="clock-val">{timeEst}</span>
-        <span className="clock-val">{timeGmt}</span>
-      </div>
-
-      {/* User Session Profile */}
-      <div className="header-user-group">
+        {/* User Profile */}
         {user ? (
-          <div className="user-pill">
-            <span className="user-icon">[@]</span>
-            <span className="user-name">{username}</span>
-            <button className="btn-exit" onClick={() => signOut()} title="Sign Out">
-              [EXIT]
-            </button>
+          <div className="user-profile-badge" onClick={() => signOut()} title="Click to Sign Out">
+            <div className="avatar-circle">
+              <span>{username.slice(0, 2).toUpperCase()}</span>
+            </div>
+            <div className="user-text-column">
+              <span className="user-name-title">{username}</span>
+              <span className="user-role-subtitle">Professional</span>
+            </div>
           </div>
         ) : (
-          <button className="btn-login-terminal" onClick={openAuthModal}>
+          <button className="btn-signin-header" onClick={openAuthModal}>
             [+] Sign In
           </button>
         )}

@@ -68,7 +68,6 @@ def test_settings_jwt_secret_too_short_raises() -> None:
 
 def test_settings_database_url_required() -> None:
     """Without DATABASE_URL in env or file, Settings() should raise validation error."""
-
     original = os.environ.pop("DATABASE_URL", None)
     try:
         with pytest.raises(ValidationError):
@@ -76,3 +75,25 @@ def test_settings_database_url_required() -> None:
     finally:
         if original is not None:
             os.environ["DATABASE_URL"] = original
+
+
+def test_settings_llm_groq_configuration() -> None:
+    s = Settings(
+        database_url="postgresql+asyncpg://u:p@localhost/db",
+        jwt_secret_key="a" * 32,
+        llm_provider="groq",
+        groq_api_key="gsk_test_12345",
+        llm_model="llama-3.3-70b-versatile",
+    )
+    assert s.llm_provider == "groq"
+    assert s.groq_api_key == "gsk_test_12345"
+    assert s.llm_model == "llama-3.3-70b-versatile"
+
+
+def test_settings_invalid_llm_provider_raises() -> None:
+    with pytest.raises(ValidationError):
+        Settings(
+            database_url="postgresql+asyncpg://u:p@localhost/db",
+            jwt_secret_key="a" * 32,
+            llm_provider="unsupported_provider",  # type: ignore[arg-type]
+        )

@@ -62,12 +62,24 @@ class Settings(BaseSettings):
     jwt_access_token_expire_minutes: int = 30
     jwt_refresh_token_expire_days: int = 7
 
-    # Supabase Auth Integration
+    # Supabase Auth Integration (Modern Publishable & Secret Keys + Legacy Aliases)
     supabase_url: str = ""
-    supabase_anon_key: str = ""
-    supabase_service_role_key: str = ""
+    supabase_publishable_key: str = ""
+    supabase_secret_key: str = ""
+    supabase_anon_key: str = ""  # Legacy alias
+    supabase_service_role_key: str = ""  # Legacy alias
     supabase_jwt_secret: str = ""
     supabase_jwt_algorithm: str = "HS256"
+
+    @property
+    def effective_supabase_publishable_key(self) -> str:
+        """Returns modern publishable key or legacy anon key."""
+        return self.supabase_publishable_key or self.supabase_anon_key
+
+    @property
+    def effective_supabase_secret_key(self) -> str:
+        """Returns modern secret key or legacy service role key."""
+        return self.supabase_secret_key or self.supabase_service_role_key
 
     # ── CORS ─────────────────────────────────────────────────────────────────
     # Stored as comma-separated string in .env to avoid JSON parsing issues.

@@ -249,7 +249,7 @@ const AppContent: React.FC = () => {
                       <strong>Supabase API Keys Needed</strong>
                     </div>
                     <p>
-                      Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to <code>.env</code> to activate real Supabase login.
+                      Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_PUBLISHABLE_KEY</code> to <code>.env</code> to activate real Supabase login.
                     </p>
                   </div>
                 )}

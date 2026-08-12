@@ -70,7 +70,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {!isConfigured && (
           <div className="alert alert-warning" style={{ margin: '1rem 0' }}>
             <small>
-              [!] Supabase keys not detected in <code>.env</code>. Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to enable live authentication.
+              [!] Supabase keys not detected in <code>.env</code>. Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_PUBLISHABLE_KEY</code> to enable live authentication.
             </small>
           </div>
         )}

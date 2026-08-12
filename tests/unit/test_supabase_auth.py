@@ -178,15 +178,20 @@ async def test_get_admin_user_dependency() -> None:
 
 
 @pytest.mark.asyncio
-async def test_auth_api_config_endpoint() -> None:
-    """Test GET /api/v1/auth/config returns public configuration."""
+async def test_auth_api_config_endpoint(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Test GET /api/v1/auth/config returns modern public configuration."""
+    monkeypatch.setattr(settings, "supabase_publishable_key", "pk_test_123")
+    monkeypatch.setattr(settings, "supabase_url", "https://xyz.supabase.co")
+
     app = create_app()
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         res = await client.get("/api/v1/auth/config")
         assert res.status_code == 200
         data = res.json()
         assert data["auth_provider"] == "supabase"
-        assert "supabase_url" in data
+        assert data["supabase_url"] == "https://xyz.supabase.co"
+        assert data["supabase_publishable_key"] == "pk_test_123"
+        assert data["supabase_anon_key"] == "pk_test_123"
 
 
 @pytest.mark.asyncio

@@ -1,6 +1,14 @@
-# FinanceBtw 💹
+```
+  _____ _                              ____  _          
+ |  ___(_)_ __   __ _ _ __   ___ ___  | __ )| |_ __      __
+ | |_  | | '_ \ / _` | '_ \ / __/ _ \ |  _ \| __\ \ /\ / /
+ |  _| | | | | | (_| | | | | (_|  __/ | |_) | |_ \ V  V / 
+ |_|   |_|_| |_|\__,_|_| |_|\___\___| |____/ \__| \_/\_/  
+```
 
-**AI-powered financial research assistant** — built on RAG, AI agents, hybrid search, and live market data.
+# FinanceBtw
+
+**AI-powered financial research assistant** -- built on RAG, AI agents, hybrid search, and live market data.
 
 > **Current phase:** `feature/project-setup` (Phase 1 of 20)
 
@@ -10,21 +18,21 @@
 
 ```
 User Query
-    │
-    ▼
+    |
+    v
 React Frontend (Vite + TypeScript)
-    │  HTTP / WebSocket
-    ▼
+    |  HTTP / WebSocket
+    v
 FastAPI Backend
-    ├── AI Agent (Phase 10)
-    │   ├── RAG Pipeline (Phases 5–8)
-    │   └── LLM Interface (Phase 9)
-    │
-    └── Market Provider Interface  ←── Core abstraction
-            ├── YahooFinanceProvider  (prices, history, ratios)
-            ├── NSEProvider           (nsepython — indices, corporate actions)
-            ├── BSEProvider           (bsedata — BSE metadata)
-            └── TheNewsAPIProvider   (financial news)
+    +-- AI Agent (Phase 10)
+    |   +-- RAG Pipeline (Phases 5-8)
+    |   +-- LLM Interface (Phase 9)
+    |
+    +-- Market Provider Interface  <-- Core abstraction
+            +-- YahooFinanceProvider  (prices, history, ratios)
+            +-- NSEProvider           (nsepython - indices, corporate actions)
+            +-- BSEProvider           (bsedata - BSE metadata)
+            +-- TheNewsAPIProvider   (financial news)
 ```
 
 The backend is **market-agnostic**. Switching or adding data providers is a single config change with zero core logic changes.
@@ -56,7 +64,7 @@ cd financebtw
 
 # 2. Configure
 cp .env.example .env
-# Edit .env — add your API keys (Groq + TheNewsAPI at minimum)
+# Edit .env -- add your API keys (Groq + TheNewsAPI at minimum)
 
 # 3. Run everything
 docker compose -f docker/docker-compose.yml up --build
@@ -114,10 +122,10 @@ See [`.env.example`](.env.example) for the full list. The minimum required to st
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `DATABASE_URL` | ✅ | PostgreSQL async DSN |
-| `JWT_SECRET_KEY` | ✅ | Min 32-char random secret |
-| `GROQ_API_KEY` | Recommended | Free at [console.groq.com](https://console.groq.com) |
-| `THE_NEWS_API_KEY` | Recommended | Free at [thenewsapi.com](https://www.thenewsapi.com) |
+| `DATABASE_URL` | [YES] | PostgreSQL async DSN |
+| `JWT_SECRET_KEY` | [YES] | Min 32-char random secret |
+| `GROQ_API_KEY` | [OPTIONAL] | Free at console.groq.com |
+| `THE_NEWS_API_KEY` | [OPTIONAL] | Free at thenewsapi.com |
 
 ---
 
@@ -125,18 +133,18 @@ See [`.env.example`](.env.example) for the full list. The minimum required to st
 
 | Phase | Branch | Status |
 |-------|--------|--------|
-| 1 — Repository Foundation | `feature/project-setup` | 🔄 In Progress |
-| 2 — Authentication | `feature/authentication` | ⏳ |
-| 3 — Frontend Layout | `feature/frontend-layout` | ⏳ |
-| 4 — Document Pipeline | `feature/document-ingestion` | ⏳ |
-| 5 — Chunking | `feature/chunking` | ⏳ |
-| 6 — Embeddings (BGE-M3) | `feature/embeddings` | ⏳ |
-| 7 — Retriever (BM25 + Vector) | `feature/retriever` | ⏳ |
-| 8 — Reranker (Cross-Encoder) | `feature/reranker` | ⏳ |
-| 9 — LLM Interface | `feature/llm-interface` | ⏳ |
-| 10 — AI Agent | `feature/agent` | ⏳ |
-| 11 — Market APIs | `feature/market-api` | ⏳ |
-| 12–20 — ... | ... | ⏳ |
+| 1 -- Repository Foundation | `feature/project-setup` | [DONE] |
+| 2 -- Authentication | `feature/authentication` | [NEXT] |
+| 3 -- Frontend Layout | `feature/frontend-layout` | [PENDING] |
+| 4 -- Document Pipeline | `feature/document-ingestion` | [PENDING] |
+| 5 -- Chunking | `feature/chunking` | [PENDING] |
+| 6 -- Embeddings (BGE-M3) | `feature/embeddings` | [PENDING] |
+| 7 -- Retriever (BM25 + Vector) | `feature/retriever` | [PENDING] |
+| 8 -- Reranker (Cross-Encoder) | `feature/reranker` | [PENDING] |
+| 9 -- LLM Interface | `feature/llm-interface` | [PENDING] |
+| 10 -- AI Agent | `feature/agent` | [PENDING] |
+| 11 -- Market APIs | `feature/market-api` | [PENDING] |
+| 12-20 -- ... | ... | [PENDING] |
 
 ---
 
@@ -145,7 +153,7 @@ See [`.env.example`](.env.example) for the full list. The minimum required to st
 1. Branch from `develop`: `git checkout -b feature/your-feature`
 2. Write tests first
 3. `pre-commit run --all-files` before committing
-4. Open a PR against `develop` — CI must be green
+4. Open a PR against `develop` -- CI must be green
 
 ---
 

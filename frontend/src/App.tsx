@@ -51,19 +51,19 @@ export const App: React.FC = () => {
       {/* Top Navbar */}
       <header className="navbar">
         <div className="brand">
-          <div className="logo-icon">💹</div>
+          <div className="logo-text">[FB]</div>
           <div>
             <h1 className="brand-title">FinanceBtw</h1>
-            <span className="brand-subtitle">AI Research Assistant for Indian & Global Markets</span>
+            <span className="brand-subtitle">AI Research Assistant for Indian and Global Markets</span>
           </div>
         </div>
         <div className="nav-actions">
-          <span className="badge badge-branch">🌿 feature/project-setup</span>
+          <span className="badge badge-branch">branch: feature/project-setup</span>
           <span className={`badge ${health?.status === 'ok' ? 'badge-online' : 'badge-offline'}`}>
-            ● {health?.status === 'ok' ? 'System Operational' : 'Backend Offline'}
+            [{health?.status === 'ok' ? 'ONLINE' : 'OFFLINE'}] {health?.status === 'ok' ? 'System Operational' : 'Backend Offline'}
           </span>
           <button className="btn btn-secondary" onClick={fetchHealth} disabled={loading}>
-            {loading ? 'Refreshing...' : '↻ Refresh Status'}
+            {loading ? 'Refreshing...' : 'Refresh Status'}
           </button>
         </div>
       </header>
@@ -74,19 +74,19 @@ export const App: React.FC = () => {
           className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
           onClick={() => setActiveTab('overview')}
         >
-          📊 Architecture & Overview
+          [Architecture & Overview]
         </button>
         <button
           className={`tab-btn ${activeTab === 'providers' ? 'active' : ''}`}
           onClick={() => setActiveTab('providers')}
         >
-          🔌 Market Providers ({health ? Object.keys(health.providers).length : '4'})
+          [Market Providers ({health ? Object.keys(health.providers).length : '4'})]
         </button>
         <button
           className={`tab-btn ${activeTab === 'roadmap' ? 'active' : ''}`}
           onClick={() => setActiveTab('roadmap')}
         >
-          🗺️ 20-Phase Roadmap
+          [20-Phase Roadmap]
         </button>
       </nav>
 
@@ -95,7 +95,7 @@ export const App: React.FC = () => {
         {error && (
           <div className="alert alert-warning">
             <div className="alert-header">
-              <span className="alert-icon">⚠️</span>
+              <span className="alert-badge">[!]</span>
               <strong>Backend Connection Notice</strong>
             </div>
             <p>{error}</p>
@@ -111,8 +111,8 @@ export const App: React.FC = () => {
               {/* System Specs Card */}
               <div className="card glass">
                 <div className="card-header">
-                  <h3 className="card-title">⚡ Foundation Status (Phase 1)</h3>
-                  <span className="badge badge-success">Passed All Checks</span>
+                  <h3 className="card-title">Foundation Status (Phase 1)</h3>
+                  <span className="badge badge-success">[PASSED]</span>
                 </div>
                 <div className="stat-grid">
                   <div className="stat-item">
@@ -135,21 +135,21 @@ export const App: React.FC = () => {
 
                 <div className="feature-list">
                   <div className="feature-item">
-                    <span className="icon-check">✓</span>
+                    <span className="icon-check">[+]</span>
                     <div>
                       <strong>Market-Agnostic Abstraction Layer</strong>
                       <p>Abstract <code>MarketProvider</code> contract allows seamless switching between Yahoo Finance, NSE, BSE, & News without touching core agent logic.</p>
                     </div>
                   </div>
                   <div className="feature-item">
-                    <span className="icon-check">✓</span>
+                    <span className="icon-check">[+]</span>
                     <div>
                       <strong>Asynchronous FastAPI Backend</strong>
                       <p>High-throughput async event loop with thread pooling for external scrapers.</p>
                     </div>
                   </div>
                   <div className="feature-item">
-                    <span className="icon-check">✓</span>
+                    <span className="icon-check">[+]</span>
                     <div>
                       <strong>Zero Demat Account Requirement</strong>
                       <p>100% free MVP data stack (yfinance + nsepython + bsedata + TheNewsAPI).</p>
@@ -161,29 +161,31 @@ export const App: React.FC = () => {
               {/* Architecture Blueprint Card */}
               <div className="card glass">
                 <div className="card-header">
-                  <h3 className="card-title">🏛️ Decoupled Architecture</h3>
+                  <h3 className="card-title">Decoupled Architecture</h3>
                 </div>
                 <div className="arch-box">
                   <div className="arch-node arch-frontend">
-                    🖥️ React Frontend (Vite + TS)
+                    [UI] React Frontend (Vite + TS)
                   </div>
-                  <div className="arch-arrow">↓ REST / WebSocket</div>
+                  <div className="arch-arrow">| REST / WebSocket</div>
+                  <div className="arch-arrow">v</div>
                   <div className="arch-node arch-backend">
-                    ⚙️ FastAPI Backend (Core Engine)
+                    [API] FastAPI Backend (Core Engine)
                   </div>
                   <div className="arch-split">
                     <div className="arch-sub arch-rag">
-                      🧠 AI Agent & Hybrid RAG (Qdrant + BM25)
+                      [RAG] AI Agent & Hybrid RAG (Qdrant + BM25)
                     </div>
                     <div className="arch-sub arch-market">
-                      📈 Market Provider Registry
+                      [DATA] Market Provider Registry
                     </div>
                   </div>
-                  <div className="arch-arrow">↓ Provider Protocol</div>
+                  <div className="arch-arrow">| Provider Protocol</div>
+                  <div className="arch-arrow">v</div>
                   <div className="arch-providers-row">
-                    <span className="provider-tag">yfinance (.NS/.BO)</span>
-                    <span className="provider-tag">nsepython (REST/F&O)</span>
-                    <span className="provider-tag">TheNewsAPI (India News)</span>
+                    <span className="provider-tag">yfinance (.NS/.BO/US)</span>
+                    <span className="provider-tag">nsepython (REST/Indices)</span>
+                    <span className="provider-tag">TheNewsAPI (Financial News)</span>
                     <span className="provider-tag">bsedata</span>
                   </div>
                 </div>
@@ -199,10 +201,10 @@ export const App: React.FC = () => {
               <div className="card glass">
                 <div className="card-header">
                   <div>
-                    <h3 className="card-title">📈 Yahoo Finance Provider</h3>
+                    <h3 className="card-title">Yahoo Finance Provider</h3>
                     <span className="text-muted">Primary Market Quotes & History</span>
                   </div>
-                  <span className="badge badge-success">Zero-Key / Free</span>
+                  <span className="badge badge-success">[FREE]</span>
                 </div>
                 <p className="card-desc">
                   Supplies real-time/delayed prices, 52-week ranges, market cap, financial ratios (P/E, P/B, ROE, EPS), and OHLCV candlestick historical data.
@@ -219,10 +221,10 @@ export const App: React.FC = () => {
               <div className="card glass">
                 <div className="card-header">
                   <div>
-                    <h3 className="card-title">🇮🇳 NSE India Provider</h3>
+                    <h3 className="card-title">NSE India Provider</h3>
                     <span className="text-muted">Official NSE REST API Scraper</span>
                   </div>
-                  <span className="badge badge-success">Zero-Key / Free</span>
+                  <span className="badge badge-success">[FREE]</span>
                 </div>
                 <p className="card-desc">
                   Provides direct NSE quotes, Nifty 50 / Bank Nifty index levels, corporate events calendars, dividends, and institutional FII/DII activity.
@@ -238,10 +240,10 @@ export const App: React.FC = () => {
               <div className="card glass">
                 <div className="card-header">
                   <div>
-                    <h3 className="card-title">📰 TheNewsAPI Provider</h3>
+                    <h3 className="card-title">TheNewsAPI Provider</h3>
                     <span className="text-muted">Curated Financial & Business News</span>
                   </div>
-                  <span className="badge badge-info">Configured</span>
+                  <span className="badge badge-info">[ACTIVE]</span>
                 </div>
                 <p className="card-desc">
                   Fetches live Indian market headlines, business developments, and stock-specific news articles with provenance citations.
@@ -257,10 +259,10 @@ export const App: React.FC = () => {
               <div className="card glass">
                 <div className="card-header">
                   <div>
-                    <h3 className="card-title">🏛️ BSE India Provider</h3>
+                    <h3 className="card-title">BSE India Provider</h3>
                     <span className="text-muted">Bombay Stock Exchange Metadata</span>
                   </div>
-                  <span className="badge badge-secondary">Phase 11 Stub</span>
+                  <span className="badge badge-secondary">[PHASE 11 STUB]</span>
                 </div>
                 <p className="card-desc">
                   Extracts BSE scrip codes, company information, and quotes for companies exclusively listed on the Bombay Stock Exchange.
@@ -278,7 +280,7 @@ export const App: React.FC = () => {
           <section className="tab-pane">
             <div className="card glass">
               <div className="card-header">
-                <h3 className="card-title">🗺️ Development Roadmap Progression</h3>
+                <h3 className="card-title">Development Roadmap Progression</h3>
                 <span className="badge badge-primary">Phase 1 of 20 Complete</span>
               </div>
               <div className="roadmap-grid">
@@ -309,9 +311,9 @@ export const App: React.FC = () => {
                     <h4 className="roadmap-title">{item.name}</h4>
                     <code className="roadmap-branch">{item.branch}</code>
                     <div className="roadmap-status-text">
-                      {item.status === 'done' && '✅ Completed & Verified'}
-                      {item.status === 'next' && '🚀 Ready for Implementation'}
-                      {item.status === 'pending' && '⏳ Scheduled'}
+                      {item.status === 'done' && '[DONE] Completed & Verified'}
+                      {item.status === 'next' && '[NEXT] Ready for Implementation'}
+                      {item.status === 'pending' && '[PENDING] Scheduled'}
                     </div>
                   </div>
                 ))}
@@ -323,8 +325,8 @@ export const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="footer">
-        <span>FinanceBtw v0.1.0 — Production-grade AI financial research assistant</span>
-        <span>Built with FastAPI • React • TypeScript • Qdrant • Redis</span>
+        <span>FinanceBtw v0.1.0 -- Production-grade AI financial research assistant</span>
+        <span>FastAPI | React | TypeScript | Qdrant | Redis</span>
       </footer>
     </div>
   );

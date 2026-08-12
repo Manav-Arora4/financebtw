@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import apiClient from './api/client';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthModal } from './components/AuthModal';
 import './App.css';
 
 interface ProviderHealth {
@@ -19,11 +21,14 @@ interface HealthResponse {
   providers: Record<string, ProviderHealth>;
 }
 
-export const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const { user, signOut, isConfigured } = useAuth();
   const [health, setHealth] = useState<HealthResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'overview' | 'providers' | 'roadmap'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'providers' | 'auth' | 'roadmap'>('overview');
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<string | null>(null);
 
   const fetchHealth = async () => {
     setLoading(true);
@@ -39,6 +44,17 @@ export const App: React.FC = () => {
       );
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleManualSync = async () => {
+    if (!user) return;
+    setSyncStatus('Syncing...');
+    try {
+      const res = await apiClient.post('/api/v1/auth/sync', {});
+      setSyncStatus(`Synced successfully! User ID: ${res.data.user_id}`);
+    } catch (err: unknown) {
+      setSyncStatus(`Sync failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
   };
 
@@ -58,10 +74,24 @@ export const App: React.FC = () => {
           </div>
         </div>
         <div className="nav-actions">
-          <span className="badge badge-branch">branch: feature/project-setup</span>
+          <span className="badge badge-branch">branch: feature/authentication</span>
           <span className={`badge ${health?.status === 'ok' ? 'badge-online' : 'badge-offline'}`}>
             [{health?.status === 'ok' ? 'ONLINE' : 'OFFLINE'}] {health?.status === 'ok' ? 'System Operational' : 'Backend Offline'}
           </span>
+
+          {user ? (
+            <div className="user-badge">
+              <span>[USER] {user.email}</span>
+              <button className="btn btn-secondary" style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem' }} onClick={() => signOut()}>
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <button className="btn btn-primary" onClick={() => setIsAuthModalOpen(true)}>
+              [+] Sign In / Sign Up
+            </button>
+          )}
+
           <button className="btn btn-secondary" onClick={fetchHealth} disabled={loading}>
             {loading ? 'Refreshing...' : 'Refresh Status'}
           </button>
@@ -81,6 +111,12 @@ export const App: React.FC = () => {
           onClick={() => setActiveTab('providers')}
         >
           [Market Providers ({health ? Object.keys(health.providers).length : '4'})]
+        </button>
+        <button
+          className={`tab-btn ${activeTab === 'auth' ? 'active' : ''}`}
+          onClick={() => setActiveTab('auth')}
+        >
+          [Supabase Auth {user ? '(Active)' : '(Guest)'}]
         </button>
         <button
           className={`tab-btn ${activeTab === 'roadmap' ? 'active' : ''}`}
@@ -111,8 +147,8 @@ export const App: React.FC = () => {
               {/* System Specs Card */}
               <div className="card glass">
                 <div className="card-header">
-                  <h3 className="card-title">Foundation Status (Phase 1)</h3>
-                  <span className="badge badge-success">[PASSED]</span>
+                  <h3 className="card-title">Foundation & Authentication Status</h3>
+                  <span className="badge badge-success">[PHASE 1 & 2 ACTIVE]</span>
                 </div>
                 <div className="stat-grid">
                   <div className="stat-item">
@@ -120,7 +156,7 @@ export const App: React.FC = () => {
                     <span className="stat-val">{health?.app_name || 'FinanceBtw'}</span>
                   </div>
                   <div className="stat-item">
-                    <span className="stat-label">API Version</span>
+                    <span className="stat-label">Version</span>
                     <span className="stat-val">{health?.version || '0.1.0'}</span>
                   </div>
                   <div className="stat-item">
@@ -128,31 +164,36 @@ export const App: React.FC = () => {
                     <span className="stat-val">{health?.environment || 'development'}</span>
                   </div>
                   <div className="stat-item">
-                    <span className="stat-label">Python Version</span>
-                    <span className="stat-val">{health?.python_version || '3.12+'}</span>
+                    <span className="stat-label">Auth Engine</span>
+                    <span className="stat-val">Supabase JWT</span>
                   </div>
                 </div>
-
                 <div className="feature-list">
                   <div className="feature-item">
                     <span className="icon-check">[+]</span>
                     <div>
-                      <strong>Market-Agnostic Abstraction Layer</strong>
-                      <p>Abstract <code>MarketProvider</code> contract allows seamless switching between Yahoo Finance, NSE, BSE, & News without touching core agent logic.</p>
+                      <strong>Decoupled Provider Architecture</strong>
+                      <p className="card-desc" style={{ margin: 0 }}>
+                        Abstract <code>MarketProvider</code> base class isolating backend logic from live data vendors.
+                      </p>
                     </div>
                   </div>
                   <div className="feature-item">
                     <span className="icon-check">[+]</span>
                     <div>
-                      <strong>Asynchronous FastAPI Backend</strong>
-                      <p>High-throughput async event loop with thread pooling for external scrapers.</p>
+                      <strong>Supabase Authentication Service</strong>
+                      <p className="card-desc" style={{ margin: 0 }}>
+                        JWT Bearer token verification, user session management, and local DB synchronization.
+                      </p>
                     </div>
                   </div>
                   <div className="feature-item">
                     <span className="icon-check">[+]</span>
                     <div>
-                      <strong>Zero Demat Account Requirement</strong>
-                      <p>100% free MVP data stack (yfinance + nsepython + bsedata + TheNewsAPI).</p>
+                      <strong>Local Vector &amp; Graph RAG</strong>
+                      <p className="card-desc" style={{ margin: 0 }}>
+                        LangGraph multi-step agent + LlamaIndex Qdrant hybrid retrieval + BGE-M3 local embeddings.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -161,32 +202,138 @@ export const App: React.FC = () => {
               {/* Architecture Blueprint Card */}
               <div className="card glass">
                 <div className="card-header">
-                  <h3 className="card-title">Decoupled Architecture</h3>
+                  <h3 className="card-title">System Topology & Data Pipeline</h3>
+                  <span className="badge badge-info">Zero-Broker Architecture</span>
                 </div>
-                <div className="arch-box">
-                  <div className="arch-node arch-frontend">
-                    [UI] React Frontend (Vite + TS)
+                <div className="arch-flow">
+                  <div className="arch-node">
+                    <div className="arch-node-title">[UI] React 19 Frontend</div>
+                    <div className="arch-node-desc">TypeScript - Vite - Zustand - Supabase Client</div>
                   </div>
-                  <div className="arch-arrow">| REST / WebSocket</div>
-                  <div className="arch-arrow">v</div>
-                  <div className="arch-node arch-backend">
-                    [API] FastAPI Backend (Core Engine)
+                  <div className="arch-arrow">|</div>
+                  <div className="arch-node">
+                    <div className="arch-node-title">[API] FastAPI Application</div>
+                    <div className="arch-node-desc">Async REST - JWT Verification - Dependency Injection</div>
                   </div>
-                  <div className="arch-split">
-                    <div className="arch-sub arch-rag">
-                      [RAG] AI Agent & Hybrid RAG (Qdrant + BM25)
+                  <div className="arch-arrow">|</div>
+                  <div className="arch-node">
+                    <div className="arch-node-title">[RAG] LangGraph + LlamaIndex</div>
+                    <div className="arch-node-desc">State Graphs - Qdrant - BGE-M3 - LiteLLM Gateway</div>
+                  </div>
+                  <div className="arch-arrow">|</div>
+                  <div className="arch-node">
+                    <div className="arch-node-title">[DATA] Market Provider Registry</div>
+                    <div className="arch-node-desc">Yahoo Finance - NSE Python - TheNewsAPI</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {activeTab === 'auth' && (
+          <section className="tab-pane">
+            <div className="grid-2">
+              <div className="card glass">
+                <div className="card-header">
+                  <h3 className="card-title">Supabase User Session</h3>
+                  <span className={`badge ${user ? 'badge-success' : 'badge-secondary'}`}>
+                    {user ? '[AUTHENTICATED]' : '[GUEST MODE]'}
+                  </span>
+                </div>
+
+                {!isConfigured && (
+                  <div className="alert alert-warning">
+                    <div className="alert-header">
+                      <span className="alert-badge">[!]</span>
+                      <strong>Supabase API Keys Needed</strong>
                     </div>
-                    <div className="arch-sub arch-market">
-                      [DATA] Market Provider Registry
+                    <p>
+                      Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to <code>.env</code> to activate real Supabase login.
+                    </p>
+                  </div>
+                )}
+
+                {user ? (
+                  <div>
+                    <div className="stat-grid">
+                      <div className="stat-item">
+                        <span className="stat-label">User Email</span>
+                        <span className="stat-val" style={{ fontSize: '0.9rem' }}>{user.email}</span>
+                      </div>
+                      <div className="stat-item">
+                        <span className="stat-label">User ID (UUID)</span>
+                        <span className="stat-val" style={{ fontSize: '0.75rem' }}>{user.id}</span>
+                      </div>
+                      <div className="stat-item">
+                        <span className="stat-label">Role</span>
+                        <span className="stat-val">{user.role || 'authenticated'}</span>
+                      </div>
+                      <div className="stat-item">
+                        <span className="stat-label">Last Sign In</span>
+                        <span className="stat-val" style={{ fontSize: '0.75rem' }}>{user.last_sign_in_at || 'Just now'}</span>
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                      <button className="btn btn-primary" onClick={handleManualSync}>
+                        [+] Sync to Local PostgreSQL DB
+                      </button>
+                      <button className="btn btn-secondary" onClick={() => signOut()}>
+                        Sign Out
+                      </button>
+                    </div>
+
+                    {syncStatus && (
+                      <div className="alert alert-success" style={{ marginTop: '1rem' }}>
+                        <small>{syncStatus}</small>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    <p className="card-desc">
+                      You are currently browsing as a guest. Authenticate to sync watchlists, financial research portfolios, and conversation histories.
+                    </p>
+                    <button className="btn btn-primary" onClick={() => setIsAuthModalOpen(true)}>
+                      [+] Open Authentication Modal
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <div className="card glass">
+                <div className="card-header">
+                  <h3 className="card-title">Protected API Endpoints (Phase 2)</h3>
+                  <span className="badge badge-info">FastAPI Dependencies</span>
+                </div>
+                <div className="feature-list">
+                  <div className="feature-item">
+                    <span className="icon-check">[+]</span>
+                    <div>
+                      <strong><code>GET /api/v1/auth/me</code></strong>
+                      <p className="card-desc" style={{ margin: 0 }}>
+                        Validates Bearer token signature &amp; claims, returning the authenticated user profile.
+                      </p>
                     </div>
                   </div>
-                  <div className="arch-arrow">| Provider Protocol</div>
-                  <div className="arch-arrow">v</div>
-                  <div className="arch-providers-row">
-                    <span className="provider-tag">yfinance (.NS/.BO/US)</span>
-                    <span className="provider-tag">nsepython (REST/Indices)</span>
-                    <span className="provider-tag">TheNewsAPI (Financial News)</span>
-                    <span className="provider-tag">bsedata</span>
+                  <div className="feature-item">
+                    <span className="icon-check">[+]</span>
+                    <div>
+                      <strong><code>POST /api/v1/auth/sync</code></strong>
+                      <p className="card-desc" style={{ margin: 0 }}>
+                        Upserts local PostgreSQL <code>User</code> record linked to Supabase UUID for fast database joins.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="feature-item">
+                    <span className="icon-check">[+]</span>
+                    <div>
+                      <strong><code>GET /api/v1/auth/config</code></strong>
+                      <p className="card-desc" style={{ margin: 0 }}>
+                        Provides public client configuration parameters to frontend clients.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -202,7 +349,7 @@ export const App: React.FC = () => {
                 <div className="card-header">
                   <div>
                     <h3 className="card-title">Yahoo Finance Provider</h3>
-                    <span className="text-muted">Primary Market Quotes & History</span>
+                    <span className="text-muted">Primary Market Quotes &amp; History</span>
                   </div>
                   <span className="badge badge-success">[FREE]</span>
                 </div>
@@ -241,7 +388,7 @@ export const App: React.FC = () => {
                 <div className="card-header">
                   <div>
                     <h3 className="card-title">TheNewsAPI Provider</h3>
-                    <span className="text-muted">Curated Financial & Business News</span>
+                    <span className="text-muted">Curated Financial &amp; Business News</span>
                   </div>
                   <span className="badge badge-info">[ACTIVE]</span>
                 </div>
@@ -281,29 +428,29 @@ export const App: React.FC = () => {
             <div className="card glass">
               <div className="card-header">
                 <h3 className="card-title">Development Roadmap Progression</h3>
-                <span className="badge badge-primary">Phase 1 of 20 Complete</span>
+                <span className="badge badge-primary">Phase 2 of 20 Active</span>
               </div>
               <div className="roadmap-grid">
                 {[
                   { phase: '1', name: 'Repository Foundation', branch: 'feature/project-setup', status: 'done' },
-                  { phase: '2', name: 'Authentication (JWT)', branch: 'feature/authentication', status: 'next' },
-                  { phase: '3', name: 'Frontend Framework & Layout', branch: 'feature/frontend-layout', status: 'pending' },
-                  { phase: '4', name: 'Document Ingestion Pipeline', branch: 'feature/document-ingestion', status: 'pending' },
-                  { phase: '5', name: 'Semantic Chunking & Overlap', branch: 'feature/chunking', status: 'pending' },
+                  { phase: '2', name: 'Supabase Authentication', branch: 'feature/authentication', status: 'done' },
+                  { phase: '3', name: 'Frontend Framework & Layout', branch: 'feature/frontend-layout', status: 'next' },
+                  { phase: '4', name: 'Document Ingestion Pipeline (LlamaIndex)', branch: 'feature/document-ingestion', status: 'pending' },
+                  { phase: '5', name: 'Semantic Chunking & Overlap (LlamaIndex)', branch: 'feature/chunking', status: 'pending' },
                   { phase: '6', name: 'BGE-M3 Embeddings & Qdrant', branch: 'feature/embeddings', status: 'pending' },
-                  { phase: '7', name: 'Hybrid Retriever (BM25 + Vector)', branch: 'feature/retriever', status: 'pending' },
-                  { phase: '8', name: 'Cross-Encoder Reranker', branch: 'feature/reranker', status: 'pending' },
-                  { phase: '9', name: 'Provider-Agnostic LLM Interface', branch: 'feature/llm-interface', status: 'pending' },
-                  { phase: '10', name: 'Autonomous Financial AI Agent', branch: 'feature/agent', status: 'pending' },
-                  { phase: '11', name: 'Market Data Provider Layer', branch: 'feature/market-api', status: 'pending' },
+                  { phase: '7', name: 'Hybrid Retriever (BM25 + Dense + RRF)', branch: 'feature/retriever', status: 'pending' },
+                  { phase: '8', name: 'Local BGE-Reranker-Large', branch: 'feature/reranker', status: 'pending' },
+                  { phase: '9', name: 'Unified LiteLLM Gateway', branch: 'feature/llm-interface', status: 'pending' },
+                  { phase: '10', name: 'Autonomous Financial AI Agent (LangGraph)', branch: 'feature/agent', status: 'pending' },
+                  { phase: '11', name: 'Market Data Provider Layer & Fallbacks', branch: 'feature/market-api', status: 'pending' },
                   { phase: '12', name: 'Financial Knowledge Base Indexer', branch: 'feature/knowledge-base', status: 'pending' },
-                  { phase: '13', name: 'Conversation Memory & Context', branch: 'feature/memory', status: 'pending' },
+                  { phase: '13', name: 'Conversation Memory & Checkpoints', branch: 'feature/memory', status: 'pending' },
                   { phase: '14', name: 'Portfolio Analyzer & Risk Engine', branch: 'feature/portfolio', status: 'pending' },
                   { phase: '15', name: 'Natural Language Financial Screener', branch: 'feature/screener', status: 'pending' },
                   { phase: '16', name: 'Interactive Financial Charts', branch: 'feature/charts', status: 'pending' },
                   { phase: '17', name: 'Research Report Generator (PDF/MD)', branch: 'feature/reports', status: 'pending' },
                   { phase: '18', name: 'Financial Safety & Citation Guardrails', branch: 'feature/guardrails', status: 'pending' },
-                  { phase: '19', name: 'Docker Compose & Nginx Production', branch: 'feature/deployment', status: 'pending' },
+                  { phase: '19', name: 'Production Docker Compose & Nginx', branch: 'feature/deployment', status: 'pending' },
                   { phase: '20', name: 'Production Documentation & Final Merge', branch: 'feature/documentation', status: 'pending' },
                 ].map((item) => (
                   <div key={item.phase} className={`roadmap-card ${item.status}`}>
@@ -323,12 +470,22 @@ export const App: React.FC = () => {
         )}
       </main>
 
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+
       {/* Footer */}
       <footer className="footer">
         <span>FinanceBtw v0.1.0 -- Production-grade AI financial research assistant</span>
-        <span>FastAPI | React | TypeScript | Qdrant | Redis</span>
+        <span>FastAPI | Supabase Auth | React | TypeScript | Qdrant | Redis</span>
       </footer>
     </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 

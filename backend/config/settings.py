@@ -56,11 +56,18 @@ class Settings(BaseSettings):
     qdrant_api_key: str = ""
     qdrant_collection_name: str = "financebtw_documents"
 
-    # ── JWT Auth ─────────────────────────────────────────────────────────────
+    # ── JWT Auth & Supabase ──────────────────────────────────────────────────
     jwt_secret_key: str = Field(..., min_length=32, description="Min 32-char random secret")
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_minutes: int = 30
     jwt_refresh_token_expire_days: int = 7
+
+    # Supabase Auth Integration
+    supabase_url: str = ""
+    supabase_anon_key: str = ""
+    supabase_service_role_key: str = ""
+    supabase_jwt_secret: str = ""
+    supabase_jwt_algorithm: str = "HS256"
 
     # ── CORS ─────────────────────────────────────────────────────────────────
     # Stored as comma-separated string in .env to avoid JSON parsing issues.

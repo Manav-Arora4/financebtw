@@ -74,7 +74,7 @@ export const SettingsPage: React.FC = () => {
               <div>
                 <strong>Supabase Authentication</strong>
                 <p className="card-desc" style={{ margin: 0 }}>
-                  Engine: Supabase Auth GoTrue | User: <code>{user ? user.email : 'Guest Session'}</code>
+                  Engine: Supabase Auth GoTrue | User: <code>{user ? `${(user.user_metadata?.full_name as string) || (user.user_metadata?.username as string) || user.email?.split('@')[0]} (${user.email})` : 'Guest Session'}</code>
                 </p>
               </div>
             </div>

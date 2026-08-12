@@ -6,6 +6,11 @@ export const Header: React.FC = () => {
   const { user, signOut } = useAuth();
   const { selectedMarket, setSelectedMarket, searchQuery, setSearchQuery, openAuthModal } = useAppStore();
 
+  const username =
+    (user?.user_metadata?.full_name as string) ||
+    (user?.user_metadata?.username as string) ||
+    (user?.email ? user.email.split('@')[0] : 'User');
+
   return (
     <header className="app-header">
       {/* Search Input Bar */}
@@ -49,9 +54,9 @@ export const Header: React.FC = () => {
       <div className="header-actions">
         {user ? (
           <div className="user-profile-menu">
-            <span className="user-avatar-tag">[U]</span>
+            <span className="user-avatar-tag">[@]</span>
             <div className="user-info-text">
-              <span className="user-email">{user.email}</span>
+              <span className="user-email">{username}</span>
               <span className="user-role">[{user.role || 'authenticated'}]</span>
             </div>
             <button

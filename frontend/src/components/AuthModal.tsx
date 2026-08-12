@@ -7,11 +7,11 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
-  const { signIn, signUp, signInWithOAuth, signInWithOtp, isConfigured } = useAuth();
+  const { signIn, signUp, signInWithOtp, isConfigured } = useAuth();
   const [mode, setMode] = useState<'signin' | 'signup' | 'magic'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -30,9 +30,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         if (error) throw error;
         onClose();
       } else if (mode === 'signup') {
-        const { error } = await signUp(email, password, fullName);
+        const { error } = await signUp(email, password, username);
         if (error) throw error;
-        setMessage('Sign up successful! Please check your email for confirmation.');
+        setMessage('Sign up successful! Please check your email or sign in.');
       } else if (mode === 'magic') {
         const { error } = await signInWithOtp(email);
         if (error) throw error;
@@ -42,14 +42,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       setError(err instanceof Error ? err.message : 'Authentication failed');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleOAuth = async (provider: 'google' | 'github') => {
-    setError(null);
-    const { error } = await signInWithOAuth(provider);
-    if (error) {
-      setError(error.message);
     }
   };
 
@@ -78,40 +70,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {error && <div className="alert alert-error"><small>{error}</small></div>}
         {message && <div className="alert alert-success"><small>{message}</small></div>}
 
-        {/* OAuth Buttons */}
-        <div className="oauth-grid">
-          <button
-            type="button"
-            className="btn btn-oauth"
-            onClick={() => handleOAuth('google')}
-            disabled={loading}
-          >
-            [G] Continue with Google
-          </button>
-          <button
-            type="button"
-            className="btn btn-oauth"
-            onClick={() => handleOAuth('github')}
-            disabled={loading}
-          >
-            [GH] Continue with GitHub
-          </button>
-        </div>
-
-        <div className="divider">
-          <span>OR</span>
-        </div>
-
         <form onSubmit={handleSubmit} className="auth-form">
           {mode === 'signup' && (
             <div className="form-group">
-              <label className="form-label">Full Name</label>
+              <label className="form-label">Display Username</label>
               <input
                 type="text"
                 className="form-input"
-                placeholder="Enter your name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                placeholder="e.g. manav, totem, alpha_trader"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -135,17 +103,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <input
                 type="password"
                 className="form-input"
-                placeholder="••••••••"
+                placeholder="********"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                minLength={6}
               />
             </div>
           )}
 
           <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-            {loading ? 'Processing...' : mode === 'signin' ? 'Sign In' : mode === 'signup' ? 'Create Account' : 'Send Link'}
+            {loading ? '[*] Authenticating...' : (
+              mode === 'signin' ? 'Sign In' : mode === 'signup' ? 'Create Account' : 'Send Magic Link'
+            )}
           </button>
         </form>
 
@@ -153,27 +122,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           {mode === 'signin' && (
             <>
               <span>New to FinanceBtw? </span>
-              <button className="link-btn" onClick={() => setMode('signup')}>
+              <button className="link-btn" onClick={() => { setMode('signup'); setError(null); setMessage(null); }}>
                 Create an account
               </button>
-              <span style={{ margin: '0 0.5rem' }}>|</span>
-              <button className="link-btn" onClick={() => setMode('magic')}>
+              {' | '}
+              <button className="link-btn" onClick={() => { setMode('magic'); setError(null); setMessage(null); }}>
                 Magic link
               </button>
             </>
           )}
+
           {mode === 'signup' && (
             <>
               <span>Already have an account? </span>
-              <button className="link-btn" onClick={() => setMode('signin')}>
+              <button className="link-btn" onClick={() => { setMode('signin'); setError(null); setMessage(null); }}>
                 Sign In
               </button>
             </>
           )}
+
           {mode === 'magic' && (
             <>
-              <span>Remember your password? </span>
-              <button className="link-btn" onClick={() => setMode('signin')}>
+              <span>Prefer password? </span>
+              <button className="link-btn" onClick={() => { setMode('signin'); setError(null); setMessage(null); }}>
                 Sign In with password
               </button>
             </>

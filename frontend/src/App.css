@@ -1,28 +1,23 @@
+/* App.css — legacy component styles, kept for backward compatibility.
+   All new components use src/styles/tokens.css via src/index.css.
+   The :root token block below is kept to ensure old class names still resolve. */
+
 :root {
-  --bg-app: #080b11;
-  --bg-surface: #0e1420;
-  --bg-surface-alt: #121927;
-  --bg-surface-hover: #172134;
-  --border-subtle: #192236;
-  --border-hover: #263554;
-  --accent-orange: #f97316;
-  --accent-orange-hover: #ea580c;
-  --accent-orange-glow: rgba(249, 115, 22, 0.22);
-  --color-green: #22c55e;
-  --color-green-glow: rgba(34, 197, 94, 0.15);
-  --color-red: #ef4444;
-  --color-red-glow: rgba(239, 68, 68, 0.15);
-  --color-blue: #3b82f6;
-  --color-cyan: #06b6d4;
-  --color-amber: #f59e0b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-subdued: #64748b;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', Consolas, 'SF Mono', monospace;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
+  /* Legacy aliases → mapped to new token values */
+  --bg-surface: var(--bg-surface-1);
+  --bg-surface-alt: var(--bg-surface-2);
+  --bg-surface-hover: var(--bg-surface-3);
+  --border-hover: var(--border-strong);
+  --accent-orange: var(--accent);
+  --accent-orange-hover: var(--accent-hover);
+  --accent-orange-glow: var(--accent-glow);
+  --color-green: var(--color-positive);
+  --color-green-glow: var(--color-positive-dim);
+  --color-red: var(--color-negative);
+  --color-red-glow: var(--color-negative-dim);
+  --color-blue: var(--chart-blue);
+  --color-cyan: var(--chart-cyan);
+  --color-amber: var(--color-warning);
 }
 
 * {

@@ -1,0 +1,119 @@
+/* ============================================================
+   TABLE COMPONENT — Financial data optimized
+   ============================================================ */
+
+.fs-table-wrapper {
+  width: 100%;
+  overflow: auto;
+  position: relative;
+}
+
+.fs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.fs-table__head {
+  background: var(--bg-surface-2);
+}
+
+.fs-table--sticky-header .fs-table__head {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.fs-table__th {
+  padding: 0 var(--space-2-5);
+  height: var(--table-header-height);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-subdued);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.fs-table__th--sortable {
+  cursor: pointer;
+}
+
+.fs-table__th--sortable:hover {
+  color: var(--text-secondary);
+}
+
+.fs-table__th-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fs-table__th-label {
+  white-space: nowrap;
+}
+
+/* ── Body ───────────────────────────────────────────────── */
+.fs-table__td {
+  padding: 0 var(--space-2-5);
+  height: var(--table-row-height);
+  border-bottom: 1px solid var(--table-border);
+  color: var(--text-primary);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.fs-table__row--hoverable:hover .fs-table__td {
+  background: var(--table-row-hover);
+}
+
+.fs-table__row--clickable {
+  cursor: pointer;
+}
+
+/* ── Density variants ───────────────────────────────────── */
+.fs-table--compact .fs-table__td,
+.fs-table--compact .fs-table__th {
+  height: 28px;
+  padding: 0 var(--space-2);
+}
+
+.fs-table--relaxed .fs-table__td,
+.fs-table--relaxed .fs-table__th {
+  height: 44px;
+  padding: 0 var(--space-3);
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.fs-table__empty {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-subdued);
+  font-size: var(--text-sm);
+}
+
+/* ── Loading skeleton inside table ─────────────────────── */
+.fs-table .fs-skeleton--text {
+  display: block;
+  height: 10px;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface-3) 25%,
+    var(--bg-surface-4) 50%,
+    var(--bg-surface-3) 75%
+  );
+  background-size: 200% 100%;
+  animation: fs-shimmer 1.4s ease-in-out infinite;
+  width: 70%;
+}
+
+@keyframes fs-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

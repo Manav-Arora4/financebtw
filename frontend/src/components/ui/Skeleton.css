@@ -1,0 +1,100 @@
+/* ============================================================
+   SKELETON COMPONENT
+   ============================================================ */
+
+@keyframes fs-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.fs-skeleton {
+  display: block;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface-2) 25%,
+    var(--bg-surface-3) 50%,
+    var(--bg-surface-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: fs-shimmer 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── Variants ───────────────────────────────────────────── */
+.fs-skeleton--text {
+  height: 10px;
+  width: 100%;
+  border-radius: var(--radius-full);
+}
+
+.fs-skeleton--rect {
+  width: 100%;
+  height: 16px;
+}
+
+.fs-skeleton--circle {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+
+/* ── Text block ─────────────────────────────────────────── */
+.fs-skeleton-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* ── Row ────────────────────────────────────────────────── */
+.fs-skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2-5) 0;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+/* ── Chart skeleton ─────────────────────────────────────── */
+.fs-skeleton-chart {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-md);
+}
+
+.fs-skeleton-chart__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+}
+
+.fs-skeleton-chart__bar {
+  flex: 1;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface-3) 25%,
+    var(--bg-surface-4) 50%,
+    var(--bg-surface-3) 75%
+  );
+  background-size: 200% 100%;
+  animation: fs-shimmer 1.5s ease-in-out infinite;
+}
+
+/* ── Card skeleton ──────────────────────────────────────── */
+.fs-skeleton-card {
+  background: var(--bg-surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

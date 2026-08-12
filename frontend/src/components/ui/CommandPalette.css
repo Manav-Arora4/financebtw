@@ -1,0 +1,175 @@
+/* ============================================================
+   COMMAND PALETTE COMPONENT
+   ============================================================ */
+
+.fs-cmd-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-command);
+  background: var(--bg-overlay);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 14vh;
+  backdrop-filter: blur(6px);
+  animation: fs-fade-in var(--duration-normal) var(--ease-decelerate);
+}
+
+.fs-cmd {
+  width: 100%;
+  max-width: 560px;
+  background: var(--bg-surface-0);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl), 0 0 60px rgba(0,0,0,0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: fs-slide-up var(--duration-slow) var(--ease-decelerate);
+}
+
+/* ── Search input ───────────────────────────────────────── */
+.fs-cmd__search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.fs-cmd__search-icon {
+  color: var(--text-subdued);
+  flex-shrink: 0;
+}
+
+.fs-cmd__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-family: var(--font-sans);
+  outline: none;
+  box-shadow: none;
+  height: 100%;
+}
+
+.fs-cmd__input::placeholder {
+  color: var(--text-subdued);
+}
+
+/* ── Results ────────────────────────────────────────────── */
+.fs-cmd__results {
+  max-height: 360px;
+  overflow-y: auto;
+  padding: var(--space-1) 0;
+}
+
+.fs-cmd__empty {
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--text-subdued);
+  font-size: var(--text-sm);
+}
+
+.fs-cmd__group {
+  padding: var(--space-1) 0;
+}
+
+.fs-cmd__group-label {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-subdued);
+}
+
+.fs-cmd__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--duration-fast);
+  font-family: var(--font-sans);
+}
+
+.fs-cmd__item--highlighted {
+  background: var(--bg-surface-3);
+}
+
+.fs-cmd__item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.fs-cmd__item--highlighted .fs-cmd__item-icon {
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+.fs-cmd__item-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.fs-cmd__item-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.fs-cmd__item-desc {
+  font-size: var(--text-xs);
+  color: var(--text-subdued);
+}
+
+.fs-cmd__item-shortcut {
+  font-size: var(--text-2xs);
+  color: var(--text-subdued);
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xs);
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.fs-cmd__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--border-faint);
+  font-size: var(--text-xs);
+  color: var(--text-subdued);
+}
+
+.fs-cmd__footer kbd,
+.fs-cmd__esc {
+  font-size: var(--text-2xs);
+  font-family: var(--font-mono);
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xs);
+  padding: 1px 4px;
+  color: var(--text-subdued);
+}

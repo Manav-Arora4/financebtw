@@ -1,0 +1,205 @@
+/* ============================================================
+   FINSIGHT DESIGN TOKENS
+   Institutional finance workstation — dark mode only
+   ============================================================ */
+
+:root {
+
+  /* ── Background Layers ────────────────────────────────── */
+  --bg-base:         #070a10;   /* App root — deepest layer    */
+  --bg-app:          #080b11;   /* Body / page background      */
+  --bg-surface-0:    #0b0f18;   /* Floating panels, modals     */
+  --bg-surface-1:    #0e1420;   /* Cards, sidebars             */
+  --bg-surface-2:    #121927;   /* Table rows, list items      */
+  --bg-surface-3:    #172134;   /* Hover state surfaces        */
+  --bg-surface-4:    #1c2a42;   /* Active / selected surfaces  */
+  --bg-overlay:      rgba(7, 10, 16, 0.85); /* Modal backdrop  */
+
+  /* ── Borders ──────────────────────────────────────────── */
+  --border-faint:    #111722;   /* Ultra-subtle dividers       */
+  --border-subtle:   #192236;   /* Card / panel borders        */
+  --border-default:  #1e2d47;   /* Standard borders            */
+  --border-strong:   #263554;   /* Hover / focus borders       */
+  --border-brand:    rgba(249, 115, 22, 0.4); /* Orange glow   */
+
+  /* ── Brand / Accent ───────────────────────────────────── */
+  --accent:          #f97316;   /* Primary orange accent       */
+  --accent-hover:    #ea580c;   /* Orange on hover             */
+  --accent-muted:    rgba(249, 115, 22, 0.12); /* Accent bg   */
+  --accent-glow:     rgba(249, 115, 22, 0.22); /* Glow shadow  */
+
+  /* ── Semantic Colors ──────────────────────────────────── */
+  --color-positive:       #22c55e;
+  --color-positive-dim:   rgba(34, 197, 94, 0.12);
+  --color-positive-glow:  rgba(34, 197, 94, 0.25);
+  --color-negative:       #ef4444;
+  --color-negative-dim:   rgba(239, 68, 68, 0.12);
+  --color-negative-glow:  rgba(239, 68, 68, 0.25);
+  --color-warning:        #f59e0b;
+  --color-warning-dim:    rgba(245, 158, 11, 0.12);
+  --color-info:           #3b82f6;
+  --color-info-dim:       rgba(59, 130, 246, 0.12);
+
+  /* ── Chart Colors ─────────────────────────────────────── */
+  --chart-blue:      #3b82f6;
+  --chart-teal:      #10b981;
+  --chart-purple:    #8b5cf6;
+  --chart-amber:     #f59e0b;
+  --chart-cyan:      #06b6d4;
+  --chart-rose:      #f43f5e;
+  --chart-indigo:    #6366f1;
+  --chart-grid:      #192236;
+
+  /* ── Text ─────────────────────────────────────────────── */
+  --text-primary:    #f1f5f9;   /* Main readable text          */
+  --text-secondary:  #94a3b8;   /* Labels, metadata            */
+  --text-subdued:    #64748b;   /* Timestamps, placeholders    */
+  --text-disabled:   #334155;   /* Disabled elements           */
+  --text-inverse:    #070a10;   /* Text on light backgrounds   */
+  --text-brand:      #f97316;   /* Brand-colored text          */
+  --text-positive:   #22c55e;
+  --text-negative:   #ef4444;
+  --text-warning:    #f59e0b;
+
+  /* ── Typography ───────────────────────────────────────── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Fira Code', monospace;
+
+  /* Font sizes — financial UI scale */
+  --text-2xs:  10px;
+  --text-xs:   11px;
+  --text-sm:   12px;
+  --text-base: 13px;
+  --text-md:   14px;
+  --text-lg:   16px;
+  --text-xl:   18px;
+  --text-2xl:  22px;
+  --text-3xl:  28px;
+  --text-4xl:  36px;
+
+  /* Font weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-black:    800;
+
+  /* Line heights */
+  --leading-tight:   1.2;
+  --leading-snug:    1.35;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+
+  /* Letter spacing */
+  --tracking-tight:  -0.02em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.04em;
+  --tracking-wider:   0.08em;
+  --tracking-widest:  0.12em;
+
+  /* ── Spacing Scale ────────────────────────────────────── */
+  --space-px:  1px;
+  --space-0-5: 2px;
+  --space-1:   4px;
+  --space-1-5: 6px;
+  --space-2:   8px;
+  --space-2-5: 10px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+
+  /* ── Border Radius ────────────────────────────────────── */
+  --radius-none: 0px;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-2xl:  16px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ──────────────────────────────────────────── */
+  --shadow-sm:    0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md:    0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg:    0 8px 24px rgba(0,0,0,0.6);
+  --shadow-xl:    0 16px 48px rgba(0,0,0,0.7);
+  --shadow-brand: 0 0 0 1px var(--border-brand), 0 4px 16px var(--accent-glow);
+  --shadow-positive: 0 0 12px var(--color-positive-glow);
+  --shadow-negative: 0 0 12px var(--color-negative-glow);
+
+  /* ── Z-index Scale ────────────────────────────────────── */
+  --z-base:      0;
+  --z-raised:    10;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-overlay:   300;
+  --z-modal:     400;
+  --z-toast:     500;
+  --z-tooltip:   600;
+  --z-command:   700;
+
+  /* ── Transitions ──────────────────────────────────────── */
+  --duration-fast:    100ms;
+  --duration-normal:  150ms;
+  --duration-slow:    250ms;
+  --duration-slower:  350ms;
+  --ease-standard:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-decelerate:  cubic-bezier(0, 0, 0.2, 1);
+  --ease-accelerate:  cubic-bezier(0.4, 0, 1, 1);
+
+  /* ── Component Tokens ─────────────────────────────────── */
+
+  /* Sidebar */
+  --sidebar-width:           200px;
+  --sidebar-width-collapsed: 48px;
+  --sidebar-bg:              var(--bg-surface-1);
+  --sidebar-border:          var(--border-subtle);
+
+  /* Header */
+  --header-height:    44px;
+  --ticker-bar-height: 28px;
+  --header-bg:        var(--bg-surface-1);
+  --header-border:    var(--border-subtle);
+
+  /* AI Panel */
+  --ai-panel-width:            340px;
+  --ai-panel-width-collapsed:  0px;
+  --ai-panel-bg:               var(--bg-surface-0);
+  --ai-panel-border:           var(--border-subtle);
+
+  /* Table */
+  --table-row-height:    36px;
+  --table-header-height: 32px;
+  --table-row-hover:     var(--bg-surface-3);
+  --table-border:        var(--border-faint);
+
+  /* Input */
+  --input-height:    32px;
+  --input-bg:        var(--bg-surface-2);
+  --input-border:    var(--border-default);
+  --input-focus-border: var(--accent);
+  --input-radius:    var(--radius-md);
+
+  /* Button */
+  --btn-height-sm:  28px;
+  --btn-height-md:  32px;
+  --btn-height-lg:  38px;
+  --btn-radius:     var(--radius-md);
+
+  /* Card */
+  --card-bg:        var(--bg-surface-1);
+  --card-border:    var(--border-subtle);
+  --card-radius:    var(--radius-lg);
+  --card-padding:   12px;
+
+  /* Scrollbar */
+  --scrollbar-width: 4px;
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: var(--border-default);
+  --scrollbar-thumb-hover: var(--border-strong);
+}

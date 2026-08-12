@@ -1,0 +1,58 @@
+/* ============================================================
+   EMPTY STATE COMPONENT
+   ============================================================ */
+
+.fs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  text-align: center;
+  color: var(--text-subdued);
+}
+
+.fs-empty--sm { padding: var(--space-6); }
+.fs-empty--md { padding: var(--space-10); }
+.fs-empty--lg { padding: var(--space-16); }
+
+.fs-empty__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  color: var(--text-disabled);
+}
+
+.fs-empty--sm .fs-empty__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+}
+
+.fs-empty__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fs-empty__title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.fs-empty__desc {
+  font-size: var(--text-xs);
+  color: var(--text-subdued);
+  max-width: 280px;
+  line-height: var(--leading-relaxed);
+}
+
+.fs-empty__action {
+  margin-top: var(--space-1);
+}

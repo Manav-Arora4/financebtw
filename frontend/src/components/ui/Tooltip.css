@@ -1,0 +1,64 @@
+/* ============================================================
+   TOOLTIP COMPONENT
+   ============================================================ */
+
+.fs-tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.fs-tooltip {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  background: var(--bg-surface-4);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--shadow-md);
+  animation: fs-tooltip-in var(--duration-fast) var(--ease-decelerate);
+}
+
+/* ── Placements ─────────────────────────────────────────── */
+.fs-tooltip--top {
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.fs-tooltip--bottom {
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.fs-tooltip--left {
+  right: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.fs-tooltip--right {
+  left: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@keyframes fs-tooltip-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(2px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.fs-tooltip--left, .fs-tooltip--right {
+  animation: fs-tooltip-side-in var(--duration-fast) var(--ease-decelerate);
+}
+
+@keyframes fs-tooltip-side-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

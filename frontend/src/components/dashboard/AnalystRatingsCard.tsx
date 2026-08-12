@@ -1,9 +1,9 @@
 import React from 'react';
 
 export const AnalystRatingsCard: React.FC = () => {
-  // Total circumference for r=32 is 2 * PI * 32 = 201.06
-  // 78% Buy = 156.8, 19% Hold = 38.2, 3% Sell = 6.0
-  const circ = 201.06;
+  // Radius = 38, strokeWidth = 6. Inner clear radius = 35 (diameter 70).
+  // Circumference = 2 * PI * 38 = 238.76
+  const circ = 238.76;
   const buyLen = (78 / 100) * circ;
   const holdLen = (19 / 100) * circ;
   const sellLen = (3 / 100) * circ;
@@ -15,59 +15,82 @@ export const AnalystRatingsCard: React.FC = () => {
       </div>
 
       <div className="analyst-gauge-and-breakdown">
-        {/* SVG Multi-colored Circular Ring Gauge */}
+        {/* SVG Multi-colored Circular Ring Gauge with Vector-Rendered Center Text */}
         <div className="analyst-circle-gauge-wrapper">
-          <svg viewBox="0 0 84 84" className="gauge-svg">
+          <svg viewBox="0 0 100 100" className="gauge-svg">
             {/* Background track */}
             <circle
-              cx="42"
-              cy="42"
-              r="32"
+              cx="50"
+              cy="50"
+              r="38"
               fill="none"
               stroke="#131c2c"
-              strokeWidth="7"
+              strokeWidth="6"
             />
             {/* 1. Green Buy Arc (78%) */}
             <circle
-              cx="42"
-              cy="42"
-              r="32"
+              cx="50"
+              cy="50"
+              r="38"
               fill="none"
               stroke="#22c55e"
-              strokeWidth="7"
+              strokeWidth="6"
               strokeDasharray={`${buyLen} ${circ - buyLen}`}
               strokeDashoffset="0"
-              transform="rotate(-90 42 42)"
+              transform="rotate(-90 50 50)"
             />
             {/* 2. Amber Hold Arc (19%) */}
             <circle
-              cx="42"
-              cy="42"
-              r="32"
+              cx="50"
+              cy="50"
+              r="38"
               fill="none"
               stroke="#f59e0b"
-              strokeWidth="7"
+              strokeWidth="6"
               strokeDasharray={`${holdLen} ${circ - holdLen}`}
               strokeDashoffset={`-${buyLen}`}
-              transform="rotate(-90 42 42)"
+              transform="rotate(-90 50 50)"
             />
             {/* 3. Red Sell Arc (3%) */}
             <circle
-              cx="42"
-              cy="42"
-              r="32"
+              cx="50"
+              cy="50"
+              r="38"
               fill="none"
               stroke="#ef4444"
-              strokeWidth="7"
+              strokeWidth="6"
               strokeDasharray={`${sellLen} ${circ - sellLen}`}
               strokeDashoffset={`-${buyLen + holdLen}`}
-              transform="rotate(-90 42 42)"
+              transform="rotate(-90 50 50)"
             />
+
+            {/* In-SVG Perfectly Proportioned Centered Score & Label */}
+            <text
+              x="50"
+              y="46"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="#ffffff"
+              fontSize="20"
+              fontWeight="900"
+              fontFamily="Inter, sans-serif"
+            >
+              4.3
+            </text>
+            <text
+              x="50"
+              y="61"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="#22c55e"
+              fontSize="6.5"
+              fontWeight="800"
+              fontFamily="Inter, sans-serif"
+              letterSpacing="0.4"
+            >
+              OUTPERFORM
+            </text>
           </svg>
-          <div className="gauge-center-text">
-            <span className="gauge-score-number">4.3</span>
-            <span className="gauge-score-label">Outperform</span>
-          </div>
         </div>
 
         {/* Ratings Breakdown List */}

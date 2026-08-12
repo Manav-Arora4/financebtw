@@ -1039,7 +1039,7 @@ html, body {
   height: 80px;
 }
 
-/* ─── Analyst Ratings Card (Fixed Multi-Color Gauge) ──────────────────────── */
+/* ─── Analyst Ratings Card (Fixed Multi-Color Vector Gauge) ────────────────── */
 .analyst-gauge-and-breakdown {
   display: flex;
   align-items: center;
@@ -1049,44 +1049,14 @@ html, body {
 
 .analyst-circle-gauge-wrapper {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 76px;
+  height: 76px;
   flex-shrink: 0;
 }
 
 .gauge-svg {
   width: 100%;
   height: 100%;
-}
-
-.gauge-center-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.gauge-score-number {
-  font-size: 1.05rem;
-  font-weight: 900;
-  color: #fff;
-  font-family: var(--font-mono);
-  line-height: 1.1;
-}
-
-.gauge-score-label {
-  font-size: 0.52rem;
-  color: var(--color-green);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-top: 1px;
 }
 
 .ratings-breakdown-list {
@@ -1159,7 +1129,7 @@ html, body {
   color: var(--color-green);
 }
 
-/* ─── Market Movers Card ──────────────────────────────────────────────────── */
+/* ─── Market Movers Card (Strict Left Alignment for Tickers & Names) ──────── */
 .movers-tab-pills {
   display: flex;
   gap: 0.35rem;
@@ -1186,7 +1156,8 @@ html, body {
 .movers-items-list {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.35rem;
+  width: 100%;
 }
 
 .mover-row-item {
@@ -1195,6 +1166,8 @@ html, body {
   align-items: center;
   padding: 0.15rem 0;
   cursor: pointer;
+  width: 100%;
+  text-align: left;
 }
 
 .mover-row-item:hover .mover-symbol-code {
@@ -1204,29 +1177,37 @@ html, body {
 .mover-identity-col {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .mover-symbol-code {
   font-weight: 800;
   font-size: 0.78rem;
   color: #fff;
+  display: block;
+  text-align: left;
 }
 
 .mover-company-name {
   font-size: 0.62rem;
   color: var(--text-subdued);
+  display: block;
+  text-align: left;
 }
 
 .mover-numbers-col {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  text-align: right;
 }
 
 .mover-change-text {
   font-weight: 800;
   font-size: 0.72rem;
   font-family: var(--font-mono);
+  display: block;
 }
 
 .mover-change-text.pos { color: var(--color-green); }
@@ -1236,6 +1217,7 @@ html, body {
   font-size: 0.68rem;
   color: var(--text-secondary);
   font-family: var(--font-mono);
+  display: block;
 }
 
 /* ─── Latest News Card ────────────────────────────────────────────────────── */
@@ -1753,6 +1735,44 @@ html, body {
   padding: 0.2rem 0.5rem;
   border-radius: var(--radius-sm);
   font-weight: 600;
+}
+
+.terminal-table-full {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+
+.terminal-table-full th {
+  text-align: left;
+  color: var(--text-subdued);
+  font-weight: 700;
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid #141d2e;
+}
+
+.terminal-table-full td {
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid #0d1422;
+}
+
+.term-row {
+  cursor: pointer;
+}
+
+.term-row:hover {
+  background: var(--bg-surface-hover);
+}
+
+.btn-term-action {
+  background: var(--accent-orange);
+  color: #fff;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 /* ─── Responsive Media Queries ────────────────────────────────────────────── */

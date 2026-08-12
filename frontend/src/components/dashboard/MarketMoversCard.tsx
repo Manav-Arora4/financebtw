@@ -41,7 +41,7 @@ export const MarketMoversCard: React.FC = () => {
         </button>
       </div>
 
-      {/* Movers List */}
+      {/* Movers List - Guaranteed Left Aligned */}
       <div className="movers-items-list">
         {indianMovers.map((m) => (
           <div

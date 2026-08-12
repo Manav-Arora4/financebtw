@@ -3,107 +3,91 @@ import { useAuth } from '../context/AuthContext';
 
 export const SettingsPage: React.FC = () => {
   const { user, isConfigured } = useAuth();
+  const username =
+    (user?.user_metadata?.full_name as string) ||
+    (user?.user_metadata?.username as string) ||
+    (user?.email ? user.email.split('@')[0] : 'GUEST');
 
   return (
-    <div className="page-container">
-      <div className="page-header">
-        <div>
-          <h2 className="page-title">[System Configuration &amp; AI Stack]</h2>
-          <p className="page-subtitle">Configure AI Model Gateway, Local Embedding Engines, and Market Data Feeds</p>
+    <div className="terminal-settings-page">
+      {/* Top Header */}
+      <div className="terminal-page-header">
+        <div className="header-title-block">
+          <span className="terminal-code-tag">&lt;CFG&gt;</span>
+          <div>
+            <h2 className="terminal-title">TERMINAL CONFIGURATION &amp; AI MODEL GATEWAY</h2>
+            <p className="terminal-sub">Manage LiteLLM Routing, Local Embedding Engines, Database Caching &amp; API Keys</p>
+          </div>
         </div>
       </div>
 
-      <div className="grid-2">
+      <div className="terminal-split-grid">
         {/* AI Stack Configuration */}
-        <div className="card glass">
-          <div className="card-header">
-            <h3 className="card-title">AI Models &amp; Frameworks</h3>
-            <span className="badge badge-success">[ACTIVE]</span>
+        <div className="terminal-panel">
+          <div className="panel-header">
+            <div className="panel-title-group">
+              <span className="panel-code">&lt;AI_ENGINE&gt;</span>
+              <span className="panel-title">AI MODELS &amp; FRAMEWORKS</span>
+            </div>
+            <span className="term-badge green">[ACTIVE]</span>
           </div>
-          <div className="feature-list">
-            <div className="feature-item">
-              <span className="icon-check">[+]</span>
-              <div>
-                <strong>Agent Orchestration</strong>
-                <p className="card-desc" style={{ margin: 0 }}>
-                  Framework: <code>LangGraph</code> | Architecture: State Graph with PostgreSQL Checkpoints
-                </p>
-              </div>
+
+          <div className="term-spec-table">
+            <div className="spec-row">
+              <span className="spec-key">AGENT ORCHESTRATION:</span>
+              <span className="spec-val bold amber">LangGraph v0.2 (StateGraph Checkpoints)</span>
             </div>
-            <div className="feature-item">
-              <span className="icon-check">[+]</span>
-              <div>
-                <strong>Universal LLM Gateway</strong>
-                <p className="card-desc" style={{ margin: 0 }}>
-                  Abstraction: <code>LiteLLM</code> | Active Provider: <code>Groq (GPT-OSS 120B / Llama 3.3)</code>
-                </p>
-              </div>
+            <div className="spec-row">
+              <span className="spec-key">PRIMARY LLM GATEWAY:</span>
+              <span className="spec-val bold">LiteLLM (Groq GPT-OSS 120B / Llama 3.3 70B)</span>
             </div>
-            <div className="feature-item">
-              <span className="icon-check">[+]</span>
-              <div>
-                <strong>Local Embeddings (Zero API Fees)</strong>
-                <p className="card-desc" style={{ margin: 0 }}>
-                  Model: <code>BAAI/bge-m3</code> | 1024-dim Dense + Sparse Vectors (Local)
-                </p>
-              </div>
+            <div className="spec-row">
+              <span className="spec-key">LOCAL EMBEDDING MODEL:</span>
+              <span className="spec-val bold green">BAAI/bge-m3 (Dense 1024-dim + Sparse Lexical)</span>
             </div>
-            <div className="feature-item">
-              <span className="icon-check">[+]</span>
-              <div>
-                <strong>Local Cross-Encoder Reranker</strong>
-                <p className="card-desc" style={{ margin: 0 }}>
-                  Model: <code>BAAI/bge-reranker-large</code> | Top-K Candidate Rescoring (Local)
-                </p>
-              </div>
+            <div className="spec-row">
+              <span className="spec-key">CROSS-ENCODER RERANKER:</span>
+              <span className="spec-val bold green">BAAI/bge-reranker-large (Local Rescorer)</span>
+            </div>
+            <div className="spec-row">
+              <span className="spec-key">HYBRID RAG RETRIEVER:</span>
+              <span className="spec-val bold cyan">LlamaIndex VectorIndex + BM25 + Reciprocal Rank Fusion</span>
             </div>
           </div>
         </div>
 
-        {/* Supabase & Database Config */}
-        <div className="card glass">
-          <div className="card-header">
-            <h3 className="card-title">Authentication &amp; Storage</h3>
-            <span className={`badge ${isConfigured ? 'badge-success' : 'badge-warning'}`}>
+        {/* Database & Storage Config */}
+        <div className="terminal-panel">
+          <div className="panel-header">
+            <div className="panel-title-group">
+              <span className="panel-code">&lt;STORAGE&gt;</span>
+              <span className="panel-title">STORAGE &amp; IDENTITY STACK</span>
+            </div>
+            <span className={`term-badge ${isConfigured ? 'green' : 'amber'}`}>
               {isConfigured ? '[CONFIGURED]' : '[KEYS NEEDED]'}
             </span>
           </div>
-          <div className="feature-list">
-            <div className="feature-item">
-              <span className="icon-check">[+]</span>
-              <div>
-                <strong>Supabase Authentication</strong>
-                <p className="card-desc" style={{ margin: 0 }}>
-                  Engine: Supabase Auth GoTrue | User: <code>{user ? `${(user.user_metadata?.full_name as string) || (user.user_metadata?.username as string) || user.email?.split('@')[0]} (${user.email})` : 'Guest Session'}</code>
-                </p>
-              </div>
+
+          <div className="term-spec-table">
+            <div className="spec-row">
+              <span className="spec-key">IDENTITY ENGINE:</span>
+              <span className="spec-val bold">Supabase GoTrue (JWT Token Auth)</span>
             </div>
-            <div className="feature-item">
-              <span className="icon-check">[+]</span>
-              <div>
-                <strong>Relational Database</strong>
-                <p className="card-desc" style={{ margin: 0 }}>
-                  Engine: <code>PostgreSQL 16</code> | Driver: <code>asyncpg</code> | ORM: <code>SQLAlchemy 2.x</code>
-                </p>
-              </div>
+            <div className="spec-row">
+              <span className="spec-key">ACTIVE SESSION:</span>
+              <span className="spec-val bold cyan">@{username} {user ? `(${user.email})` : '[GUEST]'}</span>
             </div>
-            <div className="feature-item">
-              <span className="icon-check">[+]</span>
-              <div>
-                <strong>Vector Database</strong>
-                <p className="card-desc" style={{ margin: 0 }}>
-                  Engine: <code>Qdrant</code> | Collection: <code>financebtw_documents</code>
-                </p>
-              </div>
+            <div className="spec-row">
+              <span className="spec-key">VECTOR DATABASE:</span>
+              <span className="spec-val bold">Qdrant (Collection: financebtw_documents)</span>
             </div>
-            <div className="feature-item">
-              <span className="icon-check">[+]</span>
-              <div>
-                <strong>In-Memory Cache</strong>
-                <p className="card-desc" style={{ margin: 0 }}>
-                  Engine: <code>Redis 7</code> | Market Quotes TTL: <code>300s</code>
-                </p>
-              </div>
+            <div className="spec-row">
+              <span className="spec-key">RELATIONAL DATABASE:</span>
+              <span className="spec-val bold">PostgreSQL 16 (asyncpg + SQLAlchemy)</span>
+            </div>
+            <div className="spec-row">
+              <span className="spec-key">CACHE &amp; RATE LIMITS:</span>
+              <span className="spec-val bold">Redis 7 (Market Quotes TTL: 300s)</span>
             </div>
           </div>
         </div>

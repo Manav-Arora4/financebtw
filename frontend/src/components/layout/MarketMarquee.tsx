@@ -1,36 +1,41 @@
 import React from 'react';
-import { useAppStore, type MarketTicker } from '../../store/useAppStore';
+import { useAppStore } from '../../store/useAppStore';
 
 export const MarketMarquee: React.FC = () => {
   const { tickers, setSelectedSymbol } = useAppStore();
-
-  const renderTicker = (item: MarketTicker, index: number) => {
-    const isPositive = item.change >= 0;
-    return (
-      <div
-        key={`${item.symbol}-${index}`}
-        className="marquee-item"
-        onClick={() => setSelectedSymbol(item.symbol)}
-        title={`Click to analyze ${item.name}`}
-      >
-        <span className="marquee-symbol">{item.symbol}</span>
-        <span className="marquee-price">
-          {item.currency === 'INR' ? '₹' : '$'}
-          {item.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        </span>
-        <span className={`marquee-badge ${isPositive ? 'positive' : 'negative'}`}>
-          {isPositive ? `[+${item.percent.toFixed(2)}%]` : `[${item.percent.toFixed(2)}%]`}
-        </span>
-      </div>
-    );
-  };
+  // Duplicate array for smooth continuous horizontal scroll
+  const marqueeItems = [...tickers, ...tickers];
 
   return (
-    <div className="marquee-container">
-      <div className="marquee-track">
-        {/* Double array rendering for seamless infinite scrolling */}
-        {tickers.map((item, idx) => renderTicker(item, idx))}
-        {tickers.map((item, idx) => renderTicker(item, idx + tickers.length))}
+    <div className="terminal-marquee-strip">
+      <div className="marquee-prefix-label">
+        <span className="live-pulse"></span>
+        <span className="prefix-txt">BLOOMBERG WIRE // REALTIME FEEDS:</span>
+      </div>
+      <div className="terminal-marquee-track">
+        {marqueeItems.map((item, idx) => {
+          const isPos = item.change >= 0;
+          const formattedPrice =
+            item.currency === 'INR'
+              ? `₹${item.price.toLocaleString('en-IN')}`
+              : `$${item.price.toLocaleString('en-US')}`;
+          const formattedPct = `${isPos ? '+' : ''}${item.percent.toFixed(2)}%`;
+
+          return (
+            <div
+              key={`${item.symbol}-${idx}`}
+              className="terminal-marquee-item"
+              onClick={() => setSelectedSymbol(item.symbol)}
+              title={`Select ${item.symbol} as active target`}
+            >
+              <span className="m-symbol">{item.symbol}</span>
+              <span className="m-price">{formattedPrice}</span>
+              <span className={`m-badge ${isPos ? 'pos' : 'neg'}`}>
+                {isPos ? `[▲ ${formattedPct}]` : `[▼ ${formattedPct}]`}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

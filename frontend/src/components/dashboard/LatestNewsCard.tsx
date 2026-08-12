@@ -1,29 +1,23 @@
 import React from 'react';
 
 export const LatestNewsCard: React.FC = () => {
-  const newsItems = [
+  const indianNews = [
     {
-      sourceIcon: (
-        <span className="news-brand-badge bloomberg">B</span>
-      ),
-      headline: 'Apple reports Q1 earnings beat, services revenue hits record high',
-      source: 'Bloomberg',
+      badge: <span className="news-brand-badge et">ET</span>,
+      headline: 'Reliance Retail expands fashion & lifestyle footprint with multi-brand stores',
+      source: 'Economic Times',
       timeAgo: '2h ago',
     },
     {
-      sourceIcon: (
-        <span className="news-brand-badge cnbc">CNBC</span>
-      ),
-      headline: 'Apple Vision Pro 2 expected in late 2025: Report',
-      source: 'CNBC',
-      timeAgo: '5h ago',
+      badge: <span className="news-brand-badge mint">MINT</span>,
+      headline: 'Jio Financial Services receives regulatory approvals for asset management JV',
+      source: 'LiveMint',
+      timeAgo: '4h ago',
     },
     {
-      sourceIcon: (
-        <span className="news-brand-badge reuters">R</span>
-      ),
-      headline: 'Apple expands enterprise partnership, integrates new features across ecosystem',
-      source: 'Reuters',
+      badge: <span className="news-brand-badge mc">MC</span>,
+      headline: 'RIL 5G subscriber base crosses 130M; ARPU expands to ₹181.7',
+      source: 'Moneycontrol',
       timeAgo: '1d ago',
     },
   ];
@@ -35,10 +29,10 @@ export const LatestNewsCard: React.FC = () => {
       </div>
 
       <div className="news-items-container">
-        {newsItems.map((n, i) => (
+        {indianNews.map((n, i) => (
           <div key={i} className="news-article-row">
             <div className="news-source-logo-wrapper">
-              {n.sourceIcon}
+              {n.badge}
             </div>
             <div className="news-content-col">
               <h4 className="news-headline-text">{n.headline}</h4>

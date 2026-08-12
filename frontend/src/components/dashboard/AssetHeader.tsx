@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
-import { IconApple, IconStar, IconSparkles, IconCompare } from '../icons/Icons';
+import { IconStar, IconSparkles, IconCompare } from '../icons/Icons';
 
 export const AssetHeader: React.FC = () => {
   const { selectedSymbol } = useAppStore();
   const [isStarred, setIsStarred] = useState(true);
 
-  const isApple = selectedSymbol.includes('AAPL');
-  const isNse = selectedSymbol.includes('.NS') || selectedSymbol.includes('RELIANCE');
-  const companyName = isApple ? 'Apple Inc.' : isNse ? 'Reliance Industries Ltd.' : 'Apple Inc.';
-  const tickerClean = selectedSymbol.replace('.NS', '');
-  const exchangeTag = isNse ? 'NSE' : 'NASDAQ';
-  const sectorTag = isNse ? 'Energy / Retail' : 'Technology';
-  const price = isNse ? '₹2,985.50' : '195.83';
-  const currency = isNse ? 'INR' : 'USD';
-  const change = isNse ? '▲ +32.10 (1.09%)' : '▲ 2.42 (1.25%)';
-  const afterHours = isNse ? '2,988.00 ▲ +2.50 (+0.08%)' : '196.21 ▲ 0.38 (0.19%)';
+  // Normalize Indian Stock details
+  const tickerClean = selectedSymbol.replace('.NS', '').replace('.BO', '');
+  const companyName = tickerClean === 'TCS' ? 'Tata Consultancy Services' :
+                      tickerClean === 'INFY' ? 'Infosys Limited' :
+                      tickerClean === 'HDFCBANK' ? 'HDFC Bank Limited' :
+                      tickerClean === 'ICICIBANK' ? 'ICICI Bank Limited' :
+                      'Reliance Industries Ltd.';
+  const sectorTag = tickerClean === 'TCS' || tickerClean === 'INFY' ? 'IT Services / Tech' :
+                    tickerClean.includes('BANK') ? 'Banking & Financials' :
+                    'Energy / Retail / Telecom';
+
+  const price = tickerClean === 'TCS' ? '₹4,190.00' :
+                tickerClean === 'INFY' ? '₹1,875.40' :
+                tickerClean === 'HDFCBANK' ? '₹1,645.20' :
+                '₹2,985.50';
 
   const stats = [
-    { label: 'Market Cap', val: isNse ? '₹20.2T' : '3.01T' },
+    { label: 'Market Cap', val: '₹20.2L Cr' },
     { label: 'P/E (TTM)', val: '28.42' },
-    { label: 'EPS (TTM)', val: isNse ? '₹105.10' : '6.89' },
-    { label: 'Dividend Yield', val: '0.48%' },
-    { label: '52W High', val: isNse ? '₹3,217.90' : '199.62' },
-    { label: '52W Low', val: isNse ? '₹2,220.30' : '164.08' },
+    { label: 'EPS (TTM)', val: '₹105.10' },
+    { label: 'Dividend Yield', val: '0.35%' },
+    { label: '52W High', val: '₹3,217.90' },
+    { label: '52W Low', val: '₹2,220.30' },
   ];
 
   return (
@@ -39,8 +44,8 @@ export const AssetHeader: React.FC = () => {
       <div className="asset-main-info-row">
         {/* Left Ticker & Name */}
         <div className="asset-brand-block">
-          <div className="asset-logo-icon">
-            <IconApple size={24} />
+          <div className="asset-ticker-badge-box">
+            <span>{tickerClean.slice(0, 1)}</span>
           </div>
           <div className="asset-title-column">
             <div className="ticker-star-row">
@@ -50,12 +55,12 @@ export const AssetHeader: React.FC = () => {
                 onClick={() => setIsStarred(!isStarred)}
                 title="Toggle Watchlist"
               >
-                <IconStar size={18} filled={isStarred} />
+                <IconStar size={16} filled={isStarred} />
               </button>
             </div>
             <div className="asset-meta-tags">
               <span className="company-full-name">{companyName}</span>
-              <span className="tag-pill cyan">{exchangeTag}</span>
+              <span className="tag-pill cyan">NSE</span>
               <span className="tag-pill slate">{sectorTag}</span>
             </div>
           </div>
@@ -67,11 +72,11 @@ export const AssetHeader: React.FC = () => {
             <span>+ Add to Watchlist</span>
           </button>
           <button className="btn-orange-primary">
-            <IconSparkles size={14} />
+            <IconSparkles size={13} />
             <span>Analyze Stock</span>
           </button>
           <button className="btn-outline-action">
-            <IconCompare size={14} />
+            <IconCompare size={13} />
             <span>Compare</span>
           </button>
           <button className="btn-icon-more" title="More options">
@@ -86,11 +91,11 @@ export const AssetHeader: React.FC = () => {
         <div className="price-big-block">
           <div className="price-main-line">
             <span className="price-big-num">{price}</span>
-            <span className="price-currency-code">{currency}</span>
-            <span className="price-change-pill pos">{change}</span>
+            <span className="price-currency-code">INR</span>
+            <span className="price-change-pill pos">▲ +32.10 (1.09%)</span>
           </div>
           <div className="price-after-hours">
-            After Hours: <span className="after-val">{afterHours}</span>
+            Pre-Open: <span className="after-val">2,988.00 ▲ +2.50 (+0.08%)</span>
           </div>
         </div>
 

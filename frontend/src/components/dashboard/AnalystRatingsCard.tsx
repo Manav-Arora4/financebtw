@@ -1,6 +1,13 @@
 import React from 'react';
 
 export const AnalystRatingsCard: React.FC = () => {
+  // Total circumference for r=32 is 2 * PI * 32 = 201.06
+  // 78% Buy = 156.8, 19% Hold = 38.2, 3% Sell = 6.0
+  const circ = 201.06;
+  const buyLen = (78 / 100) * circ;
+  const holdLen = (19 / 100) * circ;
+  const sellLen = (3 / 100) * circ;
+
   return (
     <div className="finsight-card analyst-ratings-card">
       <div className="card-top-title-row">
@@ -8,28 +15,53 @@ export const AnalystRatingsCard: React.FC = () => {
       </div>
 
       <div className="analyst-gauge-and-breakdown">
-        {/* SVG Circular Ring Gauge */}
+        {/* SVG Multi-colored Circular Ring Gauge */}
         <div className="analyst-circle-gauge-wrapper">
-          <svg viewBox="0 0 100 100" className="gauge-svg">
+          <svg viewBox="0 0 84 84" className="gauge-svg">
+            {/* Background track */}
             <circle
-              cx="50"
-              cy="50"
-              r="40"
+              cx="42"
+              cy="42"
+              r="32"
               fill="none"
-              stroke="#1e293b"
-              strokeWidth="8"
+              stroke="#131c2c"
+              strokeWidth="7"
             />
+            {/* 1. Green Buy Arc (78%) */}
             <circle
-              cx="50"
-              cy="50"
-              r="40"
+              cx="42"
+              cy="42"
+              r="32"
               fill="none"
               stroke="#22c55e"
-              strokeWidth="8"
-              strokeDasharray="251.2"
-              strokeDashoffset="55"
-              strokeLinecap="round"
-              transform="rotate(-90 50 50)"
+              strokeWidth="7"
+              strokeDasharray={`${buyLen} ${circ - buyLen}`}
+              strokeDashoffset="0"
+              transform="rotate(-90 42 42)"
+            />
+            {/* 2. Amber Hold Arc (19%) */}
+            <circle
+              cx="42"
+              cy="42"
+              r="32"
+              fill="none"
+              stroke="#f59e0b"
+              strokeWidth="7"
+              strokeDasharray={`${holdLen} ${circ - holdLen}`}
+              strokeDashoffset={`-${buyLen}`}
+              transform="rotate(-90 42 42)"
+            />
+            {/* 3. Red Sell Arc (3%) */}
+            <circle
+              cx="42"
+              cy="42"
+              r="32"
+              fill="none"
+              stroke="#ef4444"
+              strokeWidth="7"
+              strokeDasharray={`${sellLen} ${circ - sellLen}`}
+              strokeDashoffset={`-${buyLen + holdLen}`}
+              transform="rotate(-90 42 42)"
             />
           </svg>
           <div className="gauge-center-text">
@@ -45,7 +77,7 @@ export const AnalystRatingsCard: React.FC = () => {
               <span className="dot-indicator green"></span>
               <span>Buy</span>
             </div>
-            <span className="rating-row-count">25 (78%)</span>
+            <span className="rating-row-count">28 (78%)</span>
           </div>
 
           <div className="rating-row">
@@ -53,7 +85,7 @@ export const AnalystRatingsCard: React.FC = () => {
               <span className="dot-indicator amber"></span>
               <span>Hold</span>
             </div>
-            <span className="rating-row-count">6 (19%)</span>
+            <span className="rating-row-count">7 (19%)</span>
           </div>
 
           <div className="rating-row">
@@ -70,8 +102,8 @@ export const AnalystRatingsCard: React.FC = () => {
       <div className="analyst-target-row">
         <div className="target-col">
           <span className="target-sub-lbl">Price Target</span>
-          <span className="target-val-num">$210.45</span>
-          <span className="target-upside-text pos">▲ +7.47% Upside</span>
+          <span className="target-val-num">₹3,250.00</span>
+          <span className="target-upside-text pos">▲ +8.86% Upside</span>
         </div>
         <div className="consensus-col">
           <span className="target-sub-lbl">Consensus</span>

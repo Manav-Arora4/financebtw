@@ -15,15 +15,18 @@ export const AIAssistantDrawer: React.FC = () => {
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
 
-  const isApple = selectedSymbol.includes('AAPL') || !selectedSymbol.includes('.NS');
-  const entityName = isApple ? 'Apple Inc.' : 'Reliance Industries Ltd.';
+  const tickerClean = selectedSymbol.replace('.NS', '').replace('.BO', '');
+  const entityName = tickerClean === 'TCS' ? 'Tata Consultancy Services' :
+                     tickerClean === 'INFY' ? 'Infosys Limited' :
+                     tickerClean === 'HDFCBANK' ? 'HDFC Bank Ltd.' :
+                     'Reliance Industries Ltd.';
 
   const promptChips = [
     'Analyze valuation',
-    'Compare to Microsoft',
+    'Compare to peers',
     'Show risk factors',
     'Generate DCF model',
-    'What are the key risks?',
+    'What are key risks?',
     'Explain revenue by segment',
   ];
 
@@ -71,33 +74,33 @@ export const AIAssistantDrawer: React.FC = () => {
       <div className="ai-messages-scroll-area">
         {/* Sample / First User Query */}
         <div className="user-chat-bubble">
-          <span>Summarize Apple's Q1 earnings and key takeaways.</span>
+          <span>Summarize {entityName}'s Q1 earnings and key takeaways.</span>
         </div>
 
         {/* Structured Earnings Summary Card */}
         <div className="ai-response-summary-card">
           <h4 className="summary-company-title">
-            {entityName} Q1 FY2024 Earnings Summary
+            {entityName} Q1 FY2025 Earnings Summary
           </h4>
 
           <ul className="summary-bullets-list">
             <li>
-              <strong>Revenue:</strong> $119.6B, +2.1% YoY (beat est. $117.9B)
+              <strong>Revenue:</strong> ₹10.04L Cr, +8.2% YoY (beat est. ₹9.85L Cr)
             </li>
             <li>
-              <strong>EPS:</strong> $2.18, +16.0% YoY (beat est. $2.10)
+              <strong>EPS:</strong> ₹105.10, +7.1% YoY (beat consensus estimates)
             </li>
             <li>
-              <strong>Services revenue:</strong> hit record $23.1B, +11% YoY
+              <strong>Digital &amp; Retail revenue:</strong> hit record +11.2% YoY
             </li>
             <li>
-              <strong>iPhone revenue:</strong> $69.7B, -1% YoY
+              <strong>Jio ARPU:</strong> ₹181.7 / month, expanding operating leverage
             </li>
             <li>
-              <strong>Gross margin:</strong> 45.9%, up 1.2pp YoY
+              <strong>Gross margin:</strong> 34.9%, up 1.2pp YoY with operational efficiency
             </li>
             <li>
-              Strong performance in Wearables and Services
+              Strong free cash flow generation of ₹48,200 Cr
             </li>
           </ul>
 
@@ -105,22 +108,22 @@ export const AIAssistantDrawer: React.FC = () => {
 
           <h5 className="takeaways-heading">Key Takeaways</h5>
           <ol className="takeaways-numbered-list">
-            <li>Services growth remains a key strength.</li>
-            <li>iPhone demand stabilized better than expected.</li>
-            <li>Margin expansion shows operational leverage.</li>
-            <li>China recovery still a watch point.</li>
-            <li>Strong balance sheet with $62B cash.</li>
+            <li>Digital and retail segments remain primary growth engines.</li>
+            <li>Consumer demand stabilized significantly better than expected.</li>
+            <li>Margin expansion shows operational leverage across business verticals.</li>
+            <li>New energy business rollout on track for second half.</li>
+            <li>Strong balance sheet with robust cash conversion.</li>
           </ol>
 
           {/* Sources Badges */}
           <div className="sources-row-group">
             <span className="sources-label">Sources (5)</span>
             <div className="sources-badges-flex">
-              <span className="source-pill">Apple IR</span>
-              <span className="source-pill">Seeking Alpha</span>
-              <span className="source-pill">Bloomberg</span>
-              <span className="source-pill">CNBC</span>
-              <span className="source-pill">Reuters</span>
+              <span className="source-pill">NSE Filings</span>
+              <span className="source-pill">Company IR</span>
+              <span className="source-pill">Economic Times</span>
+              <span className="source-pill">LiveMint</span>
+              <span className="source-pill">Moneycontrol</span>
             </div>
           </div>
 

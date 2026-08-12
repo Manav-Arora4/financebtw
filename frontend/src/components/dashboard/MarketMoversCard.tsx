@@ -5,12 +5,12 @@ export const MarketMoversCard: React.FC = () => {
   const { setSelectedSymbol } = useAppStore();
   const [tab, setTab] = useState<'gainers' | 'losers' | 'active'>('gainers');
 
-  const movers = [
-    { symbol: 'NVDA', name: 'NVIDIA Corporation', change: '+5.32%', price: '841.23', isPos: true },
-    { symbol: 'META', name: 'Meta Platforms Inc.', change: '+3.21%', price: '502.31', isPos: true },
-    { symbol: 'TSLA', name: 'Tesla Inc.', change: '+2.87%', price: '182.63', isPos: true },
-    { symbol: 'AAPL', name: 'Apple Inc.', change: '+1.25%', price: '195.83', isPos: true },
-    { symbol: 'MSFT', name: 'Microsoft Corp.', change: '+1.18%', price: '421.18', isPos: true },
+  const indianMovers = [
+    { symbol: 'INFY', name: 'Infosys Limited', change: '+2.15%', price: '₹1,875.40', isPos: true },
+    { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd', change: '+1.82%', price: '₹1,645.20', isPos: true },
+    { symbol: 'TCS', name: 'Tata Consultancy Services', change: '+1.45%', price: '₹4,190.00', isPos: true },
+    { symbol: 'BHARTIARTL', name: 'Bharti Airtel Ltd', change: '+1.30%', price: '₹1,460.00', isPos: true },
+    { symbol: 'ICICIBANK', name: 'ICICI Bank Ltd', change: '+0.95%', price: '₹1,180.50', isPos: true },
   ];
 
   return (
@@ -43,11 +43,11 @@ export const MarketMoversCard: React.FC = () => {
 
       {/* Movers List */}
       <div className="movers-items-list">
-        {movers.map((m) => (
+        {indianMovers.map((m) => (
           <div
             key={m.symbol}
             className="mover-row-item"
-            onClick={() => setSelectedSymbol(m.symbol)}
+            onClick={() => setSelectedSymbol(`${m.symbol}.NS`)}
           >
             <div className="mover-identity-col">
               <span className="mover-symbol-code">{m.symbol}</span>

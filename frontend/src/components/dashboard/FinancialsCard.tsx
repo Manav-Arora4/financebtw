@@ -28,23 +28,23 @@ export const FinancialsCard: React.FC = () => {
       <div className="financials-numbers-strip">
         <div className="fin-metric-col">
           <span className="fin-lbl">Revenue</span>
-          <span className="fin-val">$383.3B</span>
-          <span className="fin-pct pos">▲ +2.1% YoY</span>
+          <span className="fin-val">₹10.04L Cr</span>
+          <span className="fin-pct pos">▲ +8.2% YoY</span>
         </div>
         <div className="fin-metric-col">
           <span className="fin-lbl">Net Income</span>
-          <span className="fin-val">$96.99B</span>
-          <span className="fin-pct pos">▲ +11.9% YoY</span>
+          <span className="fin-val">₹79,020 Cr</span>
+          <span className="fin-pct pos">▲ +7.5% YoY</span>
         </div>
         <div className="fin-metric-col">
           <span className="fin-lbl">EPS</span>
-          <span className="fin-val">$6.89</span>
-          <span className="fin-pct pos">▲ +13.1% YoY</span>
+          <span className="fin-val">₹105.10</span>
+          <span className="fin-pct pos">▲ +7.1% YoY</span>
         </div>
         <div className="fin-metric-col">
           <span className="fin-lbl">FCF</span>
-          <span className="fin-val">$110.5B</span>
-          <span className="fin-pct pos">▲ +4.2% YoY</span>
+          <span className="fin-val">₹48,200 Cr</span>
+          <span className="fin-pct pos">▲ +5.4% YoY</span>
         </div>
       </div>
 
@@ -57,55 +57,55 @@ export const FinancialsCard: React.FC = () => {
 
       {/* SVG Bar + Line Chart */}
       <div className="fin-svg-chart-wrapper">
-        <svg viewBox="0 0 360 140" className="financials-svg-chart">
+        <svg viewBox="0 0 340 100" className="financials-svg-chart">
           {/* Y Axis Grid Lines */}
-          <line x1="30" y1="20" x2="350" y2="20" stroke="#1c2538" strokeDasharray="2,2" />
-          <line x1="30" y1="60" x2="350" y2="60" stroke="#1c2538" strokeDasharray="2,2" />
-          <line x1="30" y1="100" x2="350" y2="100" stroke="#1c2538" strokeDasharray="2,2" />
+          <line x1="25" y1="15" x2="335" y2="15" stroke="#182338" strokeDasharray="2,2" />
+          <line x1="25" y1="45" x2="335" y2="45" stroke="#182338" strokeDasharray="2,2" />
+          <line x1="25" y1="75" x2="335" y2="75" stroke="#182338" strokeDasharray="2,2" />
 
-          <text x="5" y="24" fill="#64748b" fontSize="9">150B</text>
-          <text x="5" y="64" fill="#64748b" fontSize="9">100B</text>
-          <text x="5" y="104" fill="#64748b" fontSize="9">50B</text>
-
-          {/* Q1 '23 */}
-          <rect x="55" y="40" width="14" height="70" fill="#3b82f6" rx={2} />
-          <rect x="71" y="80" width="14" height="30" fill="#06b6d4" rx={2} />
-
-          {/* Q2 '23 */}
-          <rect x="115" y="30" width="14" height="80" fill="#3b82f6" rx={2} />
-          <rect x="131" y="75" width="14" height="35" fill="#06b6d4" rx={2} />
-
-          {/* Q3 '23 */}
-          <rect x="175" y="45" width="14" height="65" fill="#3b82f6" rx={2} />
-          <rect x="191" y="85" width="14" height="25" fill="#06b6d4" rx={2} />
-
-          {/* Q4 '23 */}
-          <rect x="235" y="35" width="14" height="75" fill="#3b82f6" rx={2} />
-          <rect x="251" y="78" width="14" height="32" fill="#06b6d4" rx={2} />
+          <text x="0" y="18" fill="#64748b" fontSize="8">3L Cr</text>
+          <text x="0" y="48" fill="#64748b" fontSize="8">2L Cr</text>
+          <text x="0" y="78" fill="#64748b" fontSize="8">1L Cr</text>
 
           {/* Q1 '24 */}
-          <rect x="295" y="25" width="14" height="85" fill="#3b82f6" rx={2} />
-          <rect x="311" y="70" width="14" height="40" fill="#06b6d4" rx={2} />
+          <rect x="45" y="25" width="12" height="55" fill="#3b82f6" rx={2} />
+          <rect x="59" y="55" width="12" height="25" fill="#06b6d4" rx={2} />
+
+          {/* Q2 '24 */}
+          <rect x="100" y="20" width="12" height="60" fill="#3b82f6" rx={2} />
+          <rect x="114" y="52" width="12" height="28" fill="#06b6d4" rx={2} />
+
+          {/* Q3 '24 */}
+          <rect x="155" y="30" width="12" height="50" fill="#3b82f6" rx={2} />
+          <rect x="169" y="58" width="12" height="22" fill="#06b6d4" rx={2} />
+
+          {/* Q4 '24 */}
+          <rect x="210" y="18" width="12" height="62" fill="#3b82f6" rx={2} />
+          <rect x="224" y="48" width="12" height="32" fill="#06b6d4" rx={2} />
+
+          {/* Q1 '25 */}
+          <rect x="265" y="15" width="12" height="65" fill="#3b82f6" rx={2} />
+          <rect x="279" y="45" width="12" height="35" fill="#06b6d4" rx={2} />
 
           {/* Profit Margin Polyline (Green) */}
           <polyline
-            points="71,70 131,65 191,72 251,68 311,60"
+            points="58,50 113,46 168,52 223,44 278,40"
             fill="none"
             stroke="#22c55e"
             strokeWidth={2}
           />
-          <circle cx="71" cy="70" r="3" fill="#22c55e" />
-          <circle cx="131" cy="65" r="3" fill="#22c55e" />
-          <circle cx="191" cy="72" r="3" fill="#22c55e" />
-          <circle cx="251" cy="68" r="3" fill="#22c55e" />
-          <circle cx="311" cy="60" r="3" fill="#22c55e" />
+          <circle cx="58" cy="50" r="2.5" fill="#22c55e" />
+          <circle cx="113" cy="46" r="2.5" fill="#22c55e" />
+          <circle cx="168" cy="52" r="2.5" fill="#22c55e" />
+          <circle cx="223" cy="44" r="2.5" fill="#22c55e" />
+          <circle cx="278" cy="40" r="2.5" fill="#22c55e" />
 
           {/* X Axis Labels */}
-          <text x="60" y="125" fill="#94a3b8" fontSize="9">Q1 '23</text>
-          <text x="120" y="125" fill="#94a3b8" fontSize="9">Q2 '23</text>
-          <text x="180" y="125" fill="#94a3b8" fontSize="9">Q3 '23</text>
-          <text x="240" y="125" fill="#94a3b8" fontSize="9">Q4 '23</text>
-          <text x="300" y="125" fill="#94a3b8" fontSize="9">Q1 '24</text>
+          <text x="50" y="94" fill="#94a3b8" fontSize="8">Q1 '24</text>
+          <text x="105" y="94" fill="#94a3b8" fontSize="8">Q2 '24</text>
+          <text x="160" y="94" fill="#94a3b8" fontSize="8">Q3 '24</text>
+          <text x="215" y="94" fill="#94a3b8" fontSize="8">Q4 '24</text>
+          <text x="270" y="94" fill="#94a3b8" fontSize="8">Q1 '25</text>
         </svg>
       </div>
 

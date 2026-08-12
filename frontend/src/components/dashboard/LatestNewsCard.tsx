@@ -16,7 +16,7 @@ export const LatestNewsCard: React.FC = () => {
     },
     {
       sourceIcon: '[R]',
-      headline: 'Apple expands AI partnership, integrates new features across ecosystem',
+      headline: 'Apple expands enterprise cloud partnership, integrates new features across ecosystem',
       source: 'Global News',
       timeAgo: '1d ago',
     },

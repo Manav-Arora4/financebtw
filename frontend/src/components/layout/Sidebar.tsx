@@ -26,7 +26,7 @@ export const Sidebar: React.FC = () => {
       ],
     },
     {
-      title: 'RESEARCH & AI',
+      title: 'RESEARCH',
       items: [
         { path: '/chat', label: 'AI Assistant', tag: '[AI]', isSparkle: true },
         { path: '/chat', label: 'Research', tag: '[RS]' },

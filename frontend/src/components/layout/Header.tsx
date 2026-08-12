@@ -29,7 +29,7 @@ export const Header: React.FC = () => {
         <div className="brand-logo-icon">
           <span className="logo-symbol">[FB]</span>
         </div>
-        <span className="brand-title-text">FinanceBtw <span className="brand-ai-text">AI</span></span>
+        <span className="brand-title-text">FinanceBtw</span>
       </div>
 
       {/* Global Search Bar */}

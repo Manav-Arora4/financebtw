@@ -15,7 +15,7 @@ export const ChatPage: React.FC = () => {
     {
       id: '1',
       sender: 'assistant',
-      content: `Welcome to FinanceBtw AI Research Terminal.\n\nActive Security: ${selectedSymbol}\n\nI can assist you with:\n- Comprehensive fundamental & DuPont Return on Equity analysis\n- Valuation multiples, DCF modeling & peer comparisons\n- Earnings reports, management guidance & revenue drivers\n- Risk attribution, portfolio beta & downside volatility\n\nAsk a question or select a quick analysis function below.`,
+      content: `Welcome to FinanceBtw Research Terminal.\n\nActive Security: ${selectedSymbol}\n\nI can assist you with:\n- Comprehensive fundamental & DuPont Return on Equity analysis\n- Valuation multiples, DCF modeling & peer comparisons\n- Earnings reports, management guidance & revenue drivers\n- Risk attribution, portfolio beta & downside volatility\n\nAsk a question or select a quick analysis function below.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       citations: [
         { source: 'Market Quotes', detail: `Live equity quotes & valuation metrics for ${selectedSymbol}` },
@@ -70,8 +70,8 @@ export const ChatPage: React.FC = () => {
       <div className="chat-terminal-pane">
         <div className="chat-top-bar">
           <div className="chat-bar-title">
-            <span className="chat-prompt-tag">AI&gt;</span>
-            <span>FINANCIAL RESEARCH ASSISTANT</span>
+            <span className="chat-prompt-tag">RS&gt;</span>
+            <span>FINANCIAL RESEARCH WORKSTATION</span>
           </div>
           <div className="chat-badge-group">
             <span className="badge-target">{selectedSymbol}</span>

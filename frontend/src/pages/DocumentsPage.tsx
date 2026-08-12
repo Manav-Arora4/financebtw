@@ -105,7 +105,7 @@ export const DocumentsPage: React.FC = () => {
           <span className="dropzone-icon">[+]</span>
           <h3 className="dropzone-title">Drop Annual Reports, 10-K Filings, or Transcripts Here</h3>
           <p className="dropzone-sub">
-            Tables, financial footnotes, and balance sheet statements are automatically indexed for instant AI analysis.
+            Tables, financial footnotes, and balance sheet statements are automatically indexed for instant financial analysis.
           </p>
           <button className="btn-browse-files">
             Browse Files (.PDF, .DOCX, .TXT)
@@ -151,7 +151,7 @@ export const DocumentsPage: React.FC = () => {
                       className="btn-query-doc"
                       onClick={() => handleQueryDoc(doc.ticker)}
                     >
-                      &lt;ANALYZE WITH AI&gt;
+                      &lt;ANALYZE DOCUMENT&gt;
                     </button>
                   </td>
                 </tr>

@@ -55,7 +55,7 @@ export const AssetHeader: React.FC = () => {
         {/* Right Action Buttons */}
         <div className="asset-action-buttons">
           <button className="btn-outline-action">[+] Add to Watchlist</button>
-          <button className="btn-orange-primary">[Analyze with AI]</button>
+          <button className="btn-orange-primary">Analyze Stock</button>
           <button className="btn-outline-action">Compare</button>
           <button className="btn-icon-more">[::]</button>
         </div>

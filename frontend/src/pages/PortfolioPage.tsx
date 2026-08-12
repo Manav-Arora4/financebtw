@@ -10,72 +10,61 @@ export const PortfolioPageContent: React.FC = () => {
   ];
 
   return (
-    <div className="terminal-portfolio-page">
+    <div className="terminal-portfolio-container">
       {/* Top Header */}
-      <div className="terminal-page-header">
-        <div className="header-title-block">
-          <span className="terminal-code-tag">&lt;PORT&gt;</span>
-          <div>
-            <h2 className="terminal-title">PORTFOLIO &amp; RISK ANALYTICS WORKSTATION</h2>
-            <p className="terminal-sub">Institutional Value at Risk (VaR), Stress Testing, Beta &amp; Multi-Factor Sensitivity</p>
-          </div>
+      <div className="portfolio-top-bar">
+        <div>
+          <h2 className="portfolio-heading">PORTFOLIO &amp; RISK ANALYTICS</h2>
+          <p className="portfolio-sub">Track holdings, measure Value at Risk (VaR), beta sensitivity, and performance attribution</p>
         </div>
-        <div className="header-action-btns">
-          <button className="btn-term-primary">&lt;ADD POSITION&gt;</button>
-          <button className="btn-term-sec">&lt;EXPORT RISK REPORT&gt;</button>
+        <div className="portfolio-actions">
+          <button className="btn-add-pos">[+] Add Holding</button>
+          <button className="btn-export-rep">&lt;Export Risk Report&gt;</button>
         </div>
       </div>
 
-      {/* Institutional Risk Matrix Grid */}
-      <div className="terminal-metrics-grid">
-        <div className="term-stat-card">
-          <span className="term-stat-code">&lt;NAV&gt;</span>
-          <span className="term-stat-lbl">TOTAL PORTFOLIO VALUATION</span>
-          <span className="term-stat-val pos">₹4,81,713.00</span>
-          <div className="term-stat-sub pos">UNREALIZED P&amp;L: +₹38,263.00 (+8.63%)</div>
+      {/* Portfolio Top Metrics Cards */}
+      <div className="portfolio-stats-grid">
+        <div className="metric-card">
+          <span className="metric-label">PORTFOLIO VALUATION</span>
+          <span className="metric-val-main pos">₹4,81,713.00</span>
+          <div className="metric-sub pos">UNREALIZED P&amp;L: +₹38,263.00 (+8.63%)</div>
         </div>
 
-        <div className="term-stat-card">
-          <span className="term-stat-code">&lt;VaR&gt;</span>
-          <span className="term-stat-lbl">VALUE AT RISK (95% 1-DAY)</span>
-          <span className="term-stat-val neg">-1.42% (₹6,840)</span>
-          <div className="term-stat-sub">EXPECTED SHORTFALL (CVaR): -2.18%</div>
+        <div className="metric-card">
+          <span className="metric-label">VALUE AT RISK (95% 1-DAY)</span>
+          <span className="metric-val-main neg">-1.42% (₹6,840)</span>
+          <div className="metric-sub">EXPECTED SHORTFALL (CVaR): -2.18%</div>
         </div>
 
-        <div className="term-stat-card">
-          <span className="term-stat-code">&lt;BETA&gt;</span>
-          <span className="term-stat-lbl">PORTFOLIO WEIGHTED BETA</span>
-          <span className="term-stat-val">0.94x</span>
-          <div className="term-stat-sub">TRACKING ERROR vs NIFTY: 2.15%</div>
+        <div className="metric-card">
+          <span className="metric-label">PORTFOLIO BETA</span>
+          <span className="metric-val-main">0.94x</span>
+          <div className="metric-sub">LOWER VOLATILITY THAN NIFTY 50</div>
         </div>
 
-        <div className="term-stat-card">
-          <span className="term-stat-code">&lt;RATIOS&gt;</span>
-          <span className="term-stat-lbl">SHARPE &amp; SORTINO RATIO</span>
-          <span className="term-stat-val pos">1.82 / 2.45</span>
-          <div className="term-stat-sub">TREYNOR RATIO: 12.4% | INFO: 0.78</div>
+        <div className="metric-card">
+          <span className="metric-label">SHARPE &amp; SORTINO RATIO</span>
+          <span className="metric-val-main pos">1.82 / 2.45</span>
+          <div className="metric-sub">EXCELLENT RISK-ADJUSTED RETURNS</div>
         </div>
       </div>
 
-      {/* Holdings & Risk Attribution Table */}
-      <div className="terminal-panel" style={{ marginTop: '1.25rem' }}>
-        <div className="panel-header">
-          <div className="panel-title-group">
-            <span className="panel-code">&lt;POS&gt;</span>
-            <span className="panel-title">PORTFOLIO POSITIONS &amp; RISK ATTRIBUTION</span>
-          </div>
-          <span className="source-tag">4 POSITIONS ACTIVE</span>
+      {/* Holdings Table */}
+      <div className="portfolio-holdings-panel">
+        <div className="panel-header-line">
+          <span className="panel-hdr-title">CURRENT POSITIONS &amp; RISK ATTRIBUTION</span>
+          <span className="doc-count-badge">4 OPEN POSITIONS</span>
         </div>
 
-        <div className="terminal-table-container">
-          <table className="terminal-data-table">
+        <div className="table-wrapper">
+          <table className="terminal-table-full">
             <thead>
               <tr>
-                <th>TICKER</th>
-                <th>SECURITY NAME</th>
+                <th>ASSET / SECURITY</th>
                 <th className="num">QTY</th>
-                <th className="num">AVG BUY</th>
-                <th className="num">LAST PX</th>
+                <th className="num">AVG BUY PRICE</th>
+                <th className="num">CURRENT PRICE</th>
                 <th className="num">TOTAL VALUE</th>
                 <th>WEIGHT (%)</th>
                 <th className="num">BETA</th>
@@ -85,19 +74,19 @@ export const PortfolioPageContent: React.FC = () => {
             </thead>
             <tbody>
               {holdings.map((h) => (
-                <tr key={h.symbol} className="term-row">
-                  <td className="ticker-cell">
+                <tr key={h.symbol} className="holding-row">
+                  <td className="holding-name-cell">
                     <strong>{h.symbol}</strong>
+                    <div className="holding-sub-name">{h.name}</div>
                   </td>
-                  <td className="name-cell">{h.name}</td>
                   <td className="num">{h.qty}</td>
                   <td className="num">₹{h.avg}</td>
                   <td className="num bold">₹{h.last}</td>
                   <td className="num bold">₹{h.value}</td>
                   <td>
-                    <div className="weight-bar-wrapper">
-                      <div className="weight-bar" style={{ width: `${h.weight * 2}%` }}></div>
-                      <span className="weight-num">{h.weight}%</span>
+                    <div className="weight-bar-box">
+                      <div className="weight-fill-bar" style={{ width: `${h.weight * 2}%` }}></div>
+                      <span className="weight-val-text">{h.weight}%</span>
                     </div>
                   </td>
                   <td className="num">{h.beta}</td>

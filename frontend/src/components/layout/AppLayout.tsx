@@ -1,6 +1,5 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { TerminalFunctionBar } from './TerminalFunctionBar';
 import { Header } from './Header';
 import { MarketMarquee } from './MarketMarquee';
 import { Sidebar } from './Sidebar';
@@ -11,36 +10,31 @@ export const AppLayout: React.FC = () => {
   const { sidebarCollapsed, isAuthModalOpen, closeAuthModal } = useAppStore();
 
   return (
-    <div className={`terminal-shell ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-      {/* 1. Bloomberg Function Key Strip & Global Clocks */}
-      <TerminalFunctionBar />
-
-      {/* 2. Top Amber Command Line & Market Selectors */}
+    <div className={`terminal-app-root ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+      {/* 1. Unified Bloomberg Command Header */}
       <Header />
 
-      {/* 3. Real-time Continuous Market Ticker Marquee */}
+      {/* 2. Real-time Continuous Market Ticker Marquee */}
       <MarketMarquee />
 
-      <div className="terminal-body">
+      <div className="terminal-workspace-body">
         {/* Left Terminal Sidebar */}
         <Sidebar />
 
-        {/* Dynamic Multi-Panel Terminal Content Pane */}
-        <div className="terminal-viewport">
-          <main className="terminal-content">
+        {/* Dynamic Full-Width Viewport */}
+        <div className="terminal-main-viewport">
+          <main className="terminal-page-content">
             <Outlet />
           </main>
-          <footer className="terminal-footer">
-            <div className="footer-left">
-              <span>FINANCEBTW v0.1.0 // BLOOMBERG PROFESSIONAL SIMULATION</span>
-              <span className="divider-sep">|</span>
-              <span>ORCHESTRATION: LANGGRAPH v0.2</span>
-              <span className="divider-sep">|</span>
-              <span>RAG: LLAMAINDEX HYBRID</span>
+          <footer className="terminal-status-footer">
+            <div className="footer-status-left">
+              <span>FINANCEBTW TERMINAL // REAL-TIME MARKET INTELLIGENCE</span>
+              <span className="footer-divider">|</span>
+              <span>DATA FEEDS: NSE / BSE / YAHOO / NEWSWIRE</span>
             </div>
-            <div className="footer-right">
-              <span className="status-badge-green">[ALL SYSTEMS NOMINAL]</span>
-              <span>LATENCY: 14ms</span>
+            <div className="footer-status-right">
+              <span className="live-status-green">[FEED: 100% ONLINE]</span>
+              <span>LATENCY: 12ms</span>
             </div>
           </footer>
         </div>

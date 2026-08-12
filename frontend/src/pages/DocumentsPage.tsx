@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppStore } from '../store/useAppStore';
 
 interface DocumentItem {
   id: string;
@@ -6,13 +8,16 @@ interface DocumentItem {
   ticker: string;
   category: string;
   size: string;
-  chunks: number;
-  tokens: string;
+  pages: number;
   indexedAt: string;
-  status: 'indexed' | 'processing';
+  status: 'READY' | 'PROCESSING';
 }
 
 export const DocumentsPage: React.FC = () => {
+  const { setSelectedSymbol } = useAppStore();
+  const navigate = useNavigate();
+  const [filterCategory, setFilterCategory] = useState<string>('ALL');
+
   const [documents] = useState<DocumentItem[]>([
     {
       id: 'doc-1',
@@ -20,10 +25,9 @@ export const DocumentsPage: React.FC = () => {
       ticker: 'RELIANCE.NS',
       category: 'ANNUAL_REPORT',
       size: '14.8 MB',
-      chunks: 1420,
-      tokens: '412K',
-      indexedAt: '2026-08-11 18:30:15 UTC',
-      status: 'indexed',
+      pages: 486,
+      indexedAt: '2026-08-11 18:30',
+      status: 'READY',
     },
     {
       id: 'doc-2',
@@ -31,135 +35,124 @@ export const DocumentsPage: React.FC = () => {
       ticker: 'TCS.NS',
       category: 'TRANSCRIPT',
       size: '2.1 MB',
-      chunks: 340,
-      tokens: '98K',
-      indexedAt: '2026-08-11 18:35:40 UTC',
-      status: 'indexed',
+      pages: 32,
+      indexedAt: '2026-08-11 18:35',
+      status: 'READY',
     },
     {
       id: 'doc-3',
       name: 'SEBI_Master_Circular_Portfolio_Managers_2024.pdf',
       ticker: 'REG_INDIA',
-      category: 'SEBI_CIRCULAR',
+      category: 'REGULATORY',
       size: '4.5 MB',
-      chunks: 890,
-      tokens: '254K',
-      indexedAt: '2026-08-11 18:40:02 UTC',
-      status: 'indexed',
+      pages: 124,
+      indexedAt: '2026-08-11 18:40',
+      status: 'READY',
     },
     {
       id: 'doc-4',
       name: 'RBI_Monetary_Policy_Resolution_August_2024.pdf',
       ticker: 'MACRO_INDIA',
-      category: 'RBI_POLICY',
+      category: 'POLICY',
       size: '1.2 MB',
-      chunks: 180,
-      tokens: '52K',
-      indexedAt: '2026-08-11 18:45:18 UTC',
-      status: 'indexed',
+      pages: 18,
+      indexedAt: '2026-08-11 18:45',
+      status: 'READY',
     },
   ]);
 
+  const filteredDocs =
+    filterCategory === 'ALL'
+      ? documents
+      : documents.filter((d) => d.category === filterCategory);
+
+  const handleQueryDoc = (ticker: string) => {
+    if (ticker && ticker !== 'ALL_MARKET' && ticker !== 'REG_INDIA' && ticker !== 'MACRO_INDIA') {
+      setSelectedSymbol(ticker);
+    }
+    navigate('/chat');
+  };
+
   return (
-    <div className="terminal-documents-page">
+    <div className="terminal-documents-container">
       {/* Top Header */}
-      <div className="terminal-page-header">
-        <div className="header-title-block">
-          <span className="terminal-code-tag">&lt;RAG&gt;</span>
-          <div>
-            <h2 className="terminal-title">FINANCIAL KNOWLEDGE BASE &amp; FILINGS WORKSTATION</h2>
-            <p className="terminal-sub">LlamaIndex Hybrid Ingestion, BGE-M3 Dense+Sparse Vectors, Qdrant Collection &amp; Cross-Encoder</p>
-          </div>
+      <div className="documents-top-bar">
+        <div>
+          <h2 className="doc-page-heading">FINANCIAL FILINGS &amp; RESEARCH REPORTS</h2>
+          <p className="doc-page-sub">Access verified annual reports, earnings call transcripts, and regulatory circulars</p>
         </div>
-        <div className="header-action-btns">
-          <button className="btn-term-primary">&lt;UPLOAD FILING&gt;</button>
-          <button className="btn-term-sec">&lt;REINDEX ALL&gt;</button>
-        </div>
+        <button className="btn-upload-filing">
+          [+] Upload New Document
+        </button>
       </div>
 
-      {/* RAG Engine Status Cards */}
-      <div className="terminal-metrics-grid">
-        <div className="term-stat-card">
-          <span className="term-stat-code">&lt;VDB&gt;</span>
-          <span className="term-stat-lbl">VECTOR STORE</span>
-          <span className="term-stat-val">QDRANT</span>
-          <div className="term-stat-sub">COLLECTION: <code>financebtw_documents</code></div>
-        </div>
-
-        <div className="term-stat-card">
-          <span className="term-stat-code">&lt;EMB&gt;</span>
-          <span className="term-stat-lbl">EMBEDDING MODEL</span>
-          <span className="term-stat-val">BAAI/bge-m3</span>
-          <div className="term-stat-sub">1024-DIM DENSE + SPARSE (LOCAL)</div>
-        </div>
-
-        <div className="term-stat-card">
-          <span className="term-stat-code">&lt;RERANK&gt;</span>
-          <span className="term-stat-lbl">CROSS-ENCODER RERANKER</span>
-          <span className="term-stat-val pos">BGE-RERANKER-LARGE</span>
-          <div className="term-stat-sub">TOP-K RESCORING (LOCAL)</div>
-        </div>
-
-        <div className="term-stat-card">
-          <span className="term-stat-code">&lt;NODES&gt;</span>
-          <span className="term-stat-lbl">TOTAL INDEXED NODES</span>
-          <span className="term-stat-val pos">2,830 CHUNKS</span>
-          <div className="term-stat-sub">816K FINANCIAL TOKENS INDEXED</div>
-        </div>
+      {/* Category Filter Pills */}
+      <div className="doc-filter-strip">
+        {['ALL', 'ANNUAL_REPORT', 'TRANSCRIPT', 'REGULATORY', 'POLICY'].map((cat) => (
+          <button
+            key={cat}
+            className={`filter-pill ${filterCategory === cat ? 'active' : ''}`}
+            onClick={() => setFilterCategory(cat)}
+          >
+            [{cat.replace('_', ' ')}]
+          </button>
+        ))}
       </div>
 
-      {/* Terminal Upload Dropzone */}
-      <div className="terminal-panel" style={{ marginTop: '1.25rem', padding: '1.5rem', textAlign: 'center' }}>
-        <div className="dropzone-terminal">
-          <span className="drop-code">&lt;INPUT DROPZONE&gt;</span>
-          <div className="drop-title">DRAG &amp; DROP FINANCIAL FILINGS OR ANNUAL REPORTS HERE</div>
-          <div className="drop-sub">Preserves tables, footnotes, multi-column statements, and numeric balance sheets via LlamaIndex</div>
-          <button className="btn-term-primary" style={{ marginTop: '0.75rem' }}>
-            &lt;BROWSE LOCAL FILES (.PDF, .TXT, .HTML)&gt;
+      {/* Upload Dropzone */}
+      <div className="document-upload-card">
+        <div className="dropzone-inner">
+          <span className="dropzone-icon">[+]</span>
+          <h3 className="dropzone-title">Drop Annual Reports, 10-K Filings, or Transcripts Here</h3>
+          <p className="dropzone-sub">
+            Tables, financial footnotes, and balance sheet statements are automatically indexed for instant AI analysis.
+          </p>
+          <button className="btn-browse-files">
+            Browse Files (.PDF, .DOCX, .TXT)
           </button>
         </div>
       </div>
 
-      {/* Ingested Documents Table */}
-      <div className="terminal-panel" style={{ marginTop: '1.25rem' }}>
-        <div className="panel-header">
-          <div className="panel-title-group">
-            <span className="panel-code">&lt;DOCS&gt;</span>
-            <span className="panel-title">INDEXED KNOWLEDGE BASE FILINGS</span>
-          </div>
-          <span className="source-tag">4 ACTIVE FILINGS</span>
+      {/* Documents Table */}
+      <div className="documents-panel">
+        <div className="panel-header-line">
+          <span className="panel-hdr-title">INDEXED REPOSITORY</span>
+          <span className="doc-count-badge">{filteredDocs.length} DOCUMENTS READY</span>
         </div>
 
-        <div className="terminal-table-container">
-          <table className="terminal-data-table">
+        <div className="table-wrapper">
+          <table className="terminal-table-full">
             <thead>
               <tr>
                 <th>DOCUMENT NAME</th>
                 <th>TARGET TICKER</th>
                 <th>CATEGORY</th>
-                <th className="num">SIZE</th>
-                <th className="num">CHUNKS</th>
-                <th className="num">TOKENS</th>
-                <th>INDEXED TIMESTAMP</th>
+                <th className="num">FILE SIZE</th>
+                <th className="num">PAGES</th>
+                <th>UPLOAD DATE</th>
                 <th>STATUS</th>
                 <th>ACTION</th>
               </tr>
             </thead>
             <tbody>
-              {documents.map((doc) => (
-                <tr key={doc.id} className="term-row">
-                  <td className="ticker-cell">
+              {filteredDocs.map((doc) => (
+                <tr key={doc.id} className="doc-row">
+                  <td className="doc-name-cell">
                     <strong>{doc.name}</strong>
                   </td>
-                  <td><code>&lt;{doc.ticker}&gt;</code></td>
-                  <td><span className="term-badge cyan">[{doc.category}]</span></td>
+                  <td><code>{doc.ticker}</code></td>
+                  <td><span className="category-tag">[{doc.category}]</span></td>
                   <td className="num">{doc.size}</td>
-                  <td className="num">{doc.chunks}</td>
-                  <td className="num">{doc.tokens}</td>
+                  <td className="num">{doc.pages}</td>
                   <td>{doc.indexedAt}</td>
-                  <td><span className="term-badge green">[INDEXED]</span></td>
+                  <td><span className="status-tag-green">[{doc.status}]</span></td>
                   <td>
-                    <button className="btn-term-action">&lt;QUERY&gt;</button>
+                    <button
+                      className="btn-query-doc"
+                      onClick={() => handleQueryDoc(doc.ticker)}
+                    >
+                      &lt;ANALYZE WITH AI&gt;
+                    </button>
                   </td>
                 </tr>
               ))}

@@ -1,93 +1,112 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useAppStore } from '../store/useAppStore';
 
 export const SettingsPage: React.FC = () => {
-  const { user, isConfigured } = useAuth();
+  const { user } = useAuth();
+  const { selectedMarket, setSelectedMarket } = useAppStore();
+  const [refreshRate, setRefreshRate] = useState('5s');
+  const [currency, setCurrency] = useState('INR');
+
   const username =
     (user?.user_metadata?.full_name as string) ||
     (user?.user_metadata?.username as string) ||
-    (user?.email ? user.email.split('@')[0] : 'GUEST');
+    (user?.email ? user.email.split('@')[0] : 'Guest');
 
   return (
-    <div className="terminal-settings-page">
+    <div className="terminal-settings-container">
       {/* Top Header */}
-      <div className="terminal-page-header">
-        <div className="header-title-block">
-          <span className="terminal-code-tag">&lt;CFG&gt;</span>
-          <div>
-            <h2 className="terminal-title">TERMINAL CONFIGURATION &amp; AI MODEL GATEWAY</h2>
-            <p className="terminal-sub">Manage LiteLLM Routing, Local Embedding Engines, Database Caching &amp; API Keys</p>
-          </div>
+      <div className="settings-top-bar">
+        <div>
+          <h2 className="settings-heading">TERMINAL SETTINGS &amp; PREFERENCES</h2>
+          <p className="settings-sub">Customize market feeds, default currencies, refresh rates, and user preferences</p>
         </div>
       </div>
 
-      <div className="terminal-split-grid">
-        {/* AI Stack Configuration */}
-        <div className="terminal-panel">
-          <div className="panel-header">
-            <div className="panel-title-group">
-              <span className="panel-code">&lt;AI_ENGINE&gt;</span>
-              <span className="panel-title">AI MODELS &amp; FRAMEWORKS</span>
-            </div>
-            <span className="term-badge green">[ACTIVE]</span>
+      <div className="settings-grid-split">
+        {/* User Profile & Account */}
+        <div className="settings-panel">
+          <div className="panel-header-line">
+            <span className="panel-hdr-title">USER ACCOUNT &amp; IDENTITY</span>
+            <span className="status-tag-green">[ACTIVE SESSION]</span>
           </div>
 
-          <div className="term-spec-table">
-            <div className="spec-row">
-              <span className="spec-key">AGENT ORCHESTRATION:</span>
-              <span className="spec-val bold amber">LangGraph v0.2 (StateGraph Checkpoints)</span>
+          <div className="settings-fields-list">
+            <div className="setting-field-row">
+              <span className="field-lbl">DISPLAY USERNAME:</span>
+              <span className="field-val bold amber">@{username}</span>
             </div>
-            <div className="spec-row">
-              <span className="spec-key">PRIMARY LLM GATEWAY:</span>
-              <span className="spec-val bold">LiteLLM (Groq GPT-OSS 120B / Llama 3.3 70B)</span>
+            <div className="setting-field-row">
+              <span className="field-lbl">EMAIL ADDRESS:</span>
+              <span className="field-val">{user ? user.email : 'Guest Session (Sign in to sync)'}</span>
             </div>
-            <div className="spec-row">
-              <span className="spec-key">LOCAL EMBEDDING MODEL:</span>
-              <span className="spec-val bold green">BAAI/bge-m3 (Dense 1024-dim + Sparse Lexical)</span>
-            </div>
-            <div className="spec-row">
-              <span className="spec-key">CROSS-ENCODER RERANKER:</span>
-              <span className="spec-val bold green">BAAI/bge-reranker-large (Local Rescorer)</span>
-            </div>
-            <div className="spec-row">
-              <span className="spec-key">HYBRID RAG RETRIEVER:</span>
-              <span className="spec-val bold cyan">LlamaIndex VectorIndex + BM25 + Reciprocal Rank Fusion</span>
+            <div className="setting-field-row">
+              <span className="field-lbl">SECURITY ROLE:</span>
+              <span className="field-val bold">[AUTHENTICATED USER]</span>
             </div>
           </div>
         </div>
 
-        {/* Database & Storage Config */}
-        <div className="terminal-panel">
-          <div className="panel-header">
-            <div className="panel-title-group">
-              <span className="panel-code">&lt;STORAGE&gt;</span>
-              <span className="panel-title">STORAGE &amp; IDENTITY STACK</span>
-            </div>
-            <span className={`term-badge ${isConfigured ? 'green' : 'amber'}`}>
-              {isConfigured ? '[CONFIGURED]' : '[KEYS NEEDED]'}
-            </span>
+        {/* Market Feeds & Data Preferences */}
+        <div className="settings-panel">
+          <div className="panel-header-line">
+            <span className="panel-hdr-title">MARKET FEEDS &amp; DISPLAY</span>
+            <span className="status-tag-cyan">[PREFERENCES]</span>
           </div>
 
-          <div className="term-spec-table">
-            <div className="spec-row">
-              <span className="spec-key">IDENTITY ENGINE:</span>
-              <span className="spec-val bold">Supabase GoTrue (JWT Token Auth)</span>
+          <div className="settings-fields-list">
+            <div className="setting-field-row">
+              <span className="field-lbl">DEFAULT MARKET:</span>
+              <div className="field-controls">
+                <button
+                  className={`btn-setting-pill ${selectedMarket === 'india' ? 'active' : ''}`}
+                  onClick={() => setSelectedMarket('india')}
+                >
+                  [NSE / BSE]
+                </button>
+                <button
+                  className={`btn-setting-pill ${selectedMarket === 'usa' ? 'active' : ''}`}
+                  onClick={() => setSelectedMarket('usa')}
+                >
+                  [USA / SEC]
+                </button>
+                <button
+                  className={`btn-setting-pill ${selectedMarket === 'crypto' ? 'active' : ''}`}
+                  onClick={() => setSelectedMarket('crypto')}
+                >
+                  [CRYPTO]
+                </button>
+              </div>
             </div>
-            <div className="spec-row">
-              <span className="spec-key">ACTIVE SESSION:</span>
-              <span className="spec-val bold cyan">@{username} {user ? `(${user.email})` : '[GUEST]'}</span>
+
+            <div className="setting-field-row">
+              <span className="field-lbl">FEED REFRESH INTERVAL:</span>
+              <div className="field-controls">
+                {['1s (Live)', '5s', '15s', '30s'].map((rate) => (
+                  <button
+                    key={rate}
+                    className={`btn-setting-pill ${refreshRate === rate ? 'active' : ''}`}
+                    onClick={() => setRefreshRate(rate)}
+                  >
+                    [{rate}]
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="spec-row">
-              <span className="spec-key">VECTOR DATABASE:</span>
-              <span className="spec-val bold">Qdrant (Collection: financebtw_documents)</span>
-            </div>
-            <div className="spec-row">
-              <span className="spec-key">RELATIONAL DATABASE:</span>
-              <span className="spec-val bold">PostgreSQL 16 (asyncpg + SQLAlchemy)</span>
-            </div>
-            <div className="spec-row">
-              <span className="spec-key">CACHE &amp; RATE LIMITS:</span>
-              <span className="spec-val bold">Redis 7 (Market Quotes TTL: 300s)</span>
+
+            <div className="setting-field-row">
+              <span className="field-lbl">BASE CURRENCY:</span>
+              <div className="field-controls">
+                {['INR (₹)', 'USD ($)', 'EUR (€)'].map((curr) => (
+                  <button
+                    key={curr}
+                    className={`btn-setting-pill ${currency === curr ? 'active' : ''}`}
+                    onClick={() => setCurrency(curr)}
+                  >
+                    [{curr}]
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>

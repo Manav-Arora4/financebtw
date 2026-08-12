@@ -9,102 +9,71 @@ interface NavItem {
   badge?: string;
 }
 
-interface NavSection {
-  title: string;
-  items: NavItem[];
-}
-
 export const Sidebar: React.FC = () => {
   const { sidebarCollapsed, toggleSidebar, selectedSymbol } = useAppStore();
 
-  const navSections: NavSection[] = [
-    {
-      title: 'RESEARCH & TERMINAL',
-      items: [
-        { path: '/market', label: 'Market Intelligence', code: 'GP', badge: 'LIVE' },
-        { path: '/chat', label: 'AI Financial Chat', code: 'AI', badge: 'LANG' },
-      ],
-    },
-    {
-      title: 'DATA & PORTFOLIO',
-      items: [
-        { path: '/documents', label: 'Filings & Knowledge Base', code: 'RAG', badge: 'QDRANT' },
-        { path: '/portfolio', label: 'Portfolio & Risk Engine', code: 'PORT', badge: 'VaR' },
-      ],
-    },
-    {
-      title: 'SYSTEM & BLUEPRINT',
-      items: [
-        { path: '/overview', label: 'Architecture & 20-Phases', code: 'DES' },
-        { path: '/settings', label: 'Config & Model Gateway', code: 'CFG' },
-      ],
-    },
+  const navItems: NavItem[] = [
+    { path: '/market', label: 'Market Overview', code: 'MKT', badge: 'LIVE' },
+    { path: '/chat', label: 'Financial AI Chat', code: 'AI' },
+    { path: '/documents', label: 'Filings & Reports', code: 'DOC' },
+    { path: '/portfolio', label: 'Portfolio & Risk', code: 'PTF' },
+    { path: '/settings', label: 'Settings & Feeds', code: 'SET' },
   ];
 
   return (
     <aside className={`terminal-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
       {/* Sidebar Header */}
-      <div className="term-sidebar-header">
-        <div className="term-brand">
-          <span className="brand-bloomberg-tag">FB&gt;</span>
-          {!sidebarCollapsed && <span className="term-brand-name">TERMINAL</span>}
-        </div>
+      <div className="sidebar-top-row">
+        {!sidebarCollapsed && <span className="sidebar-title">NAVIGATION</span>}
         <button
-          className="btn-term-collapse"
+          className="btn-sidebar-toggle"
           onClick={toggleSidebar}
           title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
         >
-          {sidebarCollapsed ? '[&gt;]' : '[&lt;]'}
+          {sidebarCollapsed ? '[>]' : '[<]'}
         </button>
       </div>
 
-      {/* Active Security Context */}
+      {/* Active Security Target */}
       {!sidebarCollapsed && (
-        <div className="sidebar-sec-context">
-          <span className="sec-lbl">TARGET SECURITY:</span>
-          <span className="sec-val">{selectedSymbol} &lt;EQ&gt;</span>
+        <div className="sidebar-active-target">
+          <span className="target-lbl">ACTIVE SECURITY:</span>
+          <span className="target-code">{selectedSymbol}</span>
         </div>
       )}
 
-      {/* Navigation Groups */}
-      <nav className="term-sidebar-nav">
-        {navSections.map((sec) => (
-          <div key={sec.title} className="term-nav-group">
-            {!sidebarCollapsed && <div className="term-nav-group-title">{sec.title}</div>}
-            <div className="term-nav-items">
-              {sec.items.map((item) => (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  className={({ isActive }) => `term-nav-link ${isActive ? 'active' : ''}`}
-                  title={sidebarCollapsed ? `${item.code}: ${item.label}` : undefined}
-                >
-                  <span className="term-fn-tag">&lt;{item.code}&gt;</span>
-                  {!sidebarCollapsed && (
-                    <>
-                      <span className="term-nav-text">{item.label}</span>
-                      {item.badge && <span className="term-nav-badge">[{item.badge}]</span>}
-                    </>
-                  )}
-                </NavLink>
-              ))}
-            </div>
-          </div>
+      {/* Nav List */}
+      <nav className="sidebar-nav-list">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
+            title={sidebarCollapsed ? `${item.code}: ${item.label}` : undefined}
+          >
+            <span className="nav-code">&lt;{item.code}&gt;</span>
+            {!sidebarCollapsed && (
+              <>
+                <span className="nav-label">{item.label}</span>
+                {item.badge && <span className="nav-pill">[{item.badge}]</span>}
+              </>
+            )}
+          </NavLink>
         ))}
       </nav>
 
       {/* Sidebar Footer */}
-      <div className="term-sidebar-footer">
+      <div className="sidebar-bottom-status">
         {!sidebarCollapsed ? (
-          <div className="term-footer-meta">
-            <div className="term-status-line">
-              <span className="term-dot-green"></span>
-              <span className="term-status-txt">API: 100% ONLINE</span>
+          <div className="status-container">
+            <div className="status-live-line">
+              <span className="pulse-green"></span>
+              <span className="status-txt">FEED: 100% ONLINE</span>
             </div>
-            <div className="term-env-txt">ENV: PRODUCTION SIM</div>
+            <div className="market-session-txt">SESSION: REGULAR TRADING</div>
           </div>
         ) : (
-          <div className="term-dot-green" title="System Online"></div>
+          <div className="pulse-green" title="Feeds Online"></div>
         )}
       </div>
     </aside>

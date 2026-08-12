@@ -1,27 +1,51 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabasePublishableKey =
+// Read env variables (supporting modern and legacy names with/without VITE_ prefix)
+const envUrl =
+  import.meta.env.VITE_SUPABASE_URL ||
+  import.meta.env.SUPABASE_URL ||
+  '';
+
+const envKey =
   import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
   import.meta.env.VITE_SUPABASE_ANON_KEY ||
-  'placeholder-publishable-key';
+  import.meta.env.SUPABASE_PUBLISHABLE_KEY ||
+  import.meta.env.SUPABASE_ANON_KEY ||
+  '';
+
+const effectiveUrl = envUrl || 'https://placeholder.supabase.co';
+const effectiveKey = envKey || 'placeholder-publishable-key';
 
 export const isSupabaseConfigured = (): boolean => {
-  const url = import.meta.env.VITE_SUPABASE_URL;
-  const key =
-    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-    import.meta.env.VITE_SUPABASE_ANON_KEY;
-  return Boolean(url && key && url !== 'https://placeholder.supabase.co');
+  return Boolean(
+    effectiveUrl &&
+    effectiveKey &&
+    effectiveUrl !== 'https://placeholder.supabase.co' &&
+    effectiveKey !== 'placeholder-publishable-key'
+  );
 };
 
 /**
  * Singleton Supabase Client for FinanceBtw Frontend.
  * Manages OAuth, session tokens, and realtime user state.
  */
-export const supabase: SupabaseClient = createClient(supabaseUrl, supabasePublishableKey, {
+export let supabase: SupabaseClient = createClient(effectiveUrl, effectiveKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
   },
 });
+
+export const reconfigureSupabase = (url: string, key: string): SupabaseClient => {
+  if (url && key && url !== 'https://placeholder.supabase.co') {
+    supabase = createClient(url, key, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+      },
+    });
+  }
+  return supabase;
+};

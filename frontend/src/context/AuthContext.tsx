@@ -1,7 +1,14 @@
 import React, { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { Session, User, Provider } from '@supabase/supabase-js';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { supabase, isSupabaseConfigured, reconfigureSupabase } from '../lib/supabase';
 import apiClient from '../api/client';
+
+interface AuthConfigResponse {
+  auth_provider: string;
+  supabase_url: string;
+  supabase_publishable_key: string;
+  supabase_anon_key: string;
+}
 
 interface AuthContextType {
   user: User | null;
@@ -22,7 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const isConfigured = isSupabaseConfigured();
+  const [configured, setConfigured] = useState<boolean>(isSupabaseConfigured());
 
   const syncWithBackend = async () => {
     try {
@@ -30,40 +37,69 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         await apiClient.post('/api/v1/auth/sync', {});
       }
     } catch {
-      // Background sync warning
+      // Background sync notice
     }
   };
 
   useEffect(() => {
-    if (!isConfigured) {
-      setLoading(false);
-      return;
-    }
+    let unsubscribe: (() => void) | null = null;
 
-    // 1. Check initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    const setupAuth = async () => {
+      let client = supabase;
 
-    // 2. Listen for auth state changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
-      setSession(newSession);
-      setUser(newSession?.user ?? null);
-      setLoading(false);
-      if (newSession?.access_token) {
-        localStorage.setItem('access_token', newSession.access_token);
-        await syncWithBackend();
+      // If not configured from Vite frontend env, fetch from FastAPI backend config
+      if (!isSupabaseConfigured()) {
+        try {
+          const res = await apiClient.get<AuthConfigResponse>('/api/v1/auth/config');
+          const url = res.data.supabase_url;
+          const key = res.data.supabase_publishable_key || res.data.supabase_anon_key;
+
+          if (url && key && url !== 'https://placeholder.supabase.co') {
+            client = reconfigureSupabase(url, key);
+            setConfigured(true);
+          }
+        } catch {
+          // Backend offline or config unavailable
+        }
       } else {
-        localStorage.removeItem('access_token');
+        setConfigured(true);
       }
-    });
+
+      try {
+        // Check initial session
+        const { data } = await client.auth.getSession();
+        setSession(data.session);
+        setUser(data.session?.user ?? null);
+      } catch {
+        // Session check failed
+      } finally {
+        setLoading(false);
+      }
+
+      // Listen for auth changes
+      const { data: authListener } = client.auth.onAuthStateChange(async (_event, newSession) => {
+        setSession(newSession);
+        setUser(newSession?.user ?? null);
+        setLoading(false);
+        if (newSession?.access_token) {
+          localStorage.setItem('access_token', newSession.access_token);
+          await syncWithBackend();
+        } else {
+          localStorage.removeItem('access_token');
+        }
+      });
+
+      unsubscribe = () => {
+        authListener.subscription.unsubscribe();
+      };
+    };
+
+    setupAuth();
 
     return () => {
-      authListener.subscription.unsubscribe();
+      if (unsubscribe) unsubscribe();
     };
-  }, [isConfigured]);
+  }, []);
 
   const signUp = async (email: string, password: string, fullName?: string) => {
     try {
@@ -130,7 +166,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         user,
         session,
         loading,
-        isConfigured,
+        isConfigured: configured,
         signUp,
         signIn,
         signInWithOAuth,

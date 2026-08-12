@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { IconTradingView } from '../icons/Icons';
 
 export const CandlestickChart: React.FC = () => {
   const [timeframe, setTimeframe] = useState<'1D' | '5D' | '1M' | '6M' | 'YTD' | '1Y' | '5Y' | 'MAX'>('1D');
 
   const timeframes = ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y', 'MAX'] as const;
 
-  // Rich continuous realistic dataset with 55 candlestick periods
+  // Rich continuous realistic dataset with 65 candlestick periods
   const candles = [
     { o: 194.2, h: 194.8, l: 194.0, c: 194.6, vol: 15, isGreen: true },
     { o: 194.6, h: 195.1, l: 194.4, c: 195.0, vol: 18, isGreen: true },
@@ -55,15 +56,15 @@ export const CandlestickChart: React.FC = () => {
     { o: 197.9, h: 198.5, l: 197.7, c: 198.3, vol: 68, isGreen: true },
   ];
 
-  // Helper to map price to Y coordinate in svg viewbox 0 0 800 240
+  // Helper to map price to Y coordinate in svg viewbox 0 0 780 240
   const minP = 188.0;
   const maxP = 200.0;
-  const chartHeight = 220;
-  const getY = (p: number) => chartHeight - ((p - minP) / (maxP - minP)) * (chartHeight - 40) - 25;
+  const chartHeight = 240;
+  const getY = (p: number) => chartHeight - ((p - minP) / (maxP - minP)) * (chartHeight - 50) - 30;
 
   const totalCandles = candles.length;
-  const svgWidth = 760;
-  const stepX = (svgWidth - 60) / totalCandles;
+  const svgWidth = 780;
+  const stepX = (svgWidth - 70) / totalCandles;
 
   return (
     <div className="tradingview-chart-panel">
@@ -85,18 +86,19 @@ export const CandlestickChart: React.FC = () => {
         {/* Dropdown Tools */}
         <div className="chart-options-group">
           <button className="btn-chart-dropdown">
-            <span>[::] Candles</span>
-            <span className="dropdown-arrow">[v]</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg>
+            <span>Candles</span>
+            <span className="dropdown-arrow">▾</span>
           </button>
           <button className="btn-chart-dropdown">
             <span>Indicators</span>
-            <span className="dropdown-arrow">[v]</span>
+            <span className="dropdown-arrow">▾</span>
           </button>
           <button className="btn-chart-icon-tool" title="Chart Settings">
-            <span>[CFG]</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           </button>
           <button className="btn-chart-icon-tool" title="Take Screenshot">
-            <span>[IMG]</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           </button>
         </div>
       </div>
@@ -105,51 +107,66 @@ export const CandlestickChart: React.FC = () => {
       <div className="chart-body-with-toolbar">
         {/* Left Drawing Toolbar */}
         <div className="chart-drawing-toolbar">
-          <button className="tool-btn active" title="Crosshair">[+]</button>
-          <button className="tool-btn" title="Trendline">[/]</button>
-          <button className="tool-btn" title="Fibonacci">[=]</button>
-          <button className="tool-btn" title="Text Note">[T]</button>
-          <button className="tool-btn" title="Brush">[~]</button>
-          <button className="tool-btn" title="Measure">[?]</button>
-          <button className="tool-btn" title="Zoom">[+]</button>
+          <button className="tool-btn active" title="Crosshair">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          </button>
+          <button className="tool-btn" title="Trendline">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="4" y1="20" x2="20" y2="4"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="4" r="2"/></svg>
+          </button>
+          <button className="tool-btn" title="Fibonacci">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <button className="tool-btn" title="Text Note">
+            <span style={{ fontWeight: 800, fontSize: 13 }}>T</span>
+          </button>
+          <button className="tool-btn" title="Brush">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+          </button>
+          <button className="tool-btn" title="Measure">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21.3 15.3l-6.6-6.6a2 2 0 0 0-2.8 0L3.3 17.3a2 2 0 0 0 0 2.8l.6.6a2 2 0 0 0 2.8 0l8.6-8.6"/></svg>
+          </button>
+          <button className="tool-btn" title="Zoom">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </button>
         </div>
 
         {/* Chart Viewport Canvas */}
         <div className="chart-canvas-viewport">
           {/* OHLC Banner */}
           <div className="chart-ohlc-banner">
-            <span className="ohlc-metric">O: <strong className="val">194.51</strong></span>
-            <span className="ohlc-metric">H: <strong className="val">196.00</strong></span>
-            <span className="ohlc-metric">L: <strong className="val">194.35</strong></span>
-            <span className="ohlc-metric">C: <strong className="val">195.83</strong></span>
-            <span className="ohlc-delta pos">▲ +2.42 (1.25%)</span>
-            <span className="ohlc-vol">Vol: <strong>52.73M</strong></span>
+            <span className="ohlc-metric">O <strong className="val">194.51</strong></span>
+            <span className="ohlc-metric">H <strong className="val">196.00</strong></span>
+            <span className="ohlc-metric">L <strong className="val">194.35</strong></span>
+            <span className="ohlc-metric">C <strong className="val">195.83</strong></span>
+            <span className="ohlc-delta pos">▲ 2.42 (1.25%)</span>
+            <span className="ohlc-vol">Vol <strong className="vol-val">52.73M</strong></span>
           </div>
 
           {/* SVG Candlestick & Volume Visualization */}
           <div className="svg-candlestick-wrapper">
-            <svg viewBox="0 0 760 220" className="candlestick-svg" preserveAspectRatio="none">
+            <svg viewBox="0 0 780 240" className="candlestick-svg" preserveAspectRatio="none">
               {/* Horizontal Price Grid Lines */}
-              <line x1="0" y1="30" x2="760" y2="30" stroke="#161f30" strokeDasharray="3,3" />
-              <line x1="0" y1="75" x2="760" y2="75" stroke="#161f30" strokeDasharray="3,3" />
-              <line x1="0" y1="120" x2="760" y2="120" stroke="#161f30" strokeDasharray="3,3" />
-              <line x1="0" y1="165" x2="760" y2="165" stroke="#161f30" strokeDasharray="3,3" />
+              <line x1="0" y1="35" x2="780" y2="35" stroke="#161f30" strokeDasharray="3,3" />
+              <line x1="0" y1="85" x2="780" y2="85" stroke="#161f30" strokeDasharray="3,3" />
+              <line x1="0" y1="135" x2="780" y2="135" stroke="#161f30" strokeDasharray="3,3" />
+              <line x1="0" y1="185" x2="780" y2="185" stroke="#161f30" strokeDasharray="3,3" />
 
               {/* Right Y Axis Price Labels */}
-              <text x="715" y="34" fill="#64748b" fontSize="10" fontFamily="Inter">198.00</text>
-              <text x="715" y="79" fill="#64748b" fontSize="10" fontFamily="Inter">196.00</text>
-              <text x="715" y="124" fill="#64748b" fontSize="10" fontFamily="Inter">194.00</text>
-              <text x="715" y="169" fill="#64748b" fontSize="10" fontFamily="Inter">190.00</text>
+              <text x="735" y="39" fill="#64748b" fontSize="10" fontFamily="Inter">198.00</text>
+              <text x="735" y="89" fill="#64748b" fontSize="10" fontFamily="Inter">196.00</text>
+              <text x="735" y="139" fill="#64748b" fontSize="10" fontFamily="Inter">194.00</text>
+              <text x="735" y="189" fill="#64748b" fontSize="10" fontFamily="Inter">190.00</text>
+              <text x="735" y="215" fill="#64748b" fontSize="10" fontFamily="Inter">188.00</text>
 
               {/* Volume Bars at bottom */}
               {candles.map((c, i) => {
-                const posX = 20 + i * stepX;
-                const vHeight = Math.min(c.vol * 0.4, 40);
+                const posX = 15 + i * stepX;
+                const vHeight = Math.min(c.vol * 0.45, 45);
                 return (
                   <rect
                     key={`vol-${i}`}
                     x={posX - 3}
-                    y={210 - vHeight}
+                    y={225 - vHeight}
                     width={6}
                     height={vHeight}
                     fill={c.isGreen ? '#22c55e' : '#ef4444'}
@@ -160,7 +177,7 @@ export const CandlestickChart: React.FC = () => {
 
               {/* Candlestick Wicks & Bodies */}
               {candles.map((c, i) => {
-                const posX = 20 + i * stepX;
+                const posX = 15 + i * stepX;
                 const yHigh = getY(c.h);
                 const yLow = getY(c.l);
                 const yOpen = getY(c.o);
@@ -194,12 +211,18 @@ export const CandlestickChart: React.FC = () => {
               })}
 
               {/* Current Price Dashed Marker Line Across Entire Canvas */}
-              <line x1="0" y1="78" x2="760" y2="78" stroke="#22c55e" strokeDasharray="4,4" strokeWidth={1.5} />
-              <rect x="700" y="68" width="55" height="20" fill="#22c55e" rx={3} />
-              <text x="708" y="82" fill="#000" fontSize="10" fontWeight="800" fontFamily="Inter">
+              <line x1="0" y1="88" x2="780" y2="88" stroke="#22c55e" strokeDasharray="4,4" strokeWidth={1.5} />
+              <rect x="715" y="78" width="60" height="20" fill="#22c55e" rx={3} />
+              <text x="724" y="92" fill="#000" fontSize="10" fontWeight="800" fontFamily="Inter">
                 195.83
               </text>
             </svg>
+
+            {/* TradingView watermark badge */}
+            <div className="tradingview-watermark-tag">
+              <IconTradingView size={16} />
+              <span>TradingView</span>
+            </div>
           </div>
 
           {/* Time Axis Labels */}

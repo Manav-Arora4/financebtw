@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
+import { IconApple, IconStar, IconSparkles, IconCompare } from '../icons/Icons';
 
 export const AssetHeader: React.FC = () => {
   const { selectedSymbol } = useAppStore();
+  const [isStarred, setIsStarred] = useState(true);
 
+  const isApple = selectedSymbol.includes('AAPL');
   const isNse = selectedSymbol.includes('.NS') || selectedSymbol.includes('RELIANCE');
-  const companyName = isNse ? 'Reliance Industries Ltd.' : 'Apple Inc.';
+  const companyName = isApple ? 'Apple Inc.' : isNse ? 'Reliance Industries Ltd.' : 'Apple Inc.';
   const tickerClean = selectedSymbol.replace('.NS', '');
   const exchangeTag = isNse ? 'NSE' : 'NASDAQ';
   const sectorTag = isNse ? 'Energy / Retail' : 'Technology';
-  const price = isNse ? '₹2,985.50' : '$195.83';
+  const price = isNse ? '₹2,985.50' : '195.83';
   const currency = isNse ? 'INR' : 'USD';
-  const change = isNse ? '+32.10 (+1.09%)' : '+2.42 (+1.25%)';
-  const afterHours = isNse ? '2,988.00 ▲ +2.50 (+0.08%)' : '196.21 ▲ +0.38 (+0.19%)';
+  const change = isNse ? '▲ +32.10 (1.09%)' : '▲ 2.42 (1.25%)';
+  const afterHours = isNse ? '2,988.00 ▲ +2.50 (+0.08%)' : '196.21 ▲ 0.38 (0.19%)';
 
   const stats = [
-    { label: 'Market Cap', val: isNse ? '₹20.2T' : '$3.01T' },
+    { label: 'Market Cap', val: isNse ? '₹20.2T' : '3.01T' },
     { label: 'P/E (TTM)', val: '28.42' },
     { label: 'EPS (TTM)', val: isNse ? '₹105.10' : '6.89' },
     { label: 'Dividend Yield', val: '0.48%' },
@@ -29,7 +32,7 @@ export const AssetHeader: React.FC = () => {
       <div className="asset-breadcrumb">
         <span>Dashboard</span>
         <span className="crumb-sep">&gt;</span>
-        <span className="crumb-active">{companyName} ({selectedSymbol})</span>
+        <span className="crumb-active">{companyName} ({tickerClean})</span>
       </div>
 
       {/* Main Top Row */}
@@ -37,12 +40,18 @@ export const AssetHeader: React.FC = () => {
         {/* Left Ticker & Name */}
         <div className="asset-brand-block">
           <div className="asset-logo-icon">
-            <span>[#]</span>
+            <IconApple size={24} />
           </div>
           <div className="asset-title-column">
             <div className="ticker-star-row">
               <h1 className="asset-ticker-title">{tickerClean}</h1>
-              <button className="btn-star-fav" title="Add to Watchlist">[*]</button>
+              <button
+                className={`btn-star-fav ${isStarred ? 'active' : ''}`}
+                onClick={() => setIsStarred(!isStarred)}
+                title="Toggle Watchlist"
+              >
+                <IconStar size={18} filled={isStarred} />
+              </button>
             </div>
             <div className="asset-meta-tags">
               <span className="company-full-name">{companyName}</span>
@@ -54,10 +63,20 @@ export const AssetHeader: React.FC = () => {
 
         {/* Right Action Buttons */}
         <div className="asset-action-buttons">
-          <button className="btn-outline-action">[+] Add to Watchlist</button>
-          <button className="btn-orange-primary">Analyze Stock</button>
-          <button className="btn-outline-action">Compare</button>
-          <button className="btn-icon-more">[::]</button>
+          <button className="btn-outline-action">
+            <span>+ Add to Watchlist</span>
+          </button>
+          <button className="btn-orange-primary">
+            <IconSparkles size={14} />
+            <span>Analyze Stock</span>
+          </button>
+          <button className="btn-outline-action">
+            <IconCompare size={14} />
+            <span>Compare</span>
+          </button>
+          <button className="btn-icon-more" title="More options">
+            <span>•••</span>
+          </button>
         </div>
       </div>
 
@@ -68,7 +87,7 @@ export const AssetHeader: React.FC = () => {
           <div className="price-main-line">
             <span className="price-big-num">{price}</span>
             <span className="price-currency-code">{currency}</span>
-            <span className="price-change-pill pos">▲ {change}</span>
+            <span className="price-change-pill pos">{change}</span>
           </div>
           <div className="price-after-hours">
             After Hours: <span className="after-val">{afterHours}</span>

@@ -1,6 +1,30 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppStore } from '../../store/useAppStore';
+import {
+  IconDashboard,
+  IconMarkets,
+  IconWatchlist,
+  IconHeatmap,
+  IconScreener,
+  IconAlerts,
+  IconPortfolio,
+  IconHoldings,
+  IconPerformance,
+  IconTransactions,
+  IconSparkles,
+  IconResearch,
+  IconNews,
+  IconFilings,
+  IconTranscripts,
+  IconDocuments,
+  IconCompare,
+  IconOptionsChain,
+  IconBacktest,
+  IconDCF,
+  IconChevronLeft,
+  IconMoon,
+} from '../icons/Icons';
 
 export const Sidebar: React.FC = () => {
   const { sidebarCollapsed, toggleSidebar } = useAppStore();
@@ -9,40 +33,40 @@ export const Sidebar: React.FC = () => {
     {
       title: 'MARKETS',
       items: [
-        { path: '/market', label: 'Markets', tag: '[M]' },
-        { path: '/market', label: 'Watchlist', tag: '[W]' },
-        { path: '/market', label: 'Heatmap', tag: '[H]' },
-        { path: '/market', label: 'Screener', tag: '[S]' },
-        { path: '/market', label: 'Alerts', tag: '[A]' },
+        { path: '/market', label: 'Markets', icon: <IconMarkets size={16} /> },
+        { path: '/market', label: 'Watchlist', icon: <IconWatchlist size={16} /> },
+        { path: '/market', label: 'Heatmap', icon: <IconHeatmap size={16} /> },
+        { path: '/market', label: 'Screener', icon: <IconScreener size={16} /> },
+        { path: '/market', label: 'Alerts', icon: <IconAlerts size={16} /> },
       ],
     },
     {
       title: 'PORTFOLIO',
       items: [
-        { path: '/portfolio', label: 'Portfolio', tag: '[P]' },
-        { path: '/portfolio', label: 'Holdings', tag: '[H]' },
-        { path: '/portfolio', label: 'Performance', tag: '[R]' },
-        { path: '/portfolio', label: 'Transactions', tag: '[T]' },
+        { path: '/portfolio', label: 'Portfolio', icon: <IconPortfolio size={16} /> },
+        { path: '/portfolio', label: 'Holdings', icon: <IconHoldings size={16} /> },
+        { path: '/portfolio', label: 'Performance', icon: <IconPerformance size={16} /> },
+        { path: '/portfolio', label: 'Transactions', icon: <IconTransactions size={16} /> },
       ],
     },
     {
       title: 'RESEARCH',
       items: [
-        { path: '/chat', label: 'AI Assistant', tag: '[AI]', isSparkle: true },
-        { path: '/chat', label: 'Research', tag: '[RS]' },
-        { path: '/documents', label: 'News', tag: '[NW]' },
-        { path: '/documents', label: 'Filings', tag: '[FL]' },
-        { path: '/documents', label: 'Transcripts', tag: '[TR]' },
-        { path: '/documents', label: 'Documents', tag: '[DC]' },
+        { path: '/chat', label: 'AI Assistant', icon: <IconSparkles size={16} /> },
+        { path: '/chat', label: 'Research', icon: <IconResearch size={16} /> },
+        { path: '/documents', label: 'News', icon: <IconNews size={16} /> },
+        { path: '/documents', label: 'Filings', icon: <IconFilings size={16} /> },
+        { path: '/documents', label: 'Transcripts', icon: <IconTranscripts size={16} /> },
+        { path: '/documents', label: 'Documents', icon: <IconDocuments size={16} /> },
       ],
     },
     {
       title: 'TOOLS',
       items: [
-        { path: '/market', label: 'Compare', tag: '[CP]' },
-        { path: '/market', label: 'Options Chain', tag: '[OC]' },
-        { path: '/market', label: 'Backtest', tag: '[BT]' },
-        { path: '/settings', label: 'DCF Calculator', tag: '[DCF]' },
+        { path: '/market', label: 'Compare', icon: <IconCompare size={16} /> },
+        { path: '/market', label: 'Options Chain', icon: <IconOptionsChain size={16} /> },
+        { path: '/market', label: 'Backtest', icon: <IconBacktest size={16} /> },
+        { path: '/settings', label: 'DCF Calculator', icon: <IconDCF size={16} /> },
       ],
     },
   ];
@@ -55,7 +79,7 @@ export const Sidebar: React.FC = () => {
           to="/market"
           className={({ isActive }) => `dashboard-main-btn ${isActive ? 'active' : ''}`}
         >
-          <span className="btn-dash-icon">[::]</span>
+          <IconDashboard size={18} />
           {!sidebarCollapsed && <span className="btn-dash-label">Dashboard</span>}
         </NavLink>
       </div>
@@ -73,7 +97,7 @@ export const Sidebar: React.FC = () => {
                   className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
                   title={sidebarCollapsed ? item.label : undefined}
                 >
-                  <span className="item-ascii-icon">{item.tag}</span>
+                  <span className="sidebar-item-icon">{item.icon}</span>
                   {!sidebarCollapsed && <span className="item-label-text">{item.label}</span>}
                 </NavLink>
               ))}
@@ -85,12 +109,12 @@ export const Sidebar: React.FC = () => {
       {/* Bottom Footer Actions */}
       <div className="sidebar-bottom-actions">
         <button className="btn-collapse-sidebar" onClick={toggleSidebar}>
-          <span className="collapse-icon">{sidebarCollapsed ? '[>]' : '[<]'}</span>
+          <IconChevronLeft size={16} className={`collapse-chevron ${sidebarCollapsed ? 'rotated' : ''}`} />
           {!sidebarCollapsed && <span>Collapse</span>}
         </button>
         {!sidebarCollapsed && (
           <button className="btn-theme-toggle" title="Dark Theme Active">
-            <span>[D]</span>
+            <IconMoon size={16} />
           </button>
         )}
       </div>

@@ -3,21 +3,27 @@ import React from 'react';
 export const LatestNewsCard: React.FC = () => {
   const newsItems = [
     {
-      sourceIcon: '[B]',
+      sourceIcon: (
+        <span className="news-brand-badge bloomberg">B</span>
+      ),
       headline: 'Apple reports Q1 earnings beat, services revenue hits record high',
-      source: 'Institutional Wire',
+      source: 'Bloomberg',
       timeAgo: '2h ago',
     },
     {
-      sourceIcon: '[C]',
-      headline: 'Vision Pro 2 enterprise adoption expected in late 2025: Report',
-      source: 'Tech Wire',
+      sourceIcon: (
+        <span className="news-brand-badge cnbc">CNBC</span>
+      ),
+      headline: 'Apple Vision Pro 2 expected in late 2025: Report',
+      source: 'CNBC',
       timeAgo: '5h ago',
     },
     {
-      sourceIcon: '[R]',
-      headline: 'Apple expands enterprise cloud partnership, integrates new features across ecosystem',
-      source: 'Global News',
+      sourceIcon: (
+        <span className="news-brand-badge reuters">R</span>
+      ),
+      headline: 'Apple expands enterprise partnership, integrates new features across ecosystem',
+      source: 'Reuters',
       timeAgo: '1d ago',
     },
   ];
@@ -31,8 +37,8 @@ export const LatestNewsCard: React.FC = () => {
       <div className="news-items-container">
         {newsItems.map((n, i) => (
           <div key={i} className="news-article-row">
-            <div className="news-source-logo-box">
-              <span>{n.sourceIcon}</span>
+            <div className="news-source-logo-wrapper">
+              {n.sourceIcon}
             </div>
             <div className="news-content-col">
               <h4 className="news-headline-text">{n.headline}</h4>

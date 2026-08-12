@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useAppStore } from '../../store/useAppStore';
+import { IconSearch, IconBell, IconDashboard } from '../icons/Icons';
 
 export const Header: React.FC = () => {
   const { user, signOut } = useAuth();
@@ -27,14 +28,14 @@ export const Header: React.FC = () => {
       {/* Brand Logo */}
       <div className="header-brand">
         <div className="brand-logo-icon">
-          <span className="logo-symbol">[FB]</span>
+          <IconDashboard size={18} />
         </div>
         <span className="brand-title-text">FinanceBtw</span>
       </div>
 
       {/* Global Search Bar */}
       <form className="header-search-bar" onSubmit={handleSearchSubmit}>
-        <span className="search-icon-symbol">[?]</span>
+        <IconSearch size={16} className="search-icon-svg" />
         <input
           type="text"
           className="search-input-field"
@@ -47,9 +48,13 @@ export const Header: React.FC = () => {
 
       {/* Header Right Actions */}
       <div className="header-right-actions">
+        <button className="header-icon-action-btn" title="Search">
+          <IconSearch size={16} />
+        </button>
+
         {/* Notification Bell */}
         <div className="notification-bell-btn" title="12 New Market Alerts">
-          <span className="bell-icon">[!]</span>
+          <IconBell size={16} />
           <span className="notif-badge-count">12</span>
         </div>
 
@@ -66,7 +71,7 @@ export const Header: React.FC = () => {
           </div>
         ) : (
           <button className="btn-signin-header" onClick={openAuthModal}>
-            [+] Sign In
+            Sign In
           </button>
         )}
       </div>

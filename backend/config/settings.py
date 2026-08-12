@@ -72,6 +72,15 @@ class Settings(BaseSettings):
     supabase_jwt_algorithm: str = "HS256"
 
     @property
+    def effective_supabase_url(self) -> str:
+        """Returns sanitized Supabase base URL (stripped of trailing /rest/v1 or slashes)."""
+        url = self.supabase_url.strip()
+        for suffix in ("/rest/v1/", "/rest/v1", "/auth/v1/", "/auth/v1", "/"):
+            if url.endswith(suffix):
+                url = url[:-len(suffix)]
+        return url
+
+    @property
     def effective_supabase_publishable_key(self) -> str:
         """Returns modern publishable key or legacy anon key."""
         return self.supabase_publishable_key or self.supabase_anon_key

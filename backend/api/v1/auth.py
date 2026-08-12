@@ -106,7 +106,7 @@ async def get_auth_public_config() -> dict[str, str]:
     """
     return {
         "auth_provider": "supabase",
-        "supabase_url": settings.supabase_url,
+        "supabase_url": settings.effective_supabase_url,
         "supabase_publishable_key": settings.effective_supabase_publishable_key,
         "supabase_anon_key": settings.effective_supabase_publishable_key,  # Backwards compatibility
     }

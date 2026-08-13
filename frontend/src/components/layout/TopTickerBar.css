@@ -1,0 +1,117 @@
+/* ============================================================
+   TOP TICKER BAR — Phase 2
+   ============================================================ */
+
+.fs-ticker {
+  height: var(--ticker-bar-height);
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border-faint);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Scrolling track ────────────────────────────────────── */
+.fs-ticker__scroll {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.fs-ticker__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: fs-ticker-scroll 60s linear infinite;
+}
+
+.fs-ticker__track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes fs-ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Individual ticker item ─────────────────────────────── */
+.fs-ticker__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 var(--space-3);
+  height: var(--ticker-bar-height);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  border-right: 1px solid var(--border-faint);
+  transition: background var(--duration-fast);
+  font-family: var(--font-sans);
+}
+
+.fs-ticker__item:hover {
+  background: var(--bg-surface-2);
+}
+
+.fs-ticker__symbol {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-bold);
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-wide);
+}
+
+.fs-ticker__price {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+.fs-ticker__change {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+}
+
+.fs-ticker__change--pos { color: var(--color-positive); }
+.fs-ticker__change--neg { color: var(--color-negative); }
+
+/* ── Right status ───────────────────────────────────────── */
+.fs-ticker__status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 var(--space-3);
+  border-left: 1px solid var(--border-faint);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.fs-ticker__status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-positive);
+  box-shadow: 0 0 5px var(--color-positive);
+  flex-shrink: 0;
+  animation: fs-pulse-small 2s ease-in-out infinite;
+}
+
+@keyframes fs-pulse-small {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+.fs-ticker__status-text {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-positive);
+}
+
+.fs-ticker__time {
+  font-size: var(--text-2xs);
+  font-family: var(--font-mono);
+  color: var(--text-subdued);
+}

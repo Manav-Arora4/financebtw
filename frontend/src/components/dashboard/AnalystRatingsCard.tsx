@@ -1,15 +1,14 @@
 import React from 'react';
 
 export const AnalystRatingsCard: React.FC = () => {
-  // Radius = 38, strokeWidth = 7. Inner clear radius = 34.5 (diameter 69).
-  // Circumference = 2 * PI * 38 = 238.76
-  const circ = 238.76;
+  // Radius = 40, strokeWidth = 8. Circumference = 2 * PI * 40 = 251.32
+  const circ = 251.32;
   const buyLen = (78 / 100) * circ;
   const holdLen = (19 / 100) * circ;
   const sellLen = (3 / 100) * circ;
 
   return (
-    <div className="finsight-card analyst-ratings-card">
+    <div className="financebtw-card analyst-ratings-card">
       <div className="card-top-title-row">
         <h3 className="card-main-heading">Analyst Ratings</h3>
       </div>
@@ -22,19 +21,19 @@ export const AnalystRatingsCard: React.FC = () => {
             <circle
               cx="50"
               cy="50"
-              r="38"
+              r="40"
               fill="none"
               stroke="#131c2c"
-              strokeWidth="7"
+              strokeWidth="8"
             />
             {/* 1. Green Buy Arc (78%) */}
             <circle
               cx="50"
               cy="50"
-              r="38"
+              r="40"
               fill="none"
               stroke="#22c55e"
-              strokeWidth="7"
+              strokeWidth="8"
               strokeDasharray={`${buyLen} ${circ - buyLen}`}
               strokeDashoffset="0"
               transform="rotate(-90 50 50)"
@@ -43,10 +42,10 @@ export const AnalystRatingsCard: React.FC = () => {
             <circle
               cx="50"
               cy="50"
-              r="38"
+              r="40"
               fill="none"
               stroke="#ef4444"
-              strokeWidth="7"
+              strokeWidth="8"
               strokeDasharray={`${sellLen} ${circ - sellLen}`}
               strokeDashoffset={`-${buyLen}`}
               transform="rotate(-90 50 50)"
@@ -55,23 +54,23 @@ export const AnalystRatingsCard: React.FC = () => {
             <circle
               cx="50"
               cy="50"
-              r="38"
+              r="40"
               fill="none"
               stroke="#64748b"
-              strokeWidth="7"
+              strokeWidth="8"
               strokeDasharray={`${holdLen} ${circ - holdLen}`}
               strokeDashoffset={`-${buyLen + sellLen}`}
               transform="rotate(-90 50 50)"
             />
 
-            {/* Centered Score & Clean Title-Case Label */}
+            {/* Centered Score & Clean Label */}
             <text
               x="50"
-              y="45"
+              y="44"
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#ffffff"
-              fontSize="21"
+              fontSize="23"
               fontWeight="800"
               fontFamily="Inter, sans-serif"
             >
@@ -79,12 +78,12 @@ export const AnalystRatingsCard: React.FC = () => {
             </text>
             <text
               x="50"
-              y="60"
+              y="62"
               textAnchor="middle"
               dominantBaseline="middle"
               fill="#94a3b8"
-              fontSize="8"
-              fontWeight="500"
+              fontSize="8.5"
+              fontWeight="600"
               fontFamily="Inter, sans-serif"
             >
               Outperform

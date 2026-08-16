@@ -1,0 +1,160 @@
+/* ============================================================
+   BUTTON COMPONENT
+   ============================================================ */
+
+.fs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+  outline: none;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.fs-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+/* ── Sizes ──────────────────────────────────────────────── */
+.fs-btn--xs {
+  height: 24px;
+  padding: 0 var(--space-2);
+  font-size: var(--text-2xs);
+}
+
+.fs-btn--sm {
+  height: var(--btn-height-sm);
+  padding: 0 var(--space-2-5);
+  font-size: var(--text-xs);
+}
+
+.fs-btn--md {
+  height: var(--btn-height-md);
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.fs-btn--lg {
+  height: var(--btn-height-lg);
+  padding: 0 var(--space-4);
+  font-size: var(--text-base);
+}
+
+/* ── Full Width ─────────────────────────────────────────── */
+.fs-btn--full {
+  width: 100%;
+}
+
+/* ── Variants ───────────────────────────────────────────── */
+
+/* Brand (orange) */
+.fs-btn--brand {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.fs-btn--brand:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Primary */
+.fs-btn--primary {
+  background: var(--bg-surface-4);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+.fs-btn--primary:hover:not(:disabled) {
+  background: var(--bg-surface-3);
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+/* Secondary */
+.fs-btn--secondary {
+  background: var(--bg-surface-2);
+  border-color: var(--border-default);
+  color: var(--text-secondary);
+}
+.fs-btn--secondary:hover:not(:disabled) {
+  background: var(--bg-surface-3);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+/* Ghost */
+.fs-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-secondary);
+}
+.fs-btn--ghost:hover:not(:disabled) {
+  background: var(--bg-surface-3);
+  color: var(--text-primary);
+}
+
+/* Danger */
+.fs-btn--danger {
+  background: var(--color-negative-dim);
+  border-color: var(--color-negative);
+  color: var(--color-negative);
+}
+.fs-btn--danger:hover:not(:disabled) {
+  background: var(--color-negative);
+  color: #fff;
+}
+
+/* ── Active state ───────────────────────────────────────── */
+.fs-btn--active {
+  background: var(--accent-muted) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+/* ── Loading state ──────────────────────────────────────── */
+.fs-btn--loading {
+  cursor: wait;
+}
+
+.fs-btn__spinner {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: fs-spin 0.6s linear infinite;
+  opacity: 0.7;
+}
+
+/* ── Icons ──────────────────────────────────────────────── */
+.fs-btn__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fs-btn__label {
+  display: inline-block;
+  line-height: 1;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes fs-spin {
+  to { transform: rotate(360deg); }
+}

@@ -32,7 +32,7 @@ export const MarketPage: React.FC = () => {
   // 1. Dedicated Watchlist View
   if (activeNavTab === 'Watchlist') {
     return (
-      <div className="finsight-market-dashboard">
+      <div className="financebtw-market-dashboard">
         <div className="subview-header-bar">
           <div>
             <h2 className="subview-heading">Indian Equities Watchlist</h2>
@@ -43,7 +43,7 @@ export const MarketPage: React.FC = () => {
           </button>
         </div>
 
-        <div className="finsight-card">
+        <div className="financebtw-card">
           <table className="terminal-table-full">
             <thead>
               <tr>
@@ -92,7 +92,7 @@ export const MarketPage: React.FC = () => {
     ];
 
     return (
-      <div className="finsight-market-dashboard">
+      <div className="financebtw-market-dashboard">
         <div className="subview-header-bar">
           <div>
             <h2 className="subview-heading">Nifty 50 Sector Heatmap</h2>
@@ -129,7 +129,7 @@ export const MarketPage: React.FC = () => {
   // 3. Dedicated Stock Screener View
   if (activeNavTab === 'Screener') {
     return (
-      <div className="finsight-market-dashboard">
+      <div className="financebtw-market-dashboard">
         <div className="subview-header-bar">
           <div>
             <h2 className="subview-heading">Indian Equities Stock Screener</h2>
@@ -140,7 +140,7 @@ export const MarketPage: React.FC = () => {
           </button>
         </div>
 
-        <div className="finsight-card">
+        <div className="financebtw-card">
           <div className="screener-filter-bar">
             <span className="filter-lbl">Filters:</span>
             <span className="filter-badge">Market Cap &gt; ₹50,000 Cr</span>
@@ -186,7 +186,7 @@ export const MarketPage: React.FC = () => {
 
   // Default: Master 1:1 Dashboard View
   return (
-    <div className="finsight-market-dashboard">
+    <div className="financebtw-market-dashboard">
       {/* 1. Active Security Header & Fundamentals Row */}
       <AssetHeader />
 

@@ -1,0 +1,83 @@
+/* ============================================================
+   BADGE COMPONENT
+   ============================================================ */
+
+.fs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-xs);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-wide);
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+/* ── Sizes ──────────────────────────────────────────────── */
+.fs-badge--xs {
+  padding: 1px 4px;
+  font-size: var(--text-2xs);
+}
+
+.fs-badge--sm {
+  padding: 2px 5px;
+  font-size: var(--text-xs);
+}
+
+.fs-badge--md {
+  padding: 3px 7px;
+  font-size: var(--text-sm);
+}
+
+/* ── Variants ───────────────────────────────────────────── */
+.fs-badge--default {
+  background: var(--bg-surface-3);
+  border-color: var(--border-default);
+  color: var(--text-secondary);
+}
+
+.fs-badge--positive {
+  background: var(--color-positive-dim);
+  border-color: transparent;
+  color: var(--color-positive);
+}
+
+.fs-badge--negative {
+  background: var(--color-negative-dim);
+  border-color: transparent;
+  color: var(--color-negative);
+}
+
+.fs-badge--warning {
+  background: var(--color-warning-dim);
+  border-color: transparent;
+  color: var(--color-warning);
+}
+
+.fs-badge--info {
+  background: var(--color-info-dim);
+  border-color: transparent;
+  color: var(--color-info);
+}
+
+.fs-badge--brand {
+  background: var(--accent-muted);
+  border-color: var(--border-brand);
+  color: var(--accent);
+}
+
+.fs-badge--ghost {
+  background: transparent;
+  border-color: var(--border-default);
+  color: var(--text-subdued);
+}
+
+/* ── Dot indicator ──────────────────────────────────────── */
+.fs-badge__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}

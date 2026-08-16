@@ -224,6 +224,7 @@ async def test_auth_api_me_endpoint(monkeypatch: pytest.MonkeyPatch) -> None:
 async def test_auth_api_sync_endpoint(monkeypatch: pytest.MonkeyPatch) -> None:
     """Test POST /api/v1/auth/sync returns 200 and synced user_id."""
     from unittest.mock import AsyncMock, MagicMock
+
     from backend.db.session import get_db
 
     monkeypatch.setattr(settings, "supabase_jwt_secret", TEST_SECRET)

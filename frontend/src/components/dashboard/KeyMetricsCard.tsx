@@ -13,7 +13,7 @@ export const KeyMetricsCard: React.FC = () => {
   ];
 
   return (
-    <div className="finsight-card key-metrics-card">
+    <div className="financebtw-card key-metrics-card">
       <div className="card-top-title-row">
         <h3 className="card-main-heading">Key Metrics</h3>
       </div>

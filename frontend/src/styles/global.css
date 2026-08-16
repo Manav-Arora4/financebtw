@@ -1,0 +1,137 @@
+/* ============================================================
+   FINANCE BTW GLOBAL LAYOUT
+   Master shell and layout primitives only.
+   No component-specific rules here.
+   ============================================================ */
+
+@import './tokens.css';
+@import './reset.css';
+
+/* ── App Shell Grid ─────────────────────────────────────── */
+.fs-app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background: var(--bg-app);
+  overflow: hidden;
+}
+
+/* ── Workspace Body (Sidebar + Main + AI Panel) ─────────── */
+.fs-workspace {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Main Content Area ──────────────────────────────────── */
+.fs-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.fs-page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-3) var(--space-4);
+}
+
+/* ── Utility: Flex helpers ──────────────────────────────── */
+.flex        { display: flex; }
+.flex-col    { display: flex; flex-direction: column; }
+.flex-1      { flex: 1; min-width: 0; }
+.items-center { align-items: center; }
+.items-start  { align-items: flex-start; }
+.items-end    { align-items: flex-end; }
+.justify-between { justify-content: space-between; }
+.justify-start   { justify-content: flex-start; }
+.justify-center  { justify-content: center; }
+.justify-end     { justify-content: flex-end; }
+.gap-1  { gap: var(--space-1); }
+.gap-2  { gap: var(--space-2); }
+.gap-3  { gap: var(--space-3); }
+.gap-4  { gap: var(--space-4); }
+.gap-6  { gap: var(--space-6); }
+.wrap   { flex-wrap: wrap; }
+
+/* ── Utility: Spacing ───────────────────────────────────── */
+.p-0   { padding: 0; }
+.p-2   { padding: var(--space-2); }
+.p-3   { padding: var(--space-3); }
+.p-4   { padding: var(--space-4); }
+.px-2  { padding-left: var(--space-2); padding-right: var(--space-2); }
+.px-3  { padding-left: var(--space-3); padding-right: var(--space-3); }
+.py-1  { padding-top: var(--space-1); padding-bottom: var(--space-1); }
+.py-2  { padding-top: var(--space-2); padding-bottom: var(--space-2); }
+.mt-1  { margin-top: var(--space-1); }
+.mt-2  { margin-top: var(--space-2); }
+.mt-3  { margin-top: var(--space-3); }
+.mb-1  { margin-bottom: var(--space-1); }
+.mb-2  { margin-bottom: var(--space-2); }
+.mb-3  { margin-bottom: var(--space-3); }
+
+/* ── Utility: Typography ────────────────────────────────── */
+.text-2xs   { font-size: var(--text-2xs); }
+.text-xs    { font-size: var(--text-xs); }
+.text-sm    { font-size: var(--text-sm); }
+.text-base  { font-size: var(--text-base); }
+.text-md    { font-size: var(--text-md); }
+.text-lg    { font-size: var(--text-lg); }
+.text-xl    { font-size: var(--text-xl); }
+.text-2xl   { font-size: var(--text-2xl); }
+.font-medium   { font-weight: var(--weight-medium); }
+.font-semibold { font-weight: var(--weight-semibold); }
+.font-bold     { font-weight: var(--weight-bold); }
+.font-mono     { font-family: var(--font-mono); }
+.tracking-wider { letter-spacing: var(--tracking-wider); }
+.tracking-widest { letter-spacing: var(--tracking-widest); }
+.uppercase  { text-transform: uppercase; }
+.truncate   { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
+/* ── Utility: Colors ────────────────────────────────────── */
+.text-primary   { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-subdued   { color: var(--text-subdued); }
+.text-brand     { color: var(--text-brand); }
+.text-positive  { color: var(--text-positive); }
+.text-negative  { color: var(--text-negative); }
+.text-warning   { color: var(--text-warning); }
+
+/* ── Utility: Overflow ──────────────────────────────────── */
+.overflow-hidden { overflow: hidden; }
+.overflow-auto   { overflow: auto; }
+.min-w-0         { min-width: 0; }
+.w-full          { width: 100%; }
+.h-full          { height: 100%; }
+
+/* ── Dividers ───────────────────────────────────────────── */
+.divider-h {
+  width: 100%;
+  height: 1px;
+  background: var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.divider-v {
+  width: 1px;
+  align-self: stretch;
+  background: var(--border-subtle);
+  flex-shrink: 0;
+}
+
+/* ── Section Headers ────────────────────────────────────── */
+.section-label {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-subdued);
+}

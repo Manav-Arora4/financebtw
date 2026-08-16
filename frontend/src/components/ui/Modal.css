@@ -1,0 +1,102 @@
+/* ============================================================
+   MODAL COMPONENT
+   ============================================================ */
+
+.fs-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: var(--bg-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  animation: fs-fade-in var(--duration-normal) var(--ease-decelerate);
+}
+
+.fs-modal {
+  width: 100%;
+  background: var(--bg-surface-0);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  animation: fs-slide-up var(--duration-slow) var(--ease-decelerate);
+  overflow: hidden;
+}
+
+.fs-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.fs-modal__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fs-modal__title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.fs-modal__subtitle {
+  font-size: var(--text-xs);
+  color: var(--text-subdued);
+}
+
+.fs-modal__close {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--text-subdued);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color var(--duration-fast), background var(--duration-fast);
+}
+
+.fs-modal__close:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface-3);
+}
+
+.fs-modal__body {
+  padding: var(--space-4);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.fs-modal__footer {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes fs-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fs-slide-up {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}

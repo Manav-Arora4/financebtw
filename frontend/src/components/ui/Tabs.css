@@ -1,0 +1,135 @@
+/* ============================================================
+   TABS COMPONENT
+   ============================================================ */
+
+.fs-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.fs-tabs__list {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+}
+
+.fs-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  color: var(--text-subdued);
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    background var(--duration-fast) var(--ease-standard);
+  position: relative;
+  z-index: 1;
+}
+
+.fs-tabs__tab:hover:not(:disabled) {
+  color: var(--text-secondary);
+}
+
+.fs-tabs__tab--active {
+  color: var(--text-primary) !important;
+}
+
+.fs-tabs__tab-icon {
+  display: flex;
+  align-items: center;
+}
+
+.fs-tabs__tab-badge {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  background: var(--bg-surface-3);
+  color: var(--text-subdued);
+  border-radius: var(--radius-xs);
+  padding: 0 4px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.fs-tabs__tab--active .fs-tabs__tab-badge {
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+/* ── Size: sm ───────────────────────────────────────────── */
+.fs-tabs--sm .fs-tabs__tab {
+  height: 28px;
+  padding: 0 8px;
+  font-size: var(--text-xs);
+}
+
+/* ── Size: md ───────────────────────────────────────────── */
+.fs-tabs--md .fs-tabs__tab {
+  height: 34px;
+  padding: 0 12px;
+  font-size: var(--text-sm);
+}
+
+/* ── Variant: Line ──────────────────────────────────────── */
+.fs-tabs--line .fs-tabs__list {
+  border-bottom: 1px solid var(--border-faint);
+  gap: 0;
+}
+
+.fs-tabs--line .fs-tabs__tab--active {
+  color: var(--accent) !important;
+}
+
+.fs-tabs__indicator {
+  position: absolute;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px 1px 0 0;
+  transition:
+    left var(--duration-slow) var(--ease-standard),
+    width var(--duration-slow) var(--ease-standard);
+  z-index: 2;
+}
+
+/* ── Variant: Pill ──────────────────────────────────────── */
+.fs-tabs--pill .fs-tabs__list {
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-md);
+  padding: 2px;
+  border: 1px solid var(--border-subtle);
+  gap: 0;
+}
+
+.fs-tabs--pill .fs-tabs__tab {
+  border-radius: var(--radius-sm);
+}
+
+.fs-tabs--pill .fs-tabs__tab--active {
+  background: var(--bg-surface-4);
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Variant: Chip ──────────────────────────────────────── */
+.fs-tabs--chip .fs-tabs__list {
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.fs-tabs--chip .fs-tabs__tab {
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-2);
+}
+
+.fs-tabs--chip .fs-tabs__tab--active {
+  background: var(--accent-muted);
+  border-color: var(--accent);
+  color: var(--accent) !important;
+}

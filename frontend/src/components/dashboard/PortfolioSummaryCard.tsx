@@ -9,7 +9,7 @@ export const PortfolioSummaryCard: React.FC = () => {
   const sparklineArea = `${sparklinePath} L 300,70 L 0,70 Z`;
 
   return (
-    <div className="finsight-card my-portfolio-card">
+    <div className="financebtw-card my-portfolio-card">
       <div className="card-top-title-row">
         <h3 className="card-main-heading">My Portfolio</h3>
         <button

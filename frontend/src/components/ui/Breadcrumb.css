@@ -1,0 +1,45 @@
+/* ============================================================
+   BREADCRUMB COMPONENT
+   ============================================================ */
+
+.fs-breadcrumb__list {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.fs-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.fs-breadcrumb__sep {
+  display: flex;
+  align-items: center;
+  color: var(--text-disabled);
+  margin: 0 1px;
+}
+
+.fs-breadcrumb__link {
+  font-size: var(--text-xs);
+  color: var(--text-subdued);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-sans);
+  transition: color var(--duration-fast);
+}
+
+.fs-breadcrumb__link:hover {
+  color: var(--text-primary);
+}
+
+.fs-breadcrumb__current {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-weight: var(--weight-medium);
+}

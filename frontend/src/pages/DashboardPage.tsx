@@ -1,2 +1,2 @@
-// DashboardPage — renders the full existing dashboard view
-export { OverviewPage as DashboardPage } from './OverviewPage';
+// DashboardPage — renders the full financial market dashboard
+export { MarketPage as DashboardPage } from './MarketPage';

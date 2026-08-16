@@ -1,5 +1,5 @@
 /* ============================================================
-   FINSIGHT UI COMPONENT LIBRARY — Barrel Export
+   FINANCE BTW UI COMPONENT LIBRARY — Barrel Export
    Import from '@/components/ui' or 'src/components/ui'
    ============================================================ */
 

@@ -29,7 +29,7 @@ export const UpcomingEventsCard: React.FC = () => {
   ];
 
   return (
-    <div className="finsight-card upcoming-events-card">
+    <div className="financebtw-card upcoming-events-card">
       <div className="card-top-title-row">
         <h3 className="card-main-heading">Upcoming Events</h3>
       </div>

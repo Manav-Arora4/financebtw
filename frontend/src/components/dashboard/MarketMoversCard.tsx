@@ -14,7 +14,7 @@ export const MarketMoversCard: React.FC = () => {
   ];
 
   return (
-    <div className="finsight-card market-movers-card">
+    <div className="financebtw-card market-movers-card">
       {/* Title & Tabs */}
       <div className="card-top-title-row">
         <h3 className="card-main-heading">Market Movers</h3>

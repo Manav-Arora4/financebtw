@@ -23,7 +23,7 @@ export const LatestNewsCard: React.FC = () => {
   ];
 
   return (
-    <div className="finsight-card latest-news-card">
+    <div className="financebtw-card latest-news-card">
       <div className="card-top-title-row">
         <h3 className="card-main-heading">Latest News</h3>
       </div>

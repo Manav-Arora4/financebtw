@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { Session, User, Provider } from '@supabase/supabase-js';
 import { supabase, isSupabaseConfigured, reconfigureSupabase } from '../lib/supabase';
 import apiClient from '../api/client';
@@ -31,15 +31,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState<boolean>(true);
   const [configured, setConfigured] = useState<boolean>(isSupabaseConfigured());
 
-  const syncWithBackend = async () => {
+  const syncWithBackend = useCallback(async (token?: string) => {
     try {
-      if (session?.access_token) {
+      const activeToken = token || session?.access_token || localStorage.getItem('access_token');
+      if (activeToken) {
         await apiClient.post('/api/v1/auth/sync', {});
       }
     } catch {
       // Background sync notice
     }
-  };
+  }, [session?.access_token]);
 
   useEffect(() => {
     let unsubscribe: (() => void) | null = null;
@@ -83,7 +84,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setLoading(false);
         if (newSession?.access_token) {
           localStorage.setItem('access_token', newSession.access_token);
-          await syncWithBackend();
+          await syncWithBackend(newSession.access_token);
         } else {
           localStorage.removeItem('access_token');
         }
@@ -99,7 +100,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, []);
+  }, [syncWithBackend]);
 
   const signUp = async (email: string, password: string, fullName?: string) => {
     try {

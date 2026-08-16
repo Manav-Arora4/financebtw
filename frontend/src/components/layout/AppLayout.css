@@ -31,7 +31,9 @@
 /* ── Center main area ───────────────────────────────────── */
 .fs-main {
   flex: 1;
-  min-width: 0;
+  /* Never let the main viewport collapse below this —
+     content scrolls horizontally instead of squishing */
+  min-width: 560px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -42,8 +44,9 @@
 .fs-page {
   flex: 1;
   overflow-y: auto;
-  overflow-x: hidden;
-  padding: 12px 14px;
+  /* Allow horizontal scroll so content never squishes */
+  overflow-x: auto;
+  padding: 16px 22px 60px 22px;
   scroll-behavior: smooth;
 }
 

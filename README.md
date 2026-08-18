@@ -127,41 +127,26 @@ npm run lint
 
 ---
 
-## 🗺 Roadmap & Progress
+## 🗺 Roadmap & Progress (Synchronized Full-Stack Milestones)
 
-### 🖥 Frontend Workstation UI (12-Phase Roadmap)
+Development proceeds in **synchronized full-stack milestones** where the Frontend UI Workstation is constructed first, immediately followed by its corresponding Backend Engine, APIs, and AI Pipelines:
 
-| Phase | Module | Status | Highlights |
-|:---:|---|:---:|---|
-| **UI-1** | **Design System & Tokens** | ✅ **DONE** | Complete HSL token system, typography scale (`13.5px` base), cards, buttons, badges, tables, modals |
-| **UI-2** | **Global Layout Shell** | ✅ **DONE** | Live market ticker ribbon, global search, collapsible sidebar, `Ctrl+K` command palette, notification stack |
-| **UI-3** | **Institutional Company Dashboard** | ✅ **DONE** | Candlestick chart (`340px–460px` clamp) with drawing tools, un-squished SVG Financials, Analyst Donut Gauge, Movers, News, Portfolio Summary |
-| **UI-4** | **Research Copilot (`/research`)** | 🔄 **IN PROGRESS** | Streaming token responses, inline document citations, interactive tool execution traces, structured tables |
-| **UI-5** | **Markets Hub (`/markets`)** | ⏳ UP NEXT | Sector heatmaps, market breadth bar, 52-week breakouts, India VIX gauge, economic calendar |
-| **UI-6** | **Advanced Screener (`/screener`)** | ⏳ QUEUED | Fundamental & technical multi-factor filtering, sticky sortable table, preset strategies |
-| **UI-7** | **Portfolio Analytics (`/portfolio`)** | ⏳ QUEUED | Real-time P&L attribution, sector/asset allocation donuts, benchmark comparison vs NIFTY 50 |
-| **UI-8** | **Research Hub & Docs (`/research-hub`)** | ⏳ QUEUED | Annual reports, quarterly earnings filings, SEBI disclosures, integrated PDF viewer |
-| **UI-9** | **News Terminal (`/news`)** | ⏳ QUEUED | Live breaking news stream, entity tagging, source filtering (ET, LiveMint, Moneycontrol) |
-| **UI-10**| **Watchlists (`/watchlists`)** | ⏳ QUEUED | Multi-list management, mini sparklines, customizable data columns |
-| **UI-11**| **Alerts & Signals (`/alerts`)** | ⏳ QUEUED | Price triggers, corporate event reminders, technical breakout alerts |
-| **UI-12**| **Workstation Settings (`/settings`)** | ⏳ QUEUED | Keybinding manager, theme accents, data provider configurations |
+| Milestone | Frontend UI Phase | Backend & AI Phase | Status | Scope & Deliverables |
+|:---:|---|---|:---:|---|
+| **M-1** | **UI-1: Design System & Tokens** | **BE-1: FastAPI Foundation & Redis** | ✅ **DONE** | Complete HSL token system, typography scale (`13.5px` base), cards, modals, async FastAPI, SQLAlchemy 2.0, Redis cache, Docker Compose. |
+| **M-2** | **UI-2: Global Workstation Shell** | **BE-2: Supabase Auth & RBAC** | ✅ **DONE** | Benchmark ticker ribbon, global navigation, collapsible sidebar, `Ctrl+K` palette, Supabase JWT verification, user sync. |
+| **M-3** | **UI-3: Company Dashboard & Selector** | **BE-3: Market Provider & REST API** | ✅ **DONE** | Company search/selector launcher, tracked securities toolbar, real live quotes, real OHLCV chart, live ratios, and `/api/v1/market` endpoints. |
+| **M-4** | **UI-4: Research Copilot (`/research`)** | **BE-4: Local Embeddings (BGE-M3) & Qdrant**<br>**BE-5: LiteLLM & LangGraph Agent** | 🚀 **ACTIVE** | **UI**: 3-panel research workspace, multi-step reasoning steps, inline citations `[1]`, tool traces, DuPont tables, context inspector.<br>**BE**: Local `BAAI/bge-m3` dense + sparse vectors, Qdrant indexing, LangGraph StateGraph agent, LiteLLM gateway, SSE streaming API. |
+| **M-5** | **UI-5: Research Hub & Document Viewer** | **BE-6: Financial Ingestion & PDF Parser** | ⏳ UP NEXT | Interactive PDF reader, filing search repository, table-aware chunker for annual reports, investor presentations, and SEBI disclosures. |
+| **M-6** | **UI-6: Markets Hub (`/markets`)** | **BE-7: Market Breadth & Sector Engine** | ⏳ QUEUED | Macro indices overview, Sector Heatmap, Market Breadth (Advancers vs Decliners), 52W range extremes, India VIX gauge. |
+| **M-7** | **UI-7: Advanced Screener (`/screener`)** | **BE-8: Multi-Factor Screener Engine** | ⏳ QUEUED | 2,000+ NSE/BSE stock screener with multi-factor filters (P/E, P/B, ROE %, ROCE %, Debt/Equity) and preset institutional strategies. |
+| **M-8** | **UI-8: Portfolio Analytics (`/portfolio`)** | **BE-9: Portfolio Performance Service** | ⏳ QUEUED | Demat import/trade logging, Realized/Unrealized P&L, Sector allocation donut, benchmark alpha/beta regression vs NIFTY 50. |
+| **M-9** | **UI-9: Watchlists (`/watchlists`)** | **BE-10: Watchlist Storage & Live Sync** | ⏳ QUEUED | Multi-watchlist manager, mini SVG sparklines, custom column configurator, PostgreSQL relational store, CSV export. |
+| **M-10**| **UI-10: Alerts & Signals (`/alerts`)** | **BE-11: Real-Time Trigger & SEBI Cron** | ⏳ QUEUED | Custom price threshold triggers, exchange filing alerts, background event monitor, in-app notification center. |
+| **M-11**| **UI-11: News Terminal (`/news`)** | **BE-12: News Stream & Sentiment Engine** | ⏳ QUEUED | Live breaking news wire with sentiment tagging (Bullish / Neutral / Bearish), ticker filter pills, source filtering (Reuters, ET). |
+| **M-12**| **UI-12: Financial Modeler & Settings** | **BE-13: Quantitative Engine (DCF/DuPont)**<br>**BE-14: Production Hardening & Telemetry** | ⏳ QUEUED | DCF sensitivity matrix, 5-stage DuPont ROE breakdown, settings, rate limiting, token cost tracking, OpenTelemetry, Prometheus metrics. |
 
 ---
-
-### ⚙ Backend & AI Core (20-Phase Roadmap)
-
-| Phase | Module | Status | Highlights |
-|:---:|---|:---:|---|
-| **BE-1** | **Repository Foundation** | ✅ **DONE** | Async FastAPI, SQLAlchemy 2.0, Redis, base provider interface, Docker compose, CI/CD |
-| **BE-2** | **Authentication & Security** | ✅ **DONE** | Supabase Auth integration, JWT validation, user sync endpoints, RBAC dependencies |
-| **BE-3** | **Market Data Providers & REST API** | ✅ **DONE** | Yahoo Finance, NSE (`nsepython`), BSE, TheNewsAPI + `/api/v1/market` live endpoints (quotes, tickers, ratios, OHLCV history, news) |
-| **BE-4** | **Local Embeddings (BGE-M3)** | 🔄 **IN PROGRESS** | Zero-API-cost local embedding engine (`BAAI/bge-m3`) with dense 1024-dim and sparse BM25 vectors |
-| **BE-5** | **Document Pipeline & Chunking** | ⏳ QUEUED | Table-aware financial document chunker for earnings reports and filings |
-| **BE-6** | **Vector Store & Indexing (Qdrant)** | ⏳ QUEUED | Qdrant collection setup with payload filtering by ticker, quarter, and document type |
-| **BE-7** | **Hybrid Search & Reranker** | ⏳ QUEUED | Reciprocal Rank Fusion (RRF) + `BAAI/bge-reranker-large` cross-encoder |
-| **BE-8** | **LiteLLM Universal Gateway** | ⏳ QUEUED | Multi-provider LLM interface with fallback and streaming support |
-| **BE-9** | **LangGraph Agent Orchestrator** | ⏳ QUEUED | StateGraph reasoning agent with dynamic tool routing and conversation memory |
-| **BE-10**| **Streaming & Citations API** | ⏳ QUEUED | Server-Sent Events (SSE) streaming with strict citation validation |
 
 ---
 

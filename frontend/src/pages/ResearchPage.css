@@ -1,0 +1,19 @@
+﻿.research-copilot-workspace {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 44px - 40px); /* minus ticker ribbon and header */
+  overflow: hidden;
+  background: var(--bg-app, #070b14);
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .research-session-sidebar {
+    width: 220px;
+    min-width: 200px;
+  }
+  .research-inspector-panel {
+    width: 260px;
+    min-width: 240px;
+  }
+}

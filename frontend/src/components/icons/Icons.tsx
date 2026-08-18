@@ -224,3 +224,11 @@ export const IconTradingView: React.FC<{ size?: number; className?: string }> = 
     <path d="M2.5 16.5h3v-9h-3v9zm5 0h3v-13h-3v13zm5 0h3v-6h-3v6zm5 0h3v-10h-3v10z" />
   </svg>
 );
+
+export const IconTrash: React.FC<{ size?: number; className?: string }> = ({ size = 16, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polyline points="3 6 5 6 21 6" />
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+  </svg>
+);
+

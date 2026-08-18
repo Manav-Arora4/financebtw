@@ -72,7 +72,7 @@ class ProviderRegistry:
         except KeyError:
             available = list(self._providers.keys())
             raise KeyError(
-                f"No provider registered for capability '{capability}'. " f"Available: {available}"
+                f"No provider registered for capability '{capability}'. Available: {available}"
             ) from None
 
     def list_capabilities(self) -> list[str]:

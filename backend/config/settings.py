@@ -77,7 +77,7 @@ class Settings(BaseSettings):
         url = self.supabase_url.strip()
         for suffix in ("/rest/v1/", "/rest/v1", "/auth/v1/", "/auth/v1", "/"):
             if url.endswith(suffix):
-                url = url[:-len(suffix)]
+                url = url[: -len(suffix)]
         return url
 
     @property

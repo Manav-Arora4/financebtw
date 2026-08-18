@@ -154,7 +154,7 @@ npm run lint
 |:---:|---|:---:|---|
 | **BE-1** | **Repository Foundation** | ✅ **DONE** | Async FastAPI, SQLAlchemy 2.0, Redis, base provider interface, Docker compose, CI/CD |
 | **BE-2** | **Authentication & Security** | ✅ **DONE** | Supabase Auth integration, JWT validation, user sync endpoints, RBAC dependencies |
-| **BE-3** | **Market Data Providers** | ✅ **DONE** | Yahoo Finance, NSE (`nsepython`), BSE, and TheNewsAPI provider implementations |
+| **BE-3** | **Market Data Providers & REST API** | ✅ **DONE** | Yahoo Finance, NSE (`nsepython`), BSE, TheNewsAPI + `/api/v1/market` live endpoints (quotes, tickers, ratios, OHLCV history, news) |
 | **BE-4** | **Local Embeddings (BGE-M3)** | 🔄 **IN PROGRESS** | Zero-API-cost local embedding engine (`BAAI/bge-m3`) with dense 1024-dim and sparse BM25 vectors |
 | **BE-5** | **Document Pipeline & Chunking** | ⏳ QUEUED | Table-aware financial document chunker for earnings reports and filings |
 | **BE-6** | **Vector Store & Indexing (Qdrant)** | ⏳ QUEUED | Qdrant collection setup with payload filtering by ticker, quarter, and document type |

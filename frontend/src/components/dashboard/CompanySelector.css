@@ -1,0 +1,228 @@
+﻿.company-selector-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px 64px;
+  max-width: 1080px;
+  margin: 0 auto;
+  min-height: calc(100vh - 120px);
+}
+
+.selector-header-block {
+  text-align: center;
+  margin-bottom: 32px;
+  max-width: 680px;
+}
+
+.selector-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(249, 115, 22, 0.12);
+  color: #f97316;
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.selector-main-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+}
+
+.selector-sub-text {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.selector-search-box {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-surface-1, #0e1526);
+  border: 1px solid var(--border-subtle, #1e293b);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s;
+}
+
+.selector-search-box:focus-within {
+  border-color: #f97316;
+}
+
+.selector-search-box svg {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.selector-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #f8fafc;
+  font-size: 14px;
+  outline: none;
+}
+
+.selector-search-input::placeholder {
+  color: #64748b;
+}
+
+.btn-selector-submit {
+  background: #f97316;
+  color: #ffffff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.btn-selector-submit:hover {
+  opacity: 0.9;
+}
+
+.selector-suggestions-section {
+  width: 100%;
+}
+
+.selector-section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle, #1e293b);
+}
+
+.selector-section-heading {
+  font-size: 13px;
+  font-weight: 700;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.selector-section-hint {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.selector-stocks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.selector-stock-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  background: var(--bg-surface-1, #0e1526);
+  border: 1px solid var(--border-subtle, #1e293b);
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+  width: 100%;
+}
+
+.selector-stock-card:hover {
+  border-color: #f97316;
+  transform: translateY(-2px);
+  background: #111a2e;
+}
+
+.stock-card-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.stock-card-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stock-card-title-group {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex: 1;
+}
+
+.stock-card-symbol {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.stock-card-exchange {
+  font-size: 10px;
+  font-weight: 600;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.stock-card-arrow {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.stock-card-name {
+  font-size: 12.5px;
+  color: #94a3b8;
+  margin-bottom: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.stock-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 11px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stock-card-sector {
+  color: #64748b;
+}
+
+.stock-card-action {
+  color: #f97316;
+  font-weight: 600;
+}

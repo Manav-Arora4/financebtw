@@ -1490,3 +1490,142 @@ html, body {
     display: none;
   }
 }
+
+/* --- Telemetry, WIP & Real-time Empty State Badges ------------------------- */
+
+.card-sub-badge {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-subdued, #64748b);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.card-loading-state,
+.chart-loading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 16px;
+  color: #94a3b8;
+  font-size: 12.5px;
+  text-align: center;
+}
+
+.card-loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(249, 115, 22, 0.2);
+  border-top-color: #f97316;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.card-notice-empty,
+.chart-empty-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 28px 16px;
+  color: #64748b;
+  font-size: 12.5px;
+  text-align: center;
+}
+
+.card-wip-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 28px 16px 20px;
+  gap: 8px;
+}
+
+.wip-icon-badge {
+  font-size: 24px;
+  margin-bottom: 2px;
+}
+
+.wip-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+.wip-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.5;
+  max-width: 320px;
+  margin: 0;
+}
+
+.wip-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  font-size: 11px;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-top: 6px;
+}
+
+.status-dot.orange {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f97316;
+}
+
+.status-dot.slate {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #64748b;
+}
+
+.chart-ohlc-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+.chart-ohlc-summary strong {
+  color: #f8fafc;
+}
+
+.news-article-row.clickable,
+.mover-row-item.clickable {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s;
+}
+
+.news-article-row.clickable:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.mover-row-item.clickable:hover {
+  background: rgba(249, 115, 22, 0.06);
+}

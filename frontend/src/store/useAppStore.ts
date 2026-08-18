@@ -32,8 +32,11 @@ interface AppState {
   toggleCommandPalette: () => void;
 
   // Symbol selection
-  selectedSymbol: string;
-  setSelectedSymbol: (symbol: string) => void;
+  selectedSymbol: string | null;
+  setSelectedSymbol: (symbol: string | null) => void;
+  trackedSymbols: string[];
+  addTrackedSymbol: (symbol: string) => void;
+  removeTrackedSymbol: (symbol: string) => void;
 
   // Search
   searchQuery: string;
@@ -54,15 +57,15 @@ interface AppState {
 }
 
 const DEFAULT_TICKERS: MarketTicker[] = [
-  { symbol: 'NIFTY 50',   name: 'Nifty 50 Index',       price: 24734.85, change: 165.4,  percent: 0.67, currency: 'INR' },
-  { symbol: 'BANKNIFTY',  name: 'Nifty Bank Index',      price: 51248.8,  change: 410.2,  percent: 0.81, currency: 'INR' },
-  { symbol: 'SENSEX',     name: 'BSE Sensex',            price: 81330.56, change: 510.1,  percent: 0.63, currency: 'INR' },
-  { symbol: 'RELIANCE',   name: 'Reliance Industries',   price: 2985.5,   change: 32.1,   percent: 1.09, currency: 'INR' },
-  { symbol: 'TCS',        name: 'Tata Consultancy',      price: 4190.0,   change: 60.0,   percent: 1.45, currency: 'INR' },
-  { symbol: 'HDFCBANK',   name: 'HDFC Bank Ltd',         price: 1645.2,   change: 29.5,   percent: 1.82, currency: 'INR' },
-  { symbol: 'INFY',       name: 'Infosys Limited',       price: 1875.4,   change: 39.5,   percent: 2.15, currency: 'INR' },
-  { symbol: 'ICICIBANK',  name: 'ICICI Bank Ltd',        price: 1180.5,   change: 11.2,   percent: 0.95, currency: 'INR' },
-  { symbol: 'BHARTIARTL', name: 'Bharti Airtel',         price: 1460.0,   change: 18.8,   percent: 1.30, currency: 'INR' },
+  { symbol: 'NIFTY 50',   name: 'Nifty 50 Index',       price: 24154.90, change: -132.75, percent: -0.55, currency: 'INR' },
+  { symbol: 'BANKNIFTY',  name: 'Nifty Bank Index',      price: 57262.40, change: -235.40, percent: -0.41, currency: 'INR' },
+  { symbol: 'SENSEX',     name: 'BSE Sensex',            price: 77235.46, change: -492.70, percent: -0.63, currency: 'INR' },
+  { symbol: 'RELIANCE',   name: 'Reliance Industries',   price: 1322.00,  change: 6.00,    percent: 0.46,  currency: 'INR' },
+  { symbol: 'TCS',        name: 'Tata Consultancy',      price: 2280.00,  change: -33.20,  percent: -1.44, currency: 'INR' },
+  { symbol: 'HDFCBANK',   name: 'HDFC Bank Ltd',         price: 723.00,   change: -6.00,   percent: -0.82, currency: 'INR' },
+  { symbol: 'INFY',       name: 'Infosys Limited',       price: 1115.00,  change: -24.90,  percent: -2.18, currency: 'INR' },
+  { symbol: 'ICICIBANK',  name: 'ICICI Bank Ltd',        price: 1412.00,  change: -3.20,   percent: -0.23, currency: 'INR' },
+  { symbol: 'BHARTIARTL', name: 'Bharti Airtel',         price: 1934.20,  change: -35.00,  percent: -1.78, currency: 'INR' },
 ];
 
 export const useAppStore = create<AppState>((set) => ({
@@ -83,8 +86,24 @@ export const useAppStore = create<AppState>((set) => ({
   setCommandPaletteOpen: (open) => set({ commandPaletteOpen: open }),
   toggleCommandPalette: () => set((s) => ({ commandPaletteOpen: !s.commandPaletteOpen })),
 
-  selectedSymbol: 'RELIANCE.NS',
-  setSelectedSymbol: (symbol) => set({ selectedSymbol: symbol }),
+  selectedSymbol: null,
+  setSelectedSymbol: (symbol) => set((s) => {
+    if (symbol && !s.trackedSymbols.includes(symbol)) {
+      return { selectedSymbol: symbol, trackedSymbols: [...s.trackedSymbols, symbol] };
+    }
+    return { selectedSymbol: symbol };
+  }),
+
+  trackedSymbols: [],
+  addTrackedSymbol: (symbol) => set((s) => ({
+    trackedSymbols: s.trackedSymbols.includes(symbol) ? s.trackedSymbols : [...s.trackedSymbols, symbol],
+    selectedSymbol: symbol,
+  })),
+  removeTrackedSymbol: (symbol) => set((s) => {
+    const updated = s.trackedSymbols.filter((sym) => sym !== symbol);
+    const nextSelected = s.selectedSymbol === symbol ? (updated[0] || null) : s.selectedSymbol;
+    return { trackedSymbols: updated, selectedSymbol: nextSelected };
+  }),
 
   searchQuery: '',
   setSearchQuery: (query) => set({ searchQuery: query }),

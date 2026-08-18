@@ -1,0 +1,159 @@
+﻿.tracked-companies-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--bg-surface-1, #0e1526);
+  border: 1px solid var(--border-subtle, #1e293b);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-bottom: 16px;
+}
+
+.tracked-tabs-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tracked-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+
+.tracked-pill-wrapper {
+  display: inline-flex;
+  align-items: center;
+  background: #131c2e;
+  border: 1px solid var(--border-subtle, #1e293b);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.tracked-pill-wrapper.active {
+  border-color: #f97316;
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.tracked-pill-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 4px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tracked-pill-wrapper.active .tracked-pill-btn {
+  color: #f8fafc;
+}
+
+.active-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f97316;
+}
+
+.tracked-pill-close {
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--border-subtle, #1e293b);
+  color: #64748b;
+  font-size: 13px;
+  padding: 4px 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tracked-pill-close:hover {
+  color: #ef4444;
+}
+
+.btn-add-tracked {
+  background: transparent;
+  border: 1px dashed var(--border-subtle, #1e293b);
+  color: #94a3b8;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-add-tracked:hover {
+  border-color: #f97316;
+  color: #f97316;
+}
+
+.tracked-add-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #111a2e;
+  border: 1px solid #f97316;
+  border-radius: 6px;
+  padding: 2px 4px;
+}
+
+.tracked-add-input {
+  background: transparent;
+  border: none;
+  color: #f8fafc;
+  font-size: 12px;
+  padding: 2px 6px;
+  width: 100px;
+  outline: none;
+}
+
+.tracked-add-confirm {
+  background: #f97316;
+  border: none;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tracked-add-cancel {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.btn-deselect-workspace {
+  background: transparent;
+  border: 1px solid var(--border-subtle, #1e293b);
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.btn-deselect-workspace:hover {
+  border-color: #f97316;
+  color: #f8fafc;
+}

@@ -15,11 +15,12 @@ export const AIAssistantDrawer: React.FC = () => {
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
 
-  const tickerClean = selectedSymbol.replace('.NS', '').replace('.BO', '');
+  const tickerClean = selectedSymbol ? selectedSymbol.replace('.NS', '').replace('.BO', '') : 'NIFTY';
   const entityName = tickerClean === 'TCS' ? 'Tata Consultancy Services' :
                      tickerClean === 'INFY' ? 'Infosys Limited' :
                      tickerClean === 'HDFCBANK' ? 'HDFC Bank Ltd.' :
-                     'Reliance Industries Ltd.';
+                     tickerClean === 'RELIANCE' ? 'Reliance Industries Ltd.' :
+                     'Indian Markets Benchmark';
 
   const promptChips = [
     'Analyze valuation',

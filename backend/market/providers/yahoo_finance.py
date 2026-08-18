@@ -35,8 +35,20 @@ logger = logging.getLogger(__name__)
 
 
 def _sanitize_symbol(symbol: str) -> str:
-    """Format and strip whitespace from ticker symbols."""
-    return symbol.strip().upper()
+    """Format, strip whitespace, and normalize ticker symbols."""
+    sym = symbol.strip().upper()
+    mapping = {
+        "NIFTY 50": "^NSEI",
+        "NIFTY": "^NSEI",
+        "NIFTY50": "^NSEI",
+        "^NSEI": "^NSEI",
+        "BANKNIFTY": "^NSEBANK",
+        "NIFTY BANK": "^NSEBANK",
+        "SENSEX": "^BSESN",
+        "BSE SENSEX": "^BSESN",
+        "^BSESN": "^BSESN",
+    }
+    return mapping.get(sym, sym)
 
 
 class YahooFinanceProvider(MarketProvider):
@@ -257,24 +269,59 @@ class YahooFinanceProvider(MarketProvider):
             ticker = yf.Ticker(query)
             news_items = ticker.news or []
             for item in news_items[:limit]:
-                # Publish time is unix timestamp in yfinance news
-                ts = item.get("providerPublishTime")
-                pub_date = (
-                    datetime.fromtimestamp(ts, tz=UTC).isoformat()
-                    if ts
-                    else datetime.now(UTC).isoformat()
+                # Support new yfinance content dict structure
+                content = item.get("content", {}) if isinstance(item.get("content"), dict) else item
+                title = content.get("title") or item.get("title", "")
+                summary = (
+                    content.get("summary")
+                    or content.get("description")
+                    or item.get("summary")
+                    or item.get("description")
                 )
-                articles.append(
-                    NewsArticle(
-                        title=item.get("title", ""),
-                        description=item.get("summary") or item.get("description"),
-                        url=item.get("link", ""),
-                        source=item.get("publisher", "Yahoo Finance"),
-                        published_at=pub_date,
-                        categories=item.get("relatedTickers", []),
-                        provider=self.name,
+
+                # Source / publisher
+                provider_info = content.get("provider")
+                source = (
+                    provider_info.get("displayName")
+                    if isinstance(provider_info, dict)
+                    else (item.get("publisher") or "Yahoo Finance")
+                )
+
+                # URL
+                canon = content.get("canonicalUrl")
+                url = (
+                    canon.get("url")
+                    if isinstance(canon, dict)
+                    else (
+                        content.get("clickThroughUrl", {}).get("url")
+                        if isinstance(content.get("clickThroughUrl"), dict)
+                        else (item.get("link") or "")
                     )
                 )
+
+                # Publish date
+                pub_date = content.get("pubDate") or content.get("displayTime")
+                if not pub_date:
+                    ts = item.get("providerPublishTime")
+                    pub_date = (
+                        datetime.fromtimestamp(ts, tz=UTC).isoformat()
+                        if ts
+                        else datetime.now(UTC).isoformat()
+                    )
+
+                if title:
+                    articles.append(
+                        NewsArticle(
+                            title=title,
+                            description=summary,
+                            url=url or "",
+                            source=source or "Financial News",
+                            published_at=str(pub_date),
+                            categories=content.get("relatedTickers", [])
+                            or item.get("relatedTickers", []),
+                            provider=self.name,
+                        )
+                    )
         except Exception as exc:
             logger.debug("yfinance news retrieval error for query '%s': %s", query, exc)
 
